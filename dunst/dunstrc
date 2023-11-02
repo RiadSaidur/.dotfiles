@@ -5,15 +5,19 @@ font = Noto Sans 16
 corner_radius = 6
 format = "<b>%s</b>\n%b"
 alignment = right
+offset = 25x25
+width = 300
+progress_bar = true
+progress_bar_corner_radius = 4
+gap_size = 6
 
 [urgency_low]
 background = "#1E1E2E"
 foreground = "#CDD6F4"
 
 [urgency_normal]
-background = "#161320cc"
-#foreground = "#CDD6F4"
-foreground = "#ffffff"
+background = "#dbfbea"
+foreground = "#000000CC"
 
 [urgency_critical]
 background = "#1E1E2E"
