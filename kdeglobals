@@ -1,1 +1,2 @@
-[Colors:View] BackgroundNormal=94, 104, 109
+[General]
+TerminalApplication=dolphin
