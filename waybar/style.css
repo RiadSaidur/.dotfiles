@@ -158,23 +158,36 @@ window#waybar.hidden {
 #memory {
 	margin-top: 6px;
 	margin-left: 8px;
-	margin-right: 8px;
 	padding-left: 10px;
-	margin-bottom: 6px;
 	padding-right: 10px;
+	padding-right: 18px;
+	margin-bottom: 6px;
 	border-radius: 10px;
 	transition: none;
 	color: #161320;
 	background: #DDB6F2;
 }
 
-#cpu, #temperature {
+#temperature {
 	margin-top: 6px;
 	margin-left: 8px;
-	margin-right: 8px;
 	padding-left: 10px;
-	margin-bottom: 6px;
 	padding-right: 10px;
+	padding-right: 18px;
+	margin-bottom: 6px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #96CDFB;
+}
+
+#cpu {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-right: 18px;
+	margin-bottom: 6px;
 	border-radius: 10px;
 	transition: none;
 	color: #161320;
