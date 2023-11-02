@@ -1,9 +1,9 @@
 [global]
-frame_color = "#89B4FA"
+frame_color = "#ABE9B3"
 separator_color= frame
 font = Noto Sans 16
-corner_radius = 24
-format = "%a\n<b>%s</b>\n%b"
+corner_radius = 6
+format = "<b>%s</b>\n%b"
 alignment = right
 
 [urgency_low]
@@ -11,8 +11,9 @@ background = "#1E1E2E"
 foreground = "#CDD6F4"
 
 [urgency_normal]
-background = "#1E1E2E"
-foreground = "#CDD6F4"
+background = "#161320cc"
+#foreground = "#CDD6F4"
+foreground = "#ffffff"
 
 [urgency_critical]
 background = "#1E1E2E"
