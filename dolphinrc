@@ -1,6 +1,10 @@
+[ContextMenu]
+ShowAddToPlaces=false
+
 [General]
 Version=202
 ViewPropsTimestamp=2023,10,21,16,27,12.762
+Terminal=kitty
 
 [KFileDialog Settings]
 Places Icons Auto-resize=false
@@ -12,3 +16,6 @@ Places Icons Static Size=22
 [MainWindow]
 MenuBar=Disabled
 ToolBarsMovable=Disabled
+
+[PreviewSettings]
+Plugins=appimagethumbnail,audiothumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,opendocumentthumbnail,svgthumbnail,textthumbnail

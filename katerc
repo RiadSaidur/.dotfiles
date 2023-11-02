@@ -150,7 +150,7 @@ Word Completion Minimal Word Length=3
 Word Completion Remove Tail=true
 
 [KTextEditor::Search]
-Search History=txt,font,padding
+Search History=temperature,tray,clock,networ,blue,bluetooth,txt,font,padding
 
 [Konsole]
 AutoSyncronize=true
