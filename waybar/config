@@ -1,5 +1,6 @@
 {
     "layer": "top",
+    "position": "top",
     // Using margin-bottom with a negative value in order to reduce the space between Hyprland window and waybar
     "margin-bottom": -10,
     "margin-top": 5,
@@ -105,13 +106,6 @@
         "interval": 30,
         "format": " {}%",
         "max-length": 10
-    },
-    "custom/spotify": {
-        "interval": 1,
-        "return-type": "json",
-        "exec": "~/.config/waybar/scripts/spotify.sh",
-        "exec-if": "pgrep spotify",
-        "escape": true
     },
     "temperature": {
         "critical-threshold": 80,
