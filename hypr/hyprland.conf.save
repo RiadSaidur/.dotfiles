@@ -120,7 +120,7 @@ gestures {
 windowrule = float,polkit-gnome
 windowrule = float,qview
 windowrulev2 = opacity 0.90,class:^(Code)$
-windowrulev2 = opacity 0.5,class:^(wofi)$
+windowrulev2 = opacity 0.5,class:^(wofi)$ss
 
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 $mainMod = SUPER

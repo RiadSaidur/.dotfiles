@@ -1,7 +1,7 @@
 /* Latte Flamingo */
 @define-color accent #24273a;
 @define-color txt #cad3f5;
-@define-color bg #181926;
+@define-color bg rgba(24,25,38,0.5);
 @define-color bg2 #494d64;
 
  * {
@@ -35,7 +35,7 @@
     margin: 5px;
     padding: 10px;
     border: none;
-    background-color: @bg;
+    background-color: rgba(24,25,38,0.0);
     animation: fadeIn 0.5s ease-in-out both;
  }
 
