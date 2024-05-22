@@ -206,3 +206,12 @@ window#waybar.hidden {
 	color: #cad3f5;
 	background: #363a4f;
 }
+
+#custom-cava {
+    color: #8FBC8F;
+    border-left: 0px;
+    border-right: 0px;
+    padding-bottom: 6px;
+    font-family: "bargraph";
+    font-size: 22px;
+}

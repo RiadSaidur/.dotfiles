@@ -1,8 +1,9 @@
 [global]
 frame_color = "#89b4fa"
+border = 200
 separator_color= frame
 font = Noto Sans 16
-corner_radius = 6
+corner_radius = 4
 format = "<b>%s</b>\n%b"
 alignment = right
 offset = 25x25
@@ -10,7 +11,10 @@ width = 300
 progress_bar = true
 progress_bar_corner_radius = 4
 gap_size = 6
-
+history_length = 20
+browser = /usr/bin/xdg-open
+applications (default: overlay)
+layer = top
 [urgency_low]
 background = "#1e1e2e80"
 foreground = "#cdd6f4"
