@@ -6,7 +6,7 @@
 PCTL=$(playerctl status)
 
 if [[ ${PCTL} == "" ]]; then
-	echo "No Music Played"
+	echo ""
 else
 	playerctl metadata xesam:artist
 fi
