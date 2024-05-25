@@ -15,7 +15,6 @@ window#waybar.hidden {
 }
 
 #window {
-	/* margin-top: 6px; */
 	padding-left: 10px;
 	padding-right: 10px;
 	border-radius: 10px;
@@ -25,7 +24,6 @@ window#waybar.hidden {
 }
 
 #workspaces {
-	/* margin-top: 6px; */
 	margin-left: 16px;
 	margin-right: 16px;
 	font-size: 4px;
@@ -70,11 +68,9 @@ window#waybar.hidden {
 
 #network,
 #bluetooth {
-	/* margin-top: 6px; */
 	margin-left: 8px;
 	padding-left: 10px;
-	padding-right: 10px;
-	padding-right: 18px;
+	padding-right: 16px;
 	margin-bottom: 6px;
 	border-radius: 10px;
 	transition: none;
@@ -83,10 +79,9 @@ window#waybar.hidden {
 }
 
 #pulseaudio {
-	/* margin-top: 6px; */
 	margin-left: 8px;
 	padding-left: 10px;
-	padding-right: 10px;
+	padding-right: 14px;
 	margin-bottom: 6px;
 	border-radius: 10px;
 	transition: none;
@@ -95,11 +90,10 @@ window#waybar.hidden {
 }
 
 #battery {
-	/* margin-top: 6px; */
 	margin-right: 8px;
 	margin-left: 8px;
 	padding-left: 10px;
-	padding-right: 10px;
+	padding-right: 16px;
 	margin-bottom: 6px;
 	border-radius: 10px;
 	transition: none;
@@ -131,7 +125,6 @@ window#waybar.hidden {
 }
 
 #backlight {
-	/* margin-top: 6px; */
 	margin-left: 8px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -143,10 +136,9 @@ window#waybar.hidden {
 }
 
 #clock {
-	/* margin-top: 6px; */
 	margin-left: 8px;
 	padding-left: 10px;
-	padding-right: 10px;
+	padding-right: 16px;
 	margin-bottom: 6px;
 	border-radius: 10px;
 	transition: none;
@@ -156,7 +148,6 @@ window#waybar.hidden {
 }
 
 #memory {
-	/* margin-top: 6px; */
 	margin-left: 8px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -169,7 +160,6 @@ window#waybar.hidden {
 }
 
 #temperature {
-	/* margin-top: 6px; */
 	margin-left: 8px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -182,7 +172,6 @@ window#waybar.hidden {
 }
 
 #cpu {
-	/* margin-top: 6px; */
 	margin-left: 8px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -195,7 +184,6 @@ window#waybar.hidden {
 }
 
 #tray {
-	/* margin-top: 6px; */
 	margin-left: 8px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -205,13 +193,4 @@ window#waybar.hidden {
 	transition: none;
 	color: #cad3f5;
 	background: #363a4f;
-}
-
-#custom-cava {
-    color: #8FBC8F;
-    border-left: 0px;
-    border-right: 0px;
-    padding-bottom: 6px;
-    font-family: "bargraph";
-    font-size: 22px;
 }
