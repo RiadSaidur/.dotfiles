@@ -114,5 +114,10 @@
             "",
             ""
         ]
+    },
+    "custom/mako-notifications": {
+        "format": "",
+        "on-click": "~/.config/waybar/scripts/manage_notifications.sh",
+        "tooltip": "Manage notifications"
     }
 }

@@ -24,3 +24,5 @@ yay
 kservicemenurc
 qBittorrent
 QtProject.conf
+logs/
+profiler_data

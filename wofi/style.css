@@ -1,98 +1,104 @@
 /* Latte Flamingo */
-@define-color accent rgba(255,255,255,0.5);
-@define-color txt #000;
-@define-color bg rgba(255,255,255,0.5);
-@define-color bg2 rgba(255,255,255,0.5);
+@define-color accent rgba(54, 58, 79, 0.5);
+@define-color txt #b7bdf8;
+@define-color bg rgba(54, 58, 79, 0.4);
+@define-color bg2 rgba(54, 58, 79, 0.4);
 
- * {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    background-color: rgba(255,255,255,0.001);
- }
+* {
+   font-size: 16px;
+}
 
- /* Window */
- window {
-    margin: 0px;
-    padding: 10px;
-    border: 3px solid @accent;
-    border-radius: 7px;
-    background-color: @bg;
-    animation: slideIn 0.5s ease-in-out both;
- }
+/* Window */
+window {
+   margin: 0px;
+   padding: 10px;
+   border: 3px solid @accent;
+   border-radius: 8px;
+   background-color: @bg;
+   animation: slideIn 0.5s ease-in-out both;
+}
 
- /* Slide In */
- @keyframes slideIn {
-    0% {
-       opacity: 0;
-    }
+/* Slide In */
+@keyframes slideIn {
+   0% {
+      opacity: 0;
+   }
 
-    100% {
-       opacity: 1;
-    }
- }
+   100% {
+      opacity: 1;
+   }
+}
 
- /* Inner Box */
- #inner-box {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.0);
-    animation: fadeIn 0.5s ease-in-out both;
- }
+/* Inner Box */
+#inner-box {
+   margin: 5px;
+   border: none;
+   background-color: rgba(54, 58, 79);
+   animation: fadeIn 0.5s ease-in-out both;
+}
 
- /* Fade In */
- @keyframes fadeIn {
-    0% {
-       opacity: 0;
-    }
+/* Fade In */
+@keyframes fadeIn {
+   0% {
+      opacity: 0;
+   }
 
-    100% {
-       opacity: 1;
-    }
- }
+   100% {
+      opacity: 1;
+   }
+}
 
- /* Outer Box */
- #outer-box {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    background-color: @bg;
- }
+@keyframes fadeInBacgroundColor {
+   0% {
+      background-color: rgba(255, 255, 255, 0.0);
+   }
 
- /* Scroll */
- #scroll {
-    margin: 0px;
-    padding: 10px;
-    border: none;
- }
+   100% {
+      background-color: rgba(255, 255, 255);
+   }
+}
 
- /* Input */
- #input {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    color: @txt;
-    background-color: @bg2;
-    animation: fadeIn 0.5s ease-in-out both;
-    font-size: 2rem;
- }
+/* Outer Box */
+#outer-box {
+   margin: 5px;
+   border: none;
+   background-color: @bg;
+   border-radius: 4px;
+}
 
- /* Text */
- #text {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    color: @txt;
-    animation: fadeIn 0.5s ease-in-out both;
-    font-size: 1.5rem;
- }
+/* Scroll */
+#scroll {
+   margin: 0px;
+   padding: 10px;
+   border: none;
+}
 
- /* Selected Entry */
- #entry:selected {
+/* Input */
+#input {
+   margin: 5px;
+   padding: 10px;
+   color: @txt;
+   background-color: @bg2;
+   animation: fadeIn 0.5s ease-in-out both;
+   font-size: 2rem;
+}
+
+/* Text */
+#text {
+   margin: 5px;
+   padding: 10px;
+   border: none;
+   color: @txt;
+   font-size: 1.5rem;
+}
+
+/* Selected Entry */
+#entry:selected {
    background-color: @accent;
    border-radius: 0px 10px 10px 0px;
- }
+   animation: fadeInBacgroundColor 0.25s ease-out both;
+}
 
- #entry:selected #text {
-    color: @txt;
- }
+#entry:selected #text {
+   color: rgba(54, 58, 79);
+}
