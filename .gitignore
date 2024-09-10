@@ -26,3 +26,5 @@ qBittorrent
 QtProject.conf
 logs/
 profiler_data
+go/telemetry/
+__pycache__/
