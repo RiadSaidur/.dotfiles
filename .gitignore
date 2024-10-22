@@ -28,3 +28,6 @@ logs/
 profiler_data
 go/telemetry/
 __pycache__/
+nvim
+obs-studio
+ranger
