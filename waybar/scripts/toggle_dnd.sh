@@ -1,10 +1,12 @@
 #!/bin/bash
-dnd_file="/tmp/mako_dnd"
 
-if [ -f "$dnd_file" ]; then
-    rm "$dnd_file"
-    notify-send "DND Disabled"
+# Check if DND is currently enabled
+if makoctl mode | grep -q "do-not-disturb"; then
+    # Disable DND
+    makoctl mode -r do-not-disturb
+    echo ""  # Change icon to notifications enabled
 else
-    touch "$dnd_file"
-    notify-send "DND Enabled"
+    # Enable DND
+    makoctl mode -a do-not-disturb
+    echo "dnd"  # Change icon to DND enabled
 fi

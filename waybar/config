@@ -1,9 +1,8 @@
 {
     "layer": "top",
     "position": "top",
-    // Using margin-bottom with a negative value in order to reduce the space between Hyprland window and waybar
-    "margin-bottom": -10,
-    "margin-top": 5,
+    "margin-bottom": -12,
+    "margin-top": 4,
     "modules-left": [
         "temperature",
         "cpu",
@@ -12,42 +11,38 @@
         "bluetooth"
     ],
     "modules-center": [
-        "hyprland/workspaces"
+        "hyprland/workspaces",
     ],
     "modules-right": [
-        "clock",
+        "custom/now-playing",
         "tray",
+        "clock",
         "backlight",
         "pulseaudio",
         "battery"
     ],
-    "pulseaudio": {
-        "tooltip": false,
-        "scroll-step": 5,
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": " ",
-            "hands-free": " ",
-            "headset": " ",
-            "phone": " ",
-            "portable": " ",
-            "car": " ",
-            "default": [
-                " ",
-                " ",
-                " "
-            ]
-        },
-        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ]
+    },
+    "cpu": {
+        "interval": 15,
+        "format": " {}%",
+        "max-length": 10
+    },
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "max-length": 10
     },
     "network": {
         "format-wifi": "  {essid}",
-        "format-ethernet": " ",
+        "format-ethernet": "",
         "tooltip-format": "{essid} ({signalStrength}%)",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "⚠",
@@ -62,6 +57,15 @@
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
     },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+    "clock": {
+        "format": "{:%H:%M }",
+        "tooltip-format": "<span>{:%H:%M}</span>\n<span>{calendar}</span>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
     "backlight": {
         "tooltip": false,
         "format": "{}% ",
@@ -69,13 +73,37 @@
         "on-scroll-up": "brightnessctl set +5%",
         "on-scroll-down": "brightnessctl set 5%-"
     },
+    "pulseaudio": {
+        "tooltip": false,
+        "scroll-step": 5,
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}%  {format_source}",
+        "format-bluetooth-muted": "  {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": " {volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
     "battery": {
         "states": {
             "good": 90,
             "warning": 30,
             "critical": 20
         },
-        "format": "{capacity}% {icon}",
+        "format": "{capacity}% {icon} ",
         "format-charging": "{capacity}% ",
         "format-plugged": "{capacity}% ",
         "format-alt": "{time} {icon}",
@@ -87,37 +115,21 @@
             ""
         ]
     },
-    "tray": {
-        "icon-size": 18,
-        "spacing": 10
+    "custom/mako": {
+        "format": " {}",
+        "interval": 1,
+        "format-dnd": "dnd",
+        "on-click": "~/.config/waybar/scripts/toggle_dnd.sh"
     },
-    "clock": {
-        "format": "{:%H:%M }",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
-    },
-    "cpu": {
-        "interval": 15,
-        "format": "  {}%",
-        "max-length": 10
-    },
-    "memory": {
-        "interval": 30,
-        "format": "  {}%",
-        "max-length": 10
-    },
-    "temperature": {
-        "critical-threshold": 80,
-        "format": "{icon} {temperatureC}°C",
-        "format-icons": [
-            "",
-            "",
-            ""
-        ]
-    },
-    "custom/mako-notifications": {
-        "format": "",
-        "on-click": "~/.config/waybar/scripts/manage_notifications.sh",
-        "tooltip": "Manage notifications"
+    "custom/now-playing": {
+        "exec": "playerctl metadata --format '{{artist}} - {{title}}' || echo ''",
+        "interval": 1,
+        "return-type": "text",
+        "max-length": 40,
+        "on-click": "playerctl play-pause",
+        // "on-scroll-up": "playerctl next",
+        // "on-scroll-down": "playerctl previous",
+        "format": "{}",
+        "tooltip": false
     }
 }
