@@ -12,13 +12,20 @@ Insomnia
 vscode
 google-chrome
 google-chrome-for-testing
+chromium-themes/**/theme.pem
 yay
 
 # Generated / machine-local desktop state
 dconf
-fontconfig
-gtk-3.0
-gtk-4.0
+fontconfig/*
+!fontconfig/fonts.conf
+gtk-3.0/*
+!gtk-3.0/settings.ini
+!gtk-3.0/gtk.css
+gtk-4.0/*
+!gtk-4.0/settings.ini
+!gtk-4.0/gtk.css
+!gtk-4.0/gtk-mint-vine.css
 pulse
 session
 systemd
@@ -72,6 +79,12 @@ logs/
 profiler_data
 go/telemetry/
 __pycache__/
+
+# Local secrets (see *.example)
+conky/Atria/secrets
+
+# Wallpaper lives in ~/Downloads/bg.jpg — no bundled copy
+hypr/wallpapers/
 
 # mpv ships these as examples/docs, not user config
 mpv/encoding.rst

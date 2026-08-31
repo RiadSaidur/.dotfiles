@@ -1,18 +1,27 @@
 #!/bin/bash
 
-# Your OpenWeather API key
-API_KEY="b33d3c6dbe5a3a4cde65619771f5bfdb"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=weather-cache.sh
+source "${SCRIPT_DIR}/weather-cache.sh"
 
-# The city for which you want to get the weather
-CITY="dhaka"
+CACHE_DIR="${HOME}/.cache/conky-atria"
+CACHE_FILE="${CACHE_DIR}/weather.json"
 
-# Get the weather data in JSON format
-weather_data=$(curl -s "http://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric")
+ensure_cache
+"${SCRIPT_DIR}/weather-render.sh" >/dev/null 2>&1 || true
 
-# Parse the JSON to get the desired information
-temperature=$(echo $weather_data | grep -oP '"temp":\K[^,]*')
-rounded_temperature=$(printf "%.0f" $temperature)
-description=$(echo $weather_data | grep -oP '"description":"\K[^"]*')
+if [[ ! -f "$CACHE_FILE" ]] || grep -q '"error"' "$CACHE_FILE" 2>/dev/null; then
+    echo "—"
+    exit 0
+fi
 
-# Print the weather information
-echo "${rounded_temperature=}°C      ${description}"
+temperature="$(read_field "$CACHE_FILE" '"temp":\K[^,]+')"
+description="$(read_field "$CACHE_FILE" '"description":"\K[^"]+')"
+
+if [[ -z "$temperature" ]]; then
+    echo "—"
+    exit 0
+fi
+
+rounded_temperature="$(printf "%.0f" "$temperature")"
+echo "${rounded_temperature}°C  ·  ${description}"

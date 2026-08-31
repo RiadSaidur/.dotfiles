@@ -1,0 +1,143 @@
+{
+  "manifest_version": 3,
+  "name": "Mint Vine",
+  "version": "1.1.0",
+  "description": "Dark mint-vine frame/toolbar matching Firefox + Hyprland rice",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1I3Fz3pXWWshivDWyj/Zz7RwqcAZBZRVhHXQsjv0kALzRaNtB0pwug1h21SjWZlkeuP0B3VtcZrwj3YyXbno514ibNxAcxc4uAuFop1K4QMSXXscw+cm8nCsNuk+JpXnx4DwgSYIlTeAMcbOvZWQQUIFIYrwtcJR1/PQr91xTRD8krfH2576PQXKeJPYCRlg3L5L4L+13KiuJqQq5hVgGNmrvPIw8+w05a9f/G3SfPqttTtsLkr6DUo1u9K/HKfLtfBB9xzPCbD+akrZJB9HlWTmLSUDu7oTAAFgfmBpEBmhKXKMxCd/djP0o3fbrzxKTacNiArlUIPfxe/2OPMAtwIDAQAB",
+  "icons": {
+    "128": "images/icon128.png"
+  },
+  "theme": {
+    "images": {
+      "theme_frame": "images/frame.png",
+      "theme_frame_inactive": "images/frame_inactive.png",
+      "theme_toolbar": "images/toolbar.png",
+      "theme_tab_background": "images/tab.png",
+      "theme_ntp_background": "images/ntp.png"
+    },
+    "colors": {
+      "frame": [
+        14,
+        28,
+        22
+      ],
+      "frame_inactive": [
+        12,
+        24,
+        18
+      ],
+      "frame_incognito": [
+        16,
+        32,
+        24
+      ],
+      "frame_incognito_inactive": [
+        12,
+        24,
+        18
+      ],
+      "toolbar": [
+        18,
+        36,
+        28
+      ],
+      "toolbar_button_icon": [
+        230,
+        240,
+        234
+      ],
+      "tab_text": [
+        244,
+        250,
+        246
+      ],
+      "tab_background_text": [
+        155,
+        184,
+        170
+      ],
+      "tab_background_text_inactive": [
+        120,
+        150,
+        136
+      ],
+      "bookmark_text": [
+        230,
+        240,
+        234
+      ],
+      "button_background": [
+        22,
+        44,
+        34
+      ],
+      "omnibox_background": [
+        22,
+        44,
+        34
+      ],
+      "omnibox_text": [
+        230,
+        240,
+        234
+      ],
+      "ntp_background": [
+        14,
+        28,
+        22
+      ],
+      "ntp_text": [
+        230,
+        240,
+        234
+      ],
+      "ntp_link": [
+        107,
+        191,
+        136
+      ],
+      "ntp_header": [
+        18,
+        36,
+        28
+      ]
+    },
+    "tints": {
+      "buttons": [
+        -1,
+        -1,
+        -1
+      ],
+      "frame": [
+        -1,
+        -1,
+        -1
+      ],
+      "frame_inactive": [
+        -1,
+        -1,
+        0.42
+      ],
+      "background_tab": [
+        -1,
+        0.35,
+        0.28
+      ],
+      "frame_incognito": [
+        -1,
+        -1,
+        -1
+      ],
+      "frame_incognito_inactive": [
+        -1,
+        -1,
+        0.42
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_background_repeat": "no-repeat",
+      "ntp_logo_alternate": 1
+    }
+  }
+}

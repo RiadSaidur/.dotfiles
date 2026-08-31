@@ -1,17 +1,20 @@
 {
     "layer": "top",
     "position": "top",
-    "margin-bottom": -12,
-    "margin-top": 4,
+    "height": 27,
+    "margin-top": 6,
+    "margin-left": 8,
+    "margin-right": 8,
+    "spacing": 6,
     "modules-left": [
         "temperature",
-        "cpu",
         "memory",
         "network",
         "bluetooth"
     ],
     "modules-center": [
         "hyprland/workspaces",
+        "custom/runcat"
     ],
     "modules-right": [
         "custom/now-playing",
@@ -21,54 +24,65 @@
         "pulseaudio",
         "battery"
     ],
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate",
+        "sort-by-number": true
+    },
     "temperature": {
         "critical-threshold": 80,
-        "format": "{icon} {temperatureC}°C",
-        "format-icons": [
-            "",
-            "",
-            ""
-        ]
+        "format": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>{temperatureC}°C</span>",
+        "format-icons": ["\uf2c6", "\uf2c8", "\uf2ca"]
     },
     "cpu": {
         "interval": 15,
-        "format": " {}%",
+        "format": "<span font_family='JetBrainsMonoNL Nerd Font'>   </span><span font_family='Inter'>{usage}%</span>",
         "max-length": 10
+    },
+    "custom/runcat": {
+        "exec": "/home/syds/.config/waybar/scripts/runcat.py",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true
     },
     "memory": {
         "interval": 30,
-        "format": " {}%",
+        "format": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>{percentage}%</span>",
+        "format-icons": [""],
         "max-length": 10
     },
     "network": {
-        "format-wifi": "  {essid}",
-        "format-ethernet": "",
+        "format-wifi": "<span font_family='JetBrainsMonoNL Nerd Font'>   </span><span font_family='Inter'>{essid}</span>",
+        "format-ethernet": "<span font_family='JetBrainsMonoNL Nerd Font'>\ue725</span>",
         "tooltip-format": "{essid} ({signalStrength}%)",
-        "format-linked": "{ifname} (No IP) ",
+        "format-linked": "<span font_family='JetBrainsMonoNL Nerd Font'>\ue725   </span><span font_family='Inter'>{ifname} (No IP)</span>",
         "format-disconnected": "⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "bluetooth": {
-        "format": " {status}",
-        "format-connected": " {device_alias}",
-        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        "format": "<span font_family='JetBrainsMonoNL Nerd Font'>   </span><span font_family='Inter'>{status}</span>",
+        "format-connected": "<span font_family='JetBrainsMonoNL Nerd Font'>   </span><span font_family='Inter'>{device_alias}</span>",
+        "format-connected-battery": "<span font_family='JetBrainsMonoNL Nerd Font'>   </span><span font_family='Inter'>{device_alias} {device_battery_percentage}%</span>",
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
     },
     "tray": {
-        "icon-size": 18,
-        "spacing": 10
+        "icon-size": 14,
+        "spacing": 6,
+        "show-passive-items": false,
+        "ignore-list": ["chrome_status_icon", "cursor", "Cursor", "code", "Code"]
     },
     "clock": {
-        "format": "{:%H:%M }",
+        "format": "<span font_family='JetBrainsMonoNL Nerd Font'>   </span><span font_family='Inter'>{:%H:%M}</span>",
         "tooltip-format": "<span>{:%H:%M}</span>\n<span>{calendar}</span>",
         "format-alt": "{:%Y-%m-%d}"
     },
     "backlight": {
         "tooltip": false,
-        "format": "{}% ",
+        "format": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>{percent}%</span>",
+        "format-icons": [""],
         "interval": 1,
         "on-scroll-up": "brightnessctl set +5%",
         "on-scroll-down": "brightnessctl set 5%-"
@@ -76,24 +90,20 @@
     "pulseaudio": {
         "tooltip": false,
         "scroll-step": 5,
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}%  {format_source}",
-        "format-bluetooth-muted": "  {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": " {volume}% ",
-        "format-source-muted": "",
+        "format": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>{volume}%</span>",
+        "format-bluetooth": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>{volume}%</span>",
+        "format-bluetooth-muted": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>muted</span>",
+        "format-muted": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>muted</span>",
+        "format-source": "<span font_family='JetBrainsMonoNL Nerd Font'>   </span><span font_family='Inter'>{volume}%</span>",
+        "format-source-muted": "<span font_family='JetBrainsMonoNL Nerd Font'>   </span><span font_family='Inter'>muted</span>",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "headphone": "\uf025",
+            "hands-free": "\uf025",
+            "headset": "\uf025",
             "phone": "",
             "portable": "",
             "car": "",
-            "default": [
-                "",
-                "",
-                ""
-            ]
+            "default": ["", "", ""]
         },
         "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
     },
@@ -103,32 +113,19 @@
             "warning": 30,
             "critical": 20
         },
-        "format": "{capacity}% {icon} ",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            ""
-        ]
-    },
-    "custom/mako": {
-        "format": " {}",
-        "interval": 1,
-        "format-dnd": "dnd",
-        "on-click": "~/.config/waybar/scripts/toggle_dnd.sh"
+        "format": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>{capacity}%</span>",
+        "format-charging": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>{capacity}%</span>",
+        "format-plugged": "<span font_family='JetBrainsMonoNL Nerd Font'>{icon}   </span><span font_family='Inter'>{capacity}%</span>",
+        "format-alt": "<span font_family='Inter'>{time}   </span><span font_family='JetBrainsMonoNL Nerd Font'>{icon}</span>",
+        "format-icons": ["", "", "", "", ""]
     },
     "custom/now-playing": {
-        "exec": "playerctl metadata --format '{{artist}} - {{title}}' || echo ''",
-        "interval": 1,
+        "exec": "playerctl metadata --format '{{artist}} - {{title}}' 2>/dev/null",
+        "exec-if": "playerctl status 2>/dev/null | grep -qE 'Playing|Paused'",
+        "interval": 2,
         "return-type": "text",
-        "max-length": 40,
+        "max-length": 36,
         "on-click": "playerctl play-pause",
-        // "on-scroll-up": "playerctl next",
-        // "on-scroll-down": "playerctl previous",
         "format": "{}",
         "tooltip": false
     }

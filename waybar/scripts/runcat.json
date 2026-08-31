@@ -1,0 +1,12 @@
+{
+  "run_frames": ["A", "B", "C", "D", "E"],
+  "sleep_frames": ["G", "H"],
+  "fps_low": 2.5,
+  "fps_high": 8,
+  "min_delay": 0.14,
+  "max_delay": 0.55,
+  "sleep_delay": 0.45,
+  "sleep_threshold": 8,
+  "sleep_after": 2,
+  "poll_interval": 1.5
+}

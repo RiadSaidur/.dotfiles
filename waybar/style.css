@@ -1,56 +1,43 @@
-/* Base styling for all Waybar elements */
+@import "colors.css";
+
 * {
-    border-radius: 10px;
-    font-family: "JetBrainsMonoNL Nerd Font", "Symbols Nerd Font Mono", monospace;
-    font-size: 14px; /* unified icon and text size */
-    min-height: 10px;
-    color: rgba(245, 245, 245, 0.7);
-    font-weight: bold;
-    text-shadow: 0 0 2px rgba(0,0,0,0.5); /* subtle icon glow */
+    border: none;
+    border-radius: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    min-height: 0;
+    color: @ink;
+    font-weight: 600;
+    text-shadow: none;
+    background-image: none;
 }
 
-/* Waybar window */
+/* Icon + text modules: Inter for labels, Nerd Font only via Pango spans in config */
+#network,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#clock,
+#memory,
+#temperature,
+#cpu,
+#battery {
+    font-family: "Inter", sans-serif;
+}
+
 window#waybar {
-    background: rgba(255, 255, 255, 0.0);
-    border: 0px solid rgba(245, 245, 245, 0.7);
+    background-color: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
+    border: none;
+    box-shadow: none;
 }
 
 window#waybar.hidden {
     opacity: 0.2;
 }
 
-/* Workspace buttons */
-#workspaces {
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-bottom: 6px;
-}
-
-#workspaces button {
-    background: rgba(40, 42, 54, 0.2); /* subtle background */
-    border-radius: 6px;
-    font-size: 16px;
-    padding: 0 6px;
-    margin-right: 4px; /* spacing between buttons */
-    transition: background 0.2s, color 0.2s;
-}
-
-#workspaces button.occupied {
-    font-size: 16px;
-}
-
-#workspaces button.active {
-    color: #ff79c6;
-    background: rgba(245, 101, 167, 0.2);
-}
-
-#workspaces button:hover,
-#workspaces button.focused:hover {
-    color: #FAE3B0;
-    background: rgba(245, 101, 167, 0.2);
-}
-
-/* Module styles */
+/* Uniform pill spacing */
+#workspaces,
 #network,
 #bluetooth,
 #custom-mako,
@@ -60,26 +47,57 @@ window#waybar.hidden {
 #memory,
 #temperature,
 #cpu,
+#custom-runcat,
 #tray,
-#custom-now-playing {
-    margin-left: 8px;
-    padding: 2px 8px;
-    margin-bottom: 6px;
-    border-radius: 6px;
-    background: rgba(40, 42, 54, 0.2);
-    transition: background 0.2s, color 0.2s;
-}
-
+#custom-now-playing,
 #battery {
-    margin-right: 8px;
-    padding: 2px 8px;
-    margin-bottom: 6px;
-    border-radius: 6px;
-    background: rgba(40, 42, 54, 0.2);
-    transition: background 0.2s, color 0.2s;
+    background-color: @glass;
+    color: @ink;
+    padding: 3px 10px;
+    margin: 0 5px;
+    border-radius: 8px;
 }
 
-/* Hover effect for modules */
+#workspaces button {
+    background-color: rgba(0, 0, 0, 0);
+    color: @muted;
+    border-radius: 6px;
+    padding: 0 6px;
+    margin: 0 3px;
+    min-width: 1.1em;
+}
+
+#workspaces button.active {
+    color: @ink-strong;
+    background-color: @glass-active;
+}
+
+#workspaces button:hover {
+    color: @ink-strong;
+    background-color: @glass-hover;
+}
+
+#custom-runcat {
+    font-family: "Waycat";
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 1.2em;
+    letter-spacing: 0;
+}
+
+#tray > * {
+    margin: 0 3px;
+}
+
+#custom-runcat.sleeping {
+    color: @muted;
+}
+
+#custom-runcat.medium,
+#custom-runcat.high {
+    color: @leaf;
+}
+
 #network:hover,
 #bluetooth:hover,
 #pulseaudio:hover,
@@ -89,26 +107,26 @@ window#waybar.hidden {
 #memory:hover,
 #temperature:hover,
 #cpu:hover,
-#tray:hover {
-    background: rgba(245, 101, 167, 0.2);
-    color: #ff79c6;
+#custom-runcat:hover,
+#tray:hover,
+#custom-now-playing:hover {
+    background-color: @glass-hover;
+    color: @leaf;
 }
 
-/* Battery specific states */
 #battery.charging,
 #battery.plugged {
-    color: #161320;
-    background-color: #ff79c6;
-    border: 2px solid #ff79c6;
+    color: @ink-strong;
+    background-color: @glass-active;
 }
 
 #battery.critical:not(.charging) {
-    border: 2px solid rgba(245, 245, 245, 0.7);
-    color: #161320;
+    color: @ink-strong;
+    background-color: rgba(180, 60, 60, 0.55);
     animation: blink 900ms linear infinite alternate;
 }
 
 @keyframes blink {
-    from { border: 2px solid #ff79c6; background-color: #000000; color: #f5f5f5; }
-    to { background-color: #ff79c6; color: #000000; }
+    from { background-color: rgba(180, 60, 60, 0.35); }
+    to   { background-color: rgba(180, 60, 60, 0.7); }
 }

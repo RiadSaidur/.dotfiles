@@ -1,0 +1,285 @@
+/* Mint-vine libadwaita — same chrome focused or not (KDE-style subtle dim) */
+
+@define-color accent_bg_color #549d6c;
+@define-color accent_fg_color #f4faf6;
+@define-color accent_color #6bbf88;
+
+@define-color destructive_bg_color #b45454;
+@define-color destructive_fg_color #f4faf6;
+@define-color destructive_color #ff8a8a;
+
+@define-color success_bg_color #3d7a52;
+@define-color success_fg_color #f4faf6;
+@define-color success_color #6bbf88;
+
+@define-color warning_bg_color #c4a882;
+@define-color warning_fg_color #0e1c16;
+@define-color warning_color #f0e0c8;
+
+@define-color error_bg_color #b45454;
+@define-color error_fg_color #f4faf6;
+@define-color error_color #ff8a8a;
+
+@define-color window_bg_color #0e1c16;
+@define-color window_fg_color #e6f0ea;
+@define-color view_bg_color #12241c;
+@define-color view_fg_color #e6f0ea;
+
+/* Focused + unfocused header stay dark mint — never accent green */
+@define-color headerbar_bg_color #12241c;
+@define-color headerbar_fg_color #e6f0ea;
+@define-color headerbar_border_color rgba(107, 191, 136, 0.12);
+@define-color headerbar_backdrop_color #101e18;
+@define-color headerbar_shade_color rgba(8, 15, 12, 0.25);
+
+@define-color sidebar_bg_color #0e1c16;
+@define-color sidebar_fg_color #e6f0ea;
+@define-color sidebar_backdrop_color #0e1c16;
+@define-color sidebar_shade_color rgba(8, 15, 12, 0.2);
+@define-color sidebar_border_color rgba(107, 191, 136, 0.1);
+
+@define-color secondary_sidebar_bg_color #12241c;
+@define-color secondary_sidebar_fg_color #e6f0ea;
+@define-color secondary_sidebar_backdrop_color #0e1c16;
+@define-color secondary_sidebar_shade_color rgba(8, 15, 12, 0.2);
+@define-color secondary_sidebar_border_color rgba(107, 191, 136, 0.1);
+
+@define-color card_bg_color #162c22;
+@define-color card_fg_color #e6f0ea;
+@define-color card_shade_color rgba(8, 15, 12, 0.25);
+
+@define-color dialog_bg_color #12241c;
+@define-color dialog_fg_color #e6f0ea;
+
+@define-color popover_bg_color rgba(14, 28, 22, 0.55);
+@define-color popover_fg_color #e6f0ea;
+@define-color popover_shade_color rgba(8, 15, 12, 0.3);
+
+@define-color thumbnail_bg_color #162c22;
+@define-color thumbnail_fg_color #e6f0ea;
+
+@define-color shade_color rgba(8, 15, 12, 0.3);
+@define-color scrollbar_outline_color rgba(14, 28, 22, 0.8);
+
+/* ── Focused chrome ── */
+window,
+.nautilus-window,
+.background {
+  background-color: @window_bg_color;
+  color: @window_fg_color;
+}
+
+.sidebar,
+.navigation-sidebar,
+placessidebar {
+  background-color: @sidebar_bg_color;
+  color: @sidebar_fg_color;
+}
+
+headerbar,
+headerbar.flat,
+.titlebar {
+  background-color: #12241c;
+  background-image: none;
+  color: #e6f0ea;
+  box-shadow: none;
+}
+
+/* ── Unfocused (:backdrop) — same palette, slight deepen (not grey) ── */
+window:backdrop,
+.nautilus-window:backdrop,
+.background:backdrop {
+  background-color: #0c1812;
+  color: #d8e6de;
+}
+
+headerbar:backdrop,
+headerbar.flat:backdrop,
+.titlebar:backdrop,
+window:backdrop headerbar,
+window:backdrop .titlebar {
+  background-color: #101e18;
+  background-image: none;
+  color: #d8e6de;
+  box-shadow: none;
+}
+
+.sidebar:backdrop,
+.navigation-sidebar:backdrop,
+placessidebar:backdrop,
+window:backdrop .sidebar,
+window:backdrop .navigation-sidebar {
+  background-color: #0c1812;
+  color: #d8e6de;
+}
+
+.view,
+iconview,
+listview,
+gridview {
+  background-color: @view_bg_color;
+  color: @view_fg_color;
+}
+
+window:backdrop .view,
+window:backdrop iconview,
+window:backdrop listview,
+window:backdrop gridview {
+  background-color: #101e18;
+  color: #d8e6de;
+}
+
+/* Selection — leaf glass, not neon fill */
+.view:selected,
+iconview:selected,
+listview row:selected,
+gridview > child:selected,
+.navigation-sidebar > row:selected {
+  background-color: rgba(45, 102, 68, 0.55);
+  color: #f4faf6;
+}
+
+.navigation-sidebar > row:hover {
+  background-color: rgba(22, 44, 34, 0.5);
+}
+
+window:backdrop .navigation-sidebar > row:selected {
+  background-color: rgba(45, 102, 68, 0.35);
+}
+
+/* Frosted popovers */
+popover.background,
+popover.background:backdrop {
+  background-color: transparent;
+  background-image: none;
+}
+
+popover > arrow,
+popover > contents,
+popover.menu > contents,
+popover.background > contents {
+  background-color: rgba(14, 28, 22, 0.55);
+  background-image: none;
+  color: #e6f0ea;
+  border: 1px solid rgba(107, 191, 136, 0.22);
+  border-radius: 10px;
+  box-shadow: none;
+  background-clip: padding-box;
+}
+
+popover > contents separator {
+  background-color: rgba(107, 191, 136, 0.18);
+}
+
+popover modelbutton,
+popover.menu modelbutton,
+popover.menu button {
+  color: #e6f0ea;
+  border-radius: 6px;
+  min-height: 28px;
+  padding: 4px 10px;
+  background-color: transparent;
+}
+
+popover modelbutton:hover,
+popover modelbutton:active,
+popover.menu modelbutton:hover,
+popover.menu button:hover,
+popover > contents list > row:hover,
+popover > contents list > row:selected {
+  background-color: rgba(45, 102, 68, 0.55);
+  color: #f4faf6;
+}
+
+popover modelbutton accelerator {
+  color: rgba(155, 184, 170, 0.85);
+}
+
+popover modelbutton image,
+popover.menu modelbutton image,
+popover.menu button image,
+popover > contents list > row image {
+  opacity: 1;
+  color: #e6f0ea;
+  -gtk-icon-filter: none;
+}
+
+.nautilus-window .floating-bar,
+toast,
+.toast {
+  background-color: rgba(45, 102, 68, 0.75);
+  color: #f4faf6;
+  border-radius: 8px;
+}
+
+/* Address / path bar — Adwaita default is grey wash (alpha(currentColor,.1)) */
+#NautilusPathBar,
+.nautilus-path-bar {
+  background-color: rgba(22, 44, 34, 0.72);
+  background-image: none;
+  border: 1px solid rgba(107, 191, 136, 0.18);
+  border-radius: 8px;
+  color: #e6f0ea;
+}
+
+#NautilusPathBar:backdrop,
+.nautilus-path-bar:backdrop,
+window:backdrop #NautilusPathBar {
+  background-color: rgba(16, 30, 24, 0.65);
+  color: #d8e6de;
+  border-color: rgba(107, 191, 136, 0.1);
+}
+
+#NautilusPathBar button,
+#NautilusPathBar > menubutton,
+#NautilusPathBar .path-buttons-box button,
+.path-buttons-box button,
+.nautilus-path-bar button {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+  color: #e6f0ea;
+  border-radius: 6px;
+}
+
+#NautilusPathBar button:hover,
+#NautilusPathBar > menubutton:hover,
+.path-buttons-box button:hover,
+.nautilus-path-bar button:hover {
+  background-color: rgba(45, 102, 68, 0.45);
+  color: #f4faf6;
+}
+
+#NautilusPathBar button.current-dir,
+.path-buttons-box button.current-dir,
+.nautilus-path-bar button.current-dir {
+  background-color: rgba(45, 102, 68, 0.55);
+  color: #f4faf6;
+}
+
+/* Search entry in header — same grey wash fix */
+headerbar entry,
+.titlebar entry,
+.nautilus-window headerbar entry {
+  background-color: rgba(22, 44, 34, 0.72);
+  background-image: none;
+  color: #e6f0ea;
+  border: 1px solid rgba(107, 191, 136, 0.18);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+headerbar entry:focus,
+.titlebar entry:focus,
+.nautilus-window headerbar entry:focus {
+  background-color: rgba(22, 44, 34, 0.85);
+  border-color: rgba(107, 191, 136, 0.4);
+  box-shadow: none;
+}
+
+headerbar entry:backdrop,
+.window:backdrop headerbar entry {
+  background-color: rgba(16, 30, 24, 0.65);
+  color: #d8e6de;
+}

@@ -1,5 +1,4 @@
 #!/bin/bash
-killall conky
-sleep 2s
-conky -c $HOME/.config/conky/Atria/Atria.conf
-exit
+killall conky 2>/dev/null
+sleep 1
+exec conky -c "$HOME/.config/conky/Atria/Atria.conf"

@@ -1,12 +1,19 @@
-font=Iosevka 10
-background-color=#1e1e2e80
-text-color=#ffffff
-border-color=#89b4fa
+font=JetBrainsMonoNL Nerd Font 11
+background-color=#14241CEE
+text-color=#DCE8E0
+border-color=#6BBF88
 border-size=2
-width=300
-height=100
-padding=10
-margin=10
+border-radius=10
+width=340
+height=110
+padding=12
+margin=12
+default-timeout=5000
+
+[urgency=high]
+border-color=#E07070
+text-color=#E8F0EA
+default-timeout=8000
 
 [mode=do-not-disturb]
 invisible=1

@@ -1,8 +1,7 @@
--- Hyprland 0.55+ Lua config
+-- Hyprland 0.55+ Lua entrypoint
 -- https://wiki.hypr.land/Configuring/Start/
--- Each require() is an isolated scope; errors in one file do not stop the others.
+-- If this file exists, Hyprland loads it instead of hyprland.conf (chosen once at startup).
 
-require("mocha")
 require("monitors")
 require("autostart")
 require("look")
