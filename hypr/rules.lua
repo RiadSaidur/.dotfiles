@@ -1,31 +1,31 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 hl.window_rule({
     match   = { class = "^kitty$" },
-    opacity = "0.94 override 0.92 override",
+    opacity = "0.94 override 0.70 override",
 })
 
 hl.window_rule({
     match     = { class = "^firefox$" },
     workspace = "1",
     float     = false,
-    opacity   = "0.92 override 0.88 override",
+    opacity   = "0.92 override 0.82 override",
 })
 
 -- Chromium family: native Wayland menus can frost with blur:popups when translucent
 hl.window_rule({
     match   = { class = "^(google-chrome|chromium|brave-browser|Brave-browser|chrome)$" },
-    opacity = "0.92 override 0.88 override",
+    opacity = "0.95 override 0.86 override",
 })
 
 hl.window_rule({
     match     = { class = "^.*[Cc]ode.*$" },
     workspace = "2",
-    opacity   = "0.88 override 0.82 override",
+    opacity   = "0.84 override 0.74 override",
 })
 
 hl.window_rule({
     match   = { class = "^cursor$" },
-    opacity = "0.88 override 0.82 override",
+    opacity = "0.84 override 0.74 override",
 })
 
 hl.window_rule({
@@ -55,12 +55,12 @@ hl.window_rule({
 
 hl.window_rule({
     match = { class = "^org\\.gnome\\.Nautilus$" },
-    opacity = "0.88 override 0.80 override",
+    opacity = "0.84 override 0.72 override",
 })
 
 hl.window_rule({
     match = { class = "^org\\.kde\\.kdeconnect\\.app$" },
-    opacity = "0.88 override 0.80 override",
+    opacity = "0.84 override 0.72 override",
 })
 
 -- GTK file/folder pickers (Cursor/VS Code/Firefox "Open/Add Folder" via portal)
@@ -68,19 +68,19 @@ hl.window_rule({
     match   = { class = "^xdg-desktop-portal-gtk$" },
     float   = true,
     center  = true,
-    opacity = "0.88 override 0.88 override",
+    opacity = "0.84 override 0.84 override",
 })
 hl.window_rule({
     match   = { title = "^(Add Folder to Workspace|Open File|Open Folder|Save File|Select Folder|Choose Files?)$" },
     float   = true,
     center  = true,
-    opacity = "0.88 override 0.88 override",
+    opacity = "0.84 override 0.84 override",
 })
 
 hl.layer_rule({
     match = { namespace = "waybar" },
     blur = true,
-    ignore_alpha = 0.1,
+    ignore_alpha = 0.18,
 })
 hl.layer_rule({
     match = { namespace = "wofi" },
@@ -90,7 +90,7 @@ hl.layer_rule({
 hl.layer_rule({
     match = { namespace = "notifications" },
     blur = true,
-    ignore_alpha = 0.1,
+    ignore_alpha = 0.15,
 })
 
 hl.workspace_rule({

@@ -3,41 +3,63 @@
 
 hl.config({
     general = {
-        gaps_in     = 4,
-        gaps_out    = 6,
-        border_size = 2,
+        gaps_in     = 3,
+        gaps_out    = 4,
+        border_size = 4,
         col = {
-            -- Leaf → mint: interactive / focused only (~7%)
-            active_border   = { colors = { "rgba(3d7a52cc)", "rgba(6bbf88dd)" }, angle = 45 },
-            -- Soft sand: annotation edge on unfocused (~3%)
-            inactive_border = "rgba(c4a88255)",
+            -- Active: multi-stop purple → violet → fuchsia → pink (not green / not gold)
+            active_border   = {
+                colors = {
+                    "rgba(4c1d95ff)",
+                    "rgba(7c3aedff)",
+                    "rgba(a855f7ff)",
+                    "rgba(d946efff)",
+                    "rgba(e879f9ff)",
+                },
+                angle  = 35,
+            },
+            -- Unfocused: dim purple ember
+            inactive_border = { colors = { "rgba(7c3aed28)", "rgba(1a182466)" }, angle = 160 },
         },
         layout = "dwindle",
     },
 
     decoration = {
         rounding         = 10,
-        active_opacity   = 0.93,
-        inactive_opacity = 0.90,
+        active_opacity   = 0.92,
+        inactive_opacity = 0.78,
         blur = {
             enabled           = true,
-            size              = 10,
-            passes            = 3,
+            size              = 12,
+            passes            = 4,
             new_optimizations = true,
             xray              = false,
             ignore_opacity    = true,
-            -- Lower vibrancy: green wallpaper was tinting every translucent surface
-            vibrancy          = 0.12,
-            vibrancy_darkness = 0.15,
+            vibrancy          = 0.16,
+            vibrancy_darkness = 0.12,
             -- Required for frosted GTK/Qt right-click menus (xdg-popup)
             popups            = true,
-            popups_ignorealpha = 0.2,
+            popups_ignorealpha = 0.08,
         },
         shadow = {
-            enabled      = true,
-            range        = 12,
-            render_power = 3,
-            color        = 0x550a0a09,
+            enabled        = true,
+            range          = 36,
+            render_power   = 4,
+            offset         = { 0, 0 },
+            color          = {
+                colors = {
+                    "rgba(4c1d9588)",
+                    "rgba(7c3aed99)",
+                    "rgba(d946efaa)",
+                    "rgba(e879f9aa)",
+                },
+                angle  = 125,
+            },
+            color_inactive = "rgba(7c3aed18)",
+        },
+        -- Inner glow disabled — halo is outward shadow only
+        glow = {
+            enabled = false,
         },
     },
 

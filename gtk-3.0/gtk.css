@@ -1,58 +1,54 @@
-/* Mint-vine frosted glass — GTK3 (portal file dialogs, Chromium chrome) */
+/* Mint-vine frosted glass — GTK3 (portal file dialogs) */
 
 window,
 .background {
-	background-color: rgba(20, 19, 17, 0.55);
+	background-color: #1a2822;
+	background-image: linear-gradient(180deg, #2a3830 0%, #1a2822 100%);
 	color: #e6f0ea;
 }
 
-/* File chooser / places sidebar */
 headerbar,
 .titlebar,
 .top-bar {
-	background-color: rgba(26, 28, 25, 0.55);
-	background-image: none;
+	background-color: #243830;
+	background-image: linear-gradient(180deg, #2e4036 0%, #1e2a24 100%);
 	color: #e6f0ea;
 	border: none;
-	box-shadow: none;
+	box-shadow:
+		inset 0 1px 0 rgba(180, 230, 196, 0.14),
+		0 0 16px rgba(107, 191, 136, 0.16);
 }
 
 headerbar:backdrop,
 .titlebar:backdrop {
-	background-color: rgba(20, 19, 17, 0.5);
-	color: #d8e6de;
+	background-color: #121f1a;
+	background-image: none;
+	color: #8aa89a;
 }
 
 placessidebar,
 .sidebar,
 .sidebar-pane {
-	background-color: rgba(20, 19, 17, 0.55);
+	background-color: #1a2822;
+	background-image: linear-gradient(180deg, #2a3830 0%, #1a2822 100%);
 	color: #e6f0ea;
 	border: none;
 }
 
 placessidebar row:selected,
 .sidebar row:selected {
-	background-color: rgba(45, 102, 68, 0.55);
+	background-color: #52a070;
+	background-image: linear-gradient(90deg, #72c892 0%, #52a070 100%);
 	color: #f4faf6;
 	border-radius: 6px;
 }
 
-placessidebar row:hover {
-	background-color: rgba(40, 36, 30, 0.5);
-}
-
-/* File list — slightly denser so text stays readable over frost */
 .view,
 list,
 iconview,
 treeview {
-	background-color: rgba(20, 19, 17, 0.72);
-	color: #e6f0ea;
-}
-
-.boxed-list {
-	background-color: rgba(20, 19, 17, 0.55);
+	background-color: #1e2a24;
+	background-image: linear-gradient(180deg, #283a32 0%, #1a2822 100%);
 	color: #e6f0ea;
 }
 
@@ -60,7 +56,8 @@ dialog,
 messagedialog,
 filechooser,
 filechooserdialog {
-	background-color: rgba(20, 19, 17, 0.55);
+	background-color: #1a2822;
+	background-image: linear-gradient(180deg, #2a3830 0%, #1a2822 100%);
 	color: #e6f0ea;
 }
 
@@ -68,61 +65,55 @@ popover.background,
 popover.menu,
 menu,
 .menubar {
-	background-color: rgba(20, 19, 17, 0.55);
-	border: 1px solid rgba(107, 191, 136, 0.22);
+	background-color: #283a32;
+	background-image: linear-gradient(180deg, #2e4036 0%, #1e2a24 100%);
+	border: 1px solid rgba(107, 191, 136, 0.28);
 	border-radius: 10px;
 	color: #e6f0ea;
-	box-shadow: none;
-}
-
-popover.background menuitem:hover,
-menu menuitem:hover {
-	background-color: rgba(45, 102, 68, 0.55);
-	color: #f4faf6;
+	box-shadow:
+		inset 0 1px 0 rgba(180, 230, 196, 0.12),
+		0 0 20px rgba(107, 191, 136, 0.22),
+		0 10px 32px rgba(8, 20, 14, 0.40);
 }
 
 entry,
 headerbar entry,
 .titlebar entry,
 searchbar entry {
-	background-color: rgba(40, 36, 30, 0.65);
-	background-image: none;
+	background-color: #2a3830;
+	background-image: linear-gradient(180deg, #324438 0%, #283a32 100%);
 	color: #e6f0ea;
 	border: 1px solid rgba(107, 191, 136, 0.22);
 	border-radius: 8px;
-	box-shadow: none;
+	box-shadow:
+		inset 0 1px 0 rgba(180, 230, 196, 0.10),
+		0 0 12px rgba(107, 191, 136, 0.14);
 	caret-color: #6bbf88;
 }
 
 entry:focus,
-headerbar entry:focus {
-	background-color: rgba(40, 36, 30, 0.8);
-	border-color: rgba(107, 191, 136, 0.45);
-	box-shadow: none;
+headerbar entry:focus,
+.titlebar entry:focus,
+searchbar entry:focus {
+	border-color: rgba(107, 191, 136, 0.50);
+	box-shadow:
+		0 0 0 1px rgba(107, 191, 136, 0.12),
+		0 0 16px rgba(107, 191, 136, 0.28);
 }
 
 button {
-	background-color: rgba(40, 36, 30, 0.65);
+	background-color: #2a3830;
+	background-image: linear-gradient(180deg, #324438 0%, #283a32 100%);
 	color: #e6f0ea;
 	border-radius: 6px;
-	border: 1px solid rgba(107, 191, 136, 0.15);
+	border: 1px solid rgba(196, 168, 130, 0.15);
 }
 
 button:hover {
-	background-color: rgba(45, 102, 68, 0.55);
+	background-color: #52a070;
+	background-image: linear-gradient(180deg, #72c892 0%, #52a070 100%);
 	color: #f4faf6;
 }
 
-button.suggested-action,
-button.default {
-	background-color: rgba(84, 157, 108, 0.75);
-	color: #f4faf6;
-}
-
-/* Links / meta — sand */
-*:link, link, .link {
-	color: #c4a882;
-}
-*:visited {
-	color: #9a8060;
-}
+*:link, link, .link { color: #c4a882; }
+*:visited { color: #9a8060; }

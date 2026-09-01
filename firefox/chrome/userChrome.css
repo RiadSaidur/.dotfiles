@@ -1,4 +1,5 @@
-/* Mint-vine Firefox chrome — toolbar / tabs / address bar
+/* Mint-vine Firefox chrome — toolbar / tabs / address bar / menus ONLY.
+ * We intentionally do NOT use userContent.css (no restyling of web pages).
  * Enable: toolkit.legacyUserProfileCustomizations.stylesheets = true
  * Then restart Firefox.
  */
@@ -11,10 +12,47 @@
   --mint-leaf-deep: #3d7a52;
   --mint-sand: #c4a882;
   --mint-sand-bright: #d4b896;
-  --mint-glass: #121411;
-  --mint-panel: #1a1c19;
-  --mint-panel-2: #222420;
-  --mint-select: #2d6644;
+  --mint-glass: rgba(20, 36, 28, 0.55);
+  --mint-panel: rgba(26, 40, 34, 0.50);
+  --mint-panel-2: rgba(40, 58, 50, 0.58);
+  --mint-select: rgba(82, 160, 112, 0.78);
+  --glass-top: rgba(46, 68, 54, 0.62);
+  --glass-bottom: rgba(14, 28, 22, 0.48);
+  --glass-border: rgba(107, 191, 136, 0.22);
+  --glass-highlight: rgba(180, 230, 196, 0.12);
+  --glass-glow: rgba(107, 191, 136, 0.18);
+
+  -moz-accent-color: #6bbf88 !important;
+  -moz-accent-color-foreground: #0e1c16 !important;
+
+  --focus-outline-color: #6bbf88 !important;
+  --toolbar-field-focus-border-color: rgba(107, 191, 136, 0.50) !important;
+  --tab-line-color: #6bbf88 !important;
+  --tabs-navbar-separator-color: transparent !important;
+
+  --color-accent-primary: #6bbf88 !important;
+  --color-accent-primary-hover: #7ad49a !important;
+  --color-accent-primary-active: #52a070 !important;
+
+  --urlbar-box-focus-border-color: rgba(107, 191, 136, 0.50) !important;
+  --urlbar-popup-url-color: #c4a882 !important;
+  --urlbar-popup-action-color: #9bb8aa !important;
+  --urlbar-popup-highlight-background: rgba(45, 102, 68, 0.55) !important;
+  --urlbar-popup-highlight-color: #f4faf6 !important;
+  --urlbar-popup-separator-color: rgba(107, 191, 136, 0.18) !important;
+
+  --autocomplete-popup-background: rgba(14, 28, 22, 0.72) !important;
+  --autocomplete-popup-color: #e6f0ea !important;
+  --autocomplete-popup-highlight-background: rgba(45, 102, 68, 0.55) !important;
+  --autocomplete-popup-highlight-color: #f4faf6 !important;
+  --autocomplete-popup-separator-color: rgba(107, 191, 136, 0.18) !important;
+
+  --link-color: #c4a882 !important;
+  --visitedlink-color: #9a8060 !important;
+
+  --toolbarbutton-hover-background: rgba(45, 102, 68, 0.38) !important;
+  --toolbarbutton-active-background: rgba(45, 102, 68, 0.55) !important;
+  --toolbar-field-highlight-color: #8ae8b0 !important;
 
   --lwt-accent-color: var(--mint-glass) !important;
   --lwt-text-color: var(--mint-ink) !important;
@@ -22,38 +60,58 @@
 
   --toolbar-bgcolor: var(--mint-panel) !important;
   --toolbar-color: var(--mint-ink) !important;
-  --toolbar-field-background-color: rgba(40, 36, 30, 0.85) !important;
+  --toolbar-field-background-color: var(--mint-panel-2) !important;
   --toolbar-field-color: var(--mint-ink) !important;
-  --toolbar-field-border-color: rgba(107, 191, 136, 0.22) !important;
-  --toolbar-field-focus-background-color: rgba(40, 36, 30, 0.95) !important;
+  --toolbar-field-border-color: var(--glass-border) !important;
+  --toolbar-field-focus-background-color: rgba(50, 68, 56, 0.65) !important;
   --toolbar-field-focus-color: var(--mint-ink-strong) !important;
   --toolbar-field-focus-border-color: rgba(107, 191, 136, 0.45) !important;
 
-  --tab-selected-bgcolor: rgba(45, 102, 68, 0.72) !important;
+  --tab-selected-bgcolor: var(--mint-select) !important;
   --tab-selected-textcolor: var(--mint-ink-strong) !important;
   --tabs-navbar-separator-color: transparent !important;
 
-  --arrowpanel-background: rgba(20, 19, 17, 0.92) !important;
+  --arrowpanel-background: rgba(14, 28, 22, 0.68) !important;
   --arrowpanel-color: var(--mint-ink) !important;
   --arrowpanel-border-color: rgba(107, 191, 136, 0.22) !important;
 
-  --button-bgcolor: rgba(40, 36, 30, 0.7) !important;
+  --button-bgcolor: rgba(30, 52, 40, 0.72) !important;
   --button-hover-bgcolor: rgba(45, 102, 68, 0.55) !important;
   --button-active-bgcolor: rgba(45, 102, 68, 0.72) !important;
 }
 
-/* Toolbox / title strip */
+/* Let Hyprland blur show through chrome — web content stays opaque */
+#main-window,
+#titlebar,
+.browser-toolbar {
+  background-color: transparent !important;
+}
+
+#browser,
+#tabbrowser-tabpanels,
+.browserStack,
+#appcontent {
+  background-color: inherit !important;
+}
+
+/* Toolbox / title strip — frosted mint glass */
 #navigator-toolbox,
 #navigator-toolbox:not(:-moz-window-inactive) {
-  background-color: var(--mint-panel) !important;
-  background-image: none !important;
-  border-bottom: 1px solid rgba(107, 191, 136, 0.12) !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, var(--glass-top) 0%, var(--glass-bottom) 100%) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
   color: var(--mint-ink) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 4px 20px rgba(8, 20, 14, 0.28),
+    0 0 16px var(--glass-glow) !important;
 }
 
 #navigator-toolbox:-moz-window-inactive {
-  background-color: #101e18 !important;
-  color: #d8e6de !important;
+  background-color: rgba(10, 20, 16, 0.42) !important;
+  background-image: none !important;
+  color: #8aa89a !important;
+  box-shadow: none !important;
 }
 
 #nav-bar,
@@ -69,21 +127,26 @@
 #urlbar,
 #urlbar-background,
 #searchbar {
-  background-color: rgba(40, 36, 30, 0.85) !important;
-  background-image: none !important;
+  background-color: var(--mint-panel-2) !important;
+  background-image: linear-gradient(180deg, rgba(50, 68, 56, 0.62) 0%, rgba(40, 58, 50, 0.52) 100%) !important;
   color: var(--mint-ink) !important;
-  border: 1px solid rgba(107, 191, 136, 0.22) !important;
+  border: 1px solid var(--glass-border) !important;
   border-radius: 8px !important;
-  box-shadow: none !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 12px var(--glass-glow) !important;
 }
 
 #urlbar[focused="true"] > #urlbar-background,
 #urlbar[open="true"] > #urlbar-background,
 #urlbar:focus-within > #urlbar-background,
 #searchbar:focus-within {
-  background-color: rgba(40, 36, 30, 0.95) !important;
-  border-color: rgba(107, 191, 136, 0.45) !important;
-  box-shadow: none !important;
+  background-color: rgba(50, 68, 56, 0.68) !important;
+  background-image: linear-gradient(180deg, rgba(58, 78, 64, 0.72) 0%, rgba(44, 62, 52, 0.62) 100%) !important;
+  border-color: rgba(107, 191, 136, 0.50) !important;
+  box-shadow:
+    0 0 0 1px rgba(107, 191, 136, 0.15),
+    0 0 18px rgba(107, 191, 136, 0.32) !important;
   outline: none !important;
 }
 
@@ -98,7 +161,7 @@
 /* Tabs — Proton / Firefox 120+ */
 #TabsToolbar,
 #tabbrowser-tabs {
-  --tab-selected-bgcolor: #2d6644 !important;
+  --tab-selected-bgcolor: rgba(82, 160, 112, 0.78) !important;
   --tab-selected-textcolor: #f4faf6 !important;
   --lwt-tab-text: #e6f0ea !important;
   --lwt-tab-background: transparent !important;
@@ -118,7 +181,7 @@
 
 .tabbrowser-tab:hover > .tab-stack > .tab-background,
 .tabbrowser-tab:hover .tab-background {
-  background-color: rgba(40, 36, 30, 0.7) !important;
+  background-color: rgba(45, 102, 68, 0.35) !important;
   background-image: none !important;
 }
 
@@ -129,11 +192,22 @@
 .tabbrowser-tab[visuallyselected="true"] > .tab-stack > .tab-background,
 .tabbrowser-tab[selected] .tab-background,
 .tabbrowser-tab[visuallyselected] .tab-background {
-  background-color: #2d6644 !important;
-  background-image: none !important;
+  background-color: rgba(82, 160, 112, 0.78) !important;
+  background-image: linear-gradient(180deg, rgba(120, 208, 152, 0.82) 0%, rgba(82, 160, 112, 0.72) 100%) !important;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
+}
+
+#navigator-toolbox:-moz-window-inactive .tabbrowser-tab[selected] .tab-background,
+#navigator-toolbox:-moz-window-inactive .tabbrowser-tab[visuallyselected] .tab-background {
+  background-color: rgba(58, 80, 68, 0.55) !important;
+  background-image: none !important;
+}
+
+#navigator-toolbox:-moz-window-inactive .tabbrowser-tab[selected] .tab-label,
+#navigator-toolbox:-moz-window-inactive .tabbrowser-tab[visuallyselected] .tab-label {
+  color: #b8c4bc !important;
 }
 
 .tabbrowser-tab[selected] .tab-background::before,
@@ -214,16 +288,20 @@ tooltip,
 #permission-popup,
 #editBookmarkPanel,
 #confirmation-hint {
-  --panel-background: rgba(20, 19, 17, 0.55) !important;
-  --arrowpanel-background: rgba(20, 19, 17, 0.55) !important;
-  --arrowpanel-border-color: rgba(196, 168, 130, 0.28) !important;
+  --panel-background: rgba(14, 28, 22, 0.68) !important;
+  --arrowpanel-background: rgba(14, 28, 22, 0.68) !important;
+  --arrowpanel-border-color: var(--glass-border) !important;
   --arrowpanel-color: var(--mint-ink) !important;
-  background-color: rgba(20, 19, 17, 0.55) !important;
-  background-image: none !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, var(--glass-top) 0%, var(--glass-bottom) 100%) !important;
   color: var(--mint-ink) !important;
-  border: 1px solid rgba(196, 168, 130, 0.28) !important;
+  border: 1px solid var(--glass-border) !important;
   border-radius: 10px !important;
-  box-shadow: none !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 0 1px rgba(107, 191, 136, 0.06),
+    0 0 18px var(--glass-glow),
+    0 8px 28px rgba(8, 20, 14, 0.32) !important;
 }
 
 /* Bookmarks bar — sand annotation */
@@ -261,5 +339,98 @@ toolbarbutton.subviewbutton:hover {
 }
 
 menuseparator {
-  border-color: rgba(196, 168, 130, 0.22) !important;
+  border-color: rgba(107, 191, 136, 0.22) !important;
+}
+
+/* Urlbar dropdown / autocomplete — kill Proton slate-blue */
+#urlbar-results,
+#urlbarView,
+.urlbarView-body-outer,
+.urlbarView-body-inner,
+#urlbar-anon-search-settings,
+#searchbar-anon-search-settings {
+  background-color: transparent !important;
+  background-image: linear-gradient(180deg, rgba(46, 68, 54, 0.68) 0%, rgba(14, 28, 22, 0.58) 100%) !important;
+  color: var(--mint-ink) !important;
+  border-color: rgba(107, 191, 136, 0.22) !important;
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-background,
+#urlbar[breakout][breakout-extend][open] > #urlbar-background {
+  background-color: rgba(42, 56, 48, 0.65) !important;
+  background-image: linear-gradient(180deg, rgba(50, 68, 56, 0.70) 0%, rgba(40, 58, 50, 0.58) 100%) !important;
+  border-color: rgba(107, 191, 136, 0.45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(180, 230, 196, 0.10),
+    0 0 18px rgba(107, 191, 136, 0.24) !important;
+}
+
+.urlbarView-row,
+.urlbarView-row-inner,
+.searchbar-engine-one-off-item {
+  color: var(--mint-ink) !important;
+  fill: var(--mint-ink) !important;
+}
+
+.urlbarView-row[selected],
+.urlbarView-row:hover,
+.urlbarView-action:hover,
+.searchbar-engine-one-off-item:hover,
+.searchbar-engine-one-off-item[selected] {
+  background-color: rgba(45, 102, 68, 0.55) !important;
+  color: var(--mint-ink-strong) !important;
+  fill: var(--mint-ink-strong) !important;
+}
+
+.urlbarView-url,
+.urlbarView-title,
+.urlbarView-action {
+  color: var(--mint-ink) !important;
+  fill: var(--mint-muted) !important;
+}
+
+.urlbarView-url {
+  color: var(--mint-sand) !important;
+}
+
+.urlbarView-row[selected] .urlbarView-url,
+.urlbarView-row:hover .urlbarView-url {
+  color: var(--mint-sand-bright) !important;
+}
+
+.urlbarView-favicon,
+#identity-box,
+#tracking-protection-icon-container,
+#urlbar-label-box,
+#identity-icon-box {
+  background: transparent !important;
+  color: var(--mint-muted) !important;
+  fill: var(--mint-muted) !important;
+}
+
+#urlbar-input::selection,
+.urlbar-input-box::selection {
+  background-color: #6bbf88 !important;
+  color: #0e1c16 !important;
+}
+
+/* Proton tab indicator line */
+.tabbrowser-tab[selected] .tab-background::before,
+.tabbrowser-tab[visuallyselected] .tab-background::before {
+  background-color: var(--mint-leaf) !important;
+  box-shadow: 0 0 8px rgba(107, 191, 136, 0.35) !important;
+}
+
+/* Sidebar / library (bookmarks manager chrome) */
+#sidebar-box,
+#sidebar-header,
+#sidebar,
+#placesView,
+treechildren::-moz-tree-row(selected) {
+  background-color: rgba(14, 28, 22, 0.62) !important;
+  color: var(--mint-ink) !important;
+}
+
+treechildren::-moz-tree-row(selected) {
+  background-color: rgba(45, 102, 68, 0.55) !important;
 }

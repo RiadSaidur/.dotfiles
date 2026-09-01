@@ -9,10 +9,8 @@
     color: @ink;
     font-weight: 600;
     text-shadow: none;
-    background-image: none;
 }
 
-/* Icon + text modules: Inter for labels, Nerd Font only via Pango spans in config */
 #network,
 #bluetooth,
 #pulseaudio,
@@ -26,8 +24,7 @@
 }
 
 window#waybar {
-    background-color: rgba(0, 0, 0, 0);
-    background: rgba(0, 0, 0, 0);
+    background: transparent;
     border: none;
     box-shadow: none;
 }
@@ -36,7 +33,7 @@ window#waybar.hidden {
     opacity: 0.2;
 }
 
-/* Uniform pill spacing */
+/* Single inset ring (no border + outline double-edge) for smoother corners */
 #workspaces,
 #network,
 #bluetooth,
@@ -51,14 +48,24 @@ window#waybar.hidden {
 #tray,
 #custom-now-playing,
 #battery {
-    background-color: @glass;
+    background-color: transparent;
+    background-image: linear-gradient(
+        180deg,
+        rgba(46, 68, 54, 0.60) 0%,
+        rgba(20, 36, 28, 0.46) 100%
+    );
+    background-clip: padding-box;
     color: @ink;
-    padding: 3px 10px;
-    margin: 0 5px;
-    border-radius: 8px;
+    padding: 4px 10px;
+    margin: 0 4px;
+    border-radius: 10px;
+    border: none;
+    box-shadow:
+        inset 0 0 0 1px rgba(107, 191, 136, 0.20),
+        inset 0 1px 0 rgba(180, 230, 196, 0.10),
+        0 4px 16px rgba(8, 20, 14, 0.24);
 }
 
-/* Annotation modules — sand (~3%), not leaf */
 #clock,
 #tray,
 #custom-now-playing,
@@ -68,23 +75,38 @@ window#waybar.hidden {
     color: @sand;
 }
 
+#workspaces {
+    padding: 3px 8px;
+}
+
 #workspaces button {
-    background-color: rgba(0, 0, 0, 0);
+    background: transparent;
     color: @muted;
-    border-radius: 6px;
-    padding: 0 6px;
-    margin: 0 3px;
+    border-radius: 8px;
+    padding: 0 8px;
+    margin: 0 2px;
     min-width: 1.1em;
+    border: none;
+    box-shadow: none;
 }
 
 #workspaces button.active {
     color: @ink-strong;
-    background-color: @glass-active;
+    background-image: linear-gradient(
+        180deg,
+        rgba(120, 208, 152, 0.90) 0%,
+        rgba(82, 160, 112, 0.78) 100%
+    );
+    box-shadow: inset 0 1px 0 rgba(220, 248, 228, 0.16);
 }
 
 #workspaces button:hover {
     color: @sand-bright;
-    background-color: @glass-hover;
+    background-image: linear-gradient(
+        165deg,
+        rgba(60, 100, 76, 0.64) 0%,
+        rgba(20, 36, 28, 0.48) 100%
+    );
 }
 
 #custom-runcat {
@@ -108,41 +130,65 @@ window#waybar.hidden {
     color: @leaf;
 }
 
-/* Interactive modules — leaf on hover */
 #network:hover,
 #bluetooth:hover,
 #pulseaudio:hover,
 #battery:hover,
 #backlight:hover,
 #custom-runcat:hover {
-    background-color: @glass-hover;
+    background-image: linear-gradient(
+        165deg,
+        rgba(60, 100, 76, 0.64) 0%,
+        rgba(20, 36, 28, 0.48) 100%
+    );
     color: @leaf;
+    box-shadow:
+        inset 0 0 0 1px rgba(107, 191, 136, 0.28),
+        inset 0 1px 0 rgba(180, 230, 196, 0.12),
+        0 0 12px rgba(107, 191, 136, 0.20);
 }
 
-/* Annotation modules — sand on hover */
 #clock:hover,
 #memory:hover,
 #temperature:hover,
 #cpu:hover,
 #tray:hover,
 #custom-now-playing:hover {
-    background-color: @glass-hover;
+    background-image: linear-gradient(
+        165deg,
+        rgba(60, 100, 76, 0.64) 0%,
+        rgba(20, 36, 28, 0.48) 100%
+    );
     color: @sand-bright;
+    box-shadow:
+        inset 0 0 0 1px rgba(196, 168, 130, 0.18),
+        0 0 10px rgba(196, 168, 130, 0.16);
 }
 
 #battery.charging,
 #battery.plugged {
     color: @ink-strong;
-    background-color: @glass-active;
+    background-image: linear-gradient(
+        180deg,
+        rgba(120, 208, 152, 0.90) 0%,
+        rgba(82, 160, 112, 0.78) 100%
+    );
+    box-shadow:
+        inset 0 0 0 1px rgba(107, 191, 136, 0.30),
+        inset 0 1px 0 rgba(220, 248, 228, 0.14);
 }
 
 #battery.critical:not(.charging) {
     color: @ink-strong;
-    background-color: rgba(180, 60, 60, 0.55);
+    background-image: linear-gradient(
+        165deg,
+        rgba(220, 88, 88, 0.78) 0%,
+        rgba(140, 45, 45, 0.62) 100%
+    );
     animation: blink 900ms linear infinite alternate;
 }
 
 @keyframes blink {
-    from { background-color: rgba(180, 60, 60, 0.35); }
-    to   { background-color: rgba(180, 60, 60, 0.7); }
+    from { opacity: 0.82; }
+    to   { opacity: 1; }
 }

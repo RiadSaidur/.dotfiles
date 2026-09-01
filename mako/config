@@ -1,8 +1,8 @@
 font=JetBrainsMonoNL Nerd Font 11
-background-color=#161816EE
-text-color=#E8E6E0
-# Sand annotation border (low/normal); leaf reserved for interactive UI elsewhere
-border-color=#C4A882
+background-color=#12241CC0
+text-color=#E6F0EA
+# Leaf glow border on notifications
+border-color=#7AD4A0
 border-size=2
 border-radius=10
 width=340
@@ -12,11 +12,11 @@ margin=12
 default-timeout=5000
 
 [urgency=low]
-border-color=#C4A882AA
-text-color=#E8E6E0
+border-color=#7AD4A088
+text-color=#E6F0EA
 
 [urgency=normal]
-border-color=#C4A882
+border-color=#7AD4A0
 
 [urgency=high]
 border-color=#E07070

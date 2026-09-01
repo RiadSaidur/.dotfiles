@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# Install mint-vine Firefox chrome + enable userChrome.
+# Install mint-vine Firefox chrome (toolbar/tabs/menus only — never page content).
 set -euo pipefail
 
 SRC_CHROME="${HOME}/.config/firefox/chrome/userChrome.css"
-SRC_CONTENT="${HOME}/.config/firefox/chrome/userContent.css"
 SRC_USERJS="${HOME}/.config/firefox/user.js"
 PROFILES_INI="${HOME}/.mozilla/firefox/profiles.ini"
 
@@ -41,9 +40,8 @@ fi
 
 mkdir -p "${DEST}/chrome"
 cp -f "${SRC_CHROME}" "${DEST}/chrome/userChrome.css"
-if [[ -f "${SRC_CONTENT}" ]]; then
-  cp -f "${SRC_CONTENT}" "${DEST}/chrome/userContent.css"
-fi
+# Do not ship userContent.css — that restyles real websites (links, selection, etc.)
+rm -f "${DEST}/chrome/userContent.css"
 
 # Merge prefs into user.js (overwrite our managed file; keeps profile prefs.js intact)
 cp -f "${SRC_USERJS}" "${DEST}/user.js"

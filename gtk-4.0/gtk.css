@@ -1,4 +1,4 @@
-/* Mint-vine libadwaita — same chrome focused or not (KDE-style subtle dim) */
+/* Mint-vine libadwaita — focused = gradient chrome; unfocused (:backdrop) = flat dim */
 
 @define-color accent_bg_color #549d6c;
 @define-color accent_fg_color #f4faf6;
@@ -13,10 +13,10 @@
 @define-color success_color #6bbf88;
 
 @define-color warning_bg_color #c4a882;
-@define-color warning_fg_color #121411;
+@define-color warning_fg_color #0e1c16;
 @define-color warning_color #f0e0c8;
 
-/* Links / meta — sand annotation (~3%); accents stay leaf */
+/* Links / meta — sand annotation in GTK apps only (Nautilus, portals — not browser pages) */
 link,
 a {
 	color: #c4a882;
@@ -35,52 +35,54 @@ a:hover {
 @define-color error_fg_color #f4faf6;
 @define-color error_color #ff8a8a;
 
-@define-color window_bg_color #121411;
+@define-color window_bg_color #12241c;
 @define-color window_fg_color #e6f0ea;
-@define-color view_bg_color #1a1c19;
+@define-color view_bg_color #162c22;
 @define-color view_fg_color #e6f0ea;
 
-/* Focused + unfocused header stay dark mint — never accent green */
-@define-color headerbar_bg_color #1a1c19;
+@define-color headerbar_bg_color #1a2822;
 @define-color headerbar_fg_color #e6f0ea;
-@define-color headerbar_border_color rgba(107, 191, 136, 0.12);
-@define-color headerbar_backdrop_color #101e18;
-@define-color headerbar_shade_color rgba(8, 15, 12, 0.25);
+@define-color headerbar_border_color rgba(107, 191, 136, 0.16);
+@define-color headerbar_backdrop_color #121f1a;
+@define-color headerbar_shade_color rgba(0, 0, 0, 0.15);
 
-@define-color sidebar_bg_color #121411;
+@define-color sidebar_bg_color #0e1c16;
 @define-color sidebar_fg_color #e6f0ea;
-@define-color sidebar_backdrop_color #121411;
-@define-color sidebar_shade_color rgba(8, 15, 12, 0.2);
-@define-color sidebar_border_color rgba(107, 191, 136, 0.1);
+@define-color sidebar_backdrop_color #0e1a14;
+@define-color sidebar_shade_color rgba(0, 0, 0, 0.12);
+@define-color sidebar_border_color rgba(107, 191, 136, 0.12);
 
-@define-color secondary_sidebar_bg_color #1a1c19;
+@define-color secondary_sidebar_bg_color #1e2a24;
 @define-color secondary_sidebar_fg_color #e6f0ea;
-@define-color secondary_sidebar_backdrop_color #121411;
-@define-color secondary_sidebar_shade_color rgba(8, 15, 12, 0.2);
-@define-color secondary_sidebar_border_color rgba(107, 191, 136, 0.1);
+@define-color secondary_sidebar_backdrop_color #101e18;
+@define-color secondary_sidebar_shade_color rgba(0, 0, 0, 0.12);
+@define-color secondary_sidebar_border_color rgba(196, 168, 130, 0.10);
 
-@define-color card_bg_color #222420;
+@define-color card_bg_color #283a32;
 @define-color card_fg_color #e6f0ea;
-@define-color card_shade_color rgba(8, 15, 12, 0.25);
+@define-color card_shade_color rgba(0, 0, 0, 0.12);
 
-@define-color dialog_bg_color #1a1c19;
+@define-color dialog_bg_color #1e2a24;
 @define-color dialog_fg_color #e6f0ea;
 
-@define-color popover_bg_color rgba(20, 19, 17, 0.55);
+@define-color popover_bg_color rgba(30, 52, 42, 0.72);
 @define-color popover_fg_color #e6f0ea;
-@define-color popover_shade_color rgba(8, 15, 12, 0.3);
+@define-color popover_shade_color rgba(0, 0, 0, 0.15);
 
-@define-color thumbnail_bg_color #222420;
+@define-color thumbnail_bg_color #283a32;
 @define-color thumbnail_fg_color #e6f0ea;
 
-@define-color shade_color rgba(8, 15, 12, 0.3);
-@define-color scrollbar_outline_color rgba(20, 19, 17, 0.8);
+@define-color shade_color rgba(0, 0, 0, 0.15);
+@define-color scrollbar_outline_color rgba(38, 36, 34, 0.8);
 
-/* ── Focused chrome ── */
+/* Focused = lifted warm panel (clean 2-stop gradients). Unfocused = flat dim. */
+
+/* ── Focused — airy panel (was too dark/muddy) ── */
 window,
 .nautilus-window,
 .background {
   background-color: @window_bg_color;
+  background-image: linear-gradient(180deg, #2a3830 0%, #1a2822 100%);
   color: @window_fg_color;
 }
 
@@ -88,24 +90,38 @@ window,
 .navigation-sidebar,
 placessidebar {
   background-color: @sidebar_bg_color;
+  background-image: linear-gradient(180deg, #2a3830 0%, #1a2822 100%);
   color: @sidebar_fg_color;
 }
 
 headerbar,
 headerbar.flat,
 .titlebar {
-  background-color: #1a1c19;
-  background-image: none;
+  background-color: #243830;
+  background-image: linear-gradient(180deg, #2e4036 0%, #1e2a24 100%);
   color: #e6f0ea;
-  box-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(180, 230, 196, 0.16),
+    0 0 0 1px rgba(107, 191, 136, 0.06),
+    0 0 18px rgba(107, 191, 136, 0.18);
 }
 
-/* ── Unfocused (:backdrop) — same palette, slight deepen (not grey) ── */
+.view,
+iconview,
+listview,
+gridview {
+  background-color: @view_bg_color;
+  background-image: linear-gradient(180deg, #283a32 0%, #1a2822 100%);
+  color: @view_fg_color;
+}
+
+/* ── Unfocused — flat, desaturated (recedes behind active window) ── */
 window:backdrop,
 .nautilus-window:backdrop,
 .background:backdrop {
-  background-color: #0c1812;
-  color: #d8e6de;
+  background-color: #101e18;
+  background-image: none;
+  color: #9bb8aa;
 }
 
 headerbar:backdrop,
@@ -113,9 +129,9 @@ headerbar.flat:backdrop,
 .titlebar:backdrop,
 window:backdrop headerbar,
 window:backdrop .titlebar {
-  background-color: #101e18;
+  background-color: #121f1a;
   background-image: none;
-  color: #d8e6de;
+  color: #8aa89a;
   box-shadow: none;
 }
 
@@ -124,16 +140,9 @@ window:backdrop .titlebar {
 placessidebar:backdrop,
 window:backdrop .sidebar,
 window:backdrop .navigation-sidebar {
-  background-color: #0c1812;
-  color: #d8e6de;
-}
-
-.view,
-iconview,
-listview,
-gridview {
-  background-color: @view_bg_color;
-  color: @view_fg_color;
+  background-color: #0e1a14;
+  background-image: none;
+  color: #8aa89a;
 }
 
 window:backdrop .view,
@@ -141,7 +150,8 @@ window:backdrop iconview,
 window:backdrop listview,
 window:backdrop gridview {
   background-color: #101e18;
-  color: #d8e6de;
+  background-image: none;
+  color: #9bb8aa;
 }
 
 /* Selection — leaf glass, not neon fill */
@@ -150,16 +160,21 @@ iconview:selected,
 listview row:selected,
 gridview > child:selected,
 .navigation-sidebar > row:selected {
-  background-color: rgba(45, 102, 68, 0.55);
+  background-color: #52a070;
+  background-image: linear-gradient(90deg, #72c892 0%, #52a070 100%);
   color: #f4faf6;
 }
 
 .navigation-sidebar > row:hover {
-  background-color: rgba(40, 36, 30, 0.5);
+  background-color: rgba(107, 191, 136, 0.16);
+  background-image: none;
 }
 
-window:backdrop .navigation-sidebar > row:selected {
-  background-color: rgba(45, 102, 68, 0.35);
+window:backdrop .navigation-sidebar > row:selected,
+.navigation-sidebar > row:backdrop:selected {
+  background-color: #3a5044;
+  background-image: none;
+  color: #b8c4bc;
 }
 
 /* Frosted popovers */
@@ -173,12 +188,16 @@ popover > arrow,
 popover > contents,
 popover.menu > contents,
 popover.background > contents {
-  background-color: rgba(20, 19, 17, 0.55);
-  background-image: none;
+  background-color: #283a32;
+  background-image: linear-gradient(180deg, #2e4036 0%, #1e2a24 100%);
   color: #e6f0ea;
-  border: 1px solid rgba(107, 191, 136, 0.22);
+  border: 1px solid rgba(107, 191, 136, 0.28);
   border-radius: 10px;
-  box-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(180, 230, 196, 0.14),
+    0 0 0 1px rgba(107, 191, 136, 0.06),
+    0 0 20px rgba(107, 191, 136, 0.22),
+    0 10px 32px rgba(8, 20, 14, 0.40);
   background-clip: padding-box;
 }
 
@@ -230,8 +249,8 @@ toast,
 /* Address / path bar — Adwaita default is grey wash (alpha(currentColor,.1)) */
 #NautilusPathBar,
 .nautilus-path-bar {
-  background-color: rgba(40, 36, 30, 0.72);
-  background-image: none;
+  background-color: #2a3830;
+  background-image: linear-gradient(180deg, #324438 0%, #283a32 100%);
   border: 1px solid rgba(107, 191, 136, 0.18);
   border-radius: 8px;
   color: #e6f0ea;
@@ -240,9 +259,10 @@ toast,
 #NautilusPathBar:backdrop,
 .nautilus-path-bar:backdrop,
 window:backdrop #NautilusPathBar {
-  background-color: rgba(16, 30, 24, 0.65);
-  color: #d8e6de;
-  border-color: rgba(107, 191, 136, 0.1);
+  background-color: #14241c;
+  background-image: none;
+  color: #8aa89a;
+  border-color: rgba(107, 191, 136, 0.10);
 }
 
 #NautilusPathBar button,
@@ -277,8 +297,8 @@ window:backdrop #NautilusPathBar {
 headerbar entry,
 .titlebar entry,
 .nautilus-window headerbar entry {
-  background-color: rgba(40, 36, 30, 0.72);
-  background-image: none;
+  background-color: #2a3830;
+  background-image: linear-gradient(180deg, #324438 0%, #283a32 100%);
   color: #e6f0ea;
   border: 1px solid rgba(107, 191, 136, 0.18);
   border-radius: 8px;
@@ -288,13 +308,224 @@ headerbar entry,
 headerbar entry:focus,
 .titlebar entry:focus,
 .nautilus-window headerbar entry:focus {
-  background-color: rgba(40, 36, 30, 0.85);
-  border-color: rgba(107, 191, 136, 0.4);
-  box-shadow: none;
+  border-color: rgba(107, 191, 136, 0.50);
+  box-shadow:
+    0 0 0 1px rgba(107, 191, 136, 0.12),
+    0 0 16px rgba(107, 191, 136, 0.28);
 }
 
 headerbar entry:backdrop,
 .window:backdrop headerbar entry {
-  background-color: rgba(16, 30, 24, 0.65);
-  color: #d8e6de;
+  background-color: #14241c;
+  background-image: none;
+  color: #8aa89a;
+  border-color: rgba(107, 191, 136, 0.10);
+}
+
+/* ── GTK4 utilities (pavucontrol) ── */
+window:not(.nautilus-window) notebook {
+  background-color: #1e2a24;
+  background-image: linear-gradient(180deg, #2a3830 0%, #1a2822 100%);
+  color: #e6f0ea;
+}
+
+window:not(.nautilus-window) notebook > header,
+window:not(.nautilus-window) notebook header {
+  background-color: #243830;
+  background-image: linear-gradient(180deg, #2e4036 0%, #1e2a24 100%);
+  border-bottom: 1px solid rgba(107, 191, 136, 0.14);
+}
+
+window:not(.nautilus-window) notebook tab {
+  background-color: #283a32;
+  color: #9bb8aa;
+  padding: 6px 14px;
+  border-radius: 8px 8px 0 0;
+}
+
+window:not(.nautilus-window) notebook tab:checked {
+  background-color: #52a070;
+  background-image: linear-gradient(180deg, #72c892 0%, #52a070 100%);
+  color: #f4faf6;
+}
+
+window:not(.nautilus-window) notebook listview row:selected {
+  background-color: #52a070;
+  background-image: linear-gradient(90deg, #72c892 0%, #52a070 100%);
+  color: #f4faf6;
+}
+
+window:not(.nautilus-window):backdrop notebook {
+  background-color: #101e18;
+  background-image: none;
+  color: #9bb8aa;
+}
+
+window:not(.nautilus-window):backdrop notebook > header,
+window:not(.nautilus-window):backdrop notebook header {
+  background-color: #121f1a;
+  background-image: none;
+  color: #8aa89a;
+}
+
+window:not(.nautilus-window):backdrop notebook tab:checked {
+  background-color: #3a5044;
+  background-image: none;
+  color: #b8c4bc;
+}
+
+/* ── GTK4 utilities — pavucontrol, etc. (override Breeze light panels + blue accents) ── */
+window:not(.nautilus-window) {
+  background-color: #12241c;
+  background-image: linear-gradient(180deg, #2a3830 0%, #1a2822 100%);
+  color: #e6f0ea;
+}
+
+window:not(.nautilus-window) notebook > stack,
+window:not(.nautilus-window) notebook page,
+window:not(.nautilus-window) notebook page > box,
+window:not(.nautilus-window) scrolledwindow,
+window:not(.nautilus-window) scrolledwindow > viewport,
+window:not(.nautilus-window) frame,
+window:not(.nautilus-window) frame > border,
+window:not(.nautilus-window) .view,
+window:not(.nautilus-window) listview,
+window:not(.nautilus-window) list {
+  background-color: transparent;
+  background-image: none;
+  color: #e6f0ea;
+}
+
+window:not(.nautilus-window) listview row,
+window:not(.nautilus-window) list row {
+  background-color: rgba(40, 58, 50, 0.52);
+  color: #e6f0ea;
+  border-radius: 10px;
+  margin: 4px 10px;
+  border: 1px solid rgba(107, 191, 136, 0.12);
+}
+
+window:not(.nautilus-window) listview row:hover,
+window:not(.nautilus-window) list row:hover {
+  background-color: rgba(45, 102, 68, 0.32);
+}
+
+window:not(.nautilus-window) frame {
+  background-color: rgba(40, 58, 50, 0.48);
+  background-image: linear-gradient(180deg, rgba(46, 68, 54, 0.58) 0%, rgba(26, 40, 34, 0.44) 100%);
+  border: 1px solid rgba(107, 191, 136, 0.18);
+  border-radius: 10px;
+  margin: 6px 10px;
+  box-shadow:
+    inset 0 1px 0 rgba(180, 230, 196, 0.10),
+    0 0 12px rgba(107, 191, 136, 0.10);
+}
+
+window:not(.nautilus-window) frame > border {
+  border: none;
+  background: transparent;
+}
+
+window:not(.nautilus-window) label {
+  color: #e6f0ea;
+}
+
+window:not(.nautilus-window) notebook > header tabs tab {
+  background-color: #1a2822;
+  color: #9bb8aa;
+  border: none;
+  box-shadow: none;
+  padding: 6px 14px;
+}
+
+window:not(.nautilus-window) notebook > header tabs tab:checked {
+  background-color: #243830;
+  background-image: linear-gradient(180deg, #2e4036 0%, #1e2a24 100%);
+  color: #e6f0ea;
+  border: none;
+  box-shadow: inset 0 2px 0 #6bbf88;
+}
+
+window:not(.nautilus-window) scale {
+  min-height: 10px;
+}
+
+window:not(.nautilus-window) scale trough {
+  background-color: rgba(14, 28, 22, 0.62);
+  border-radius: 999px;
+  min-height: 6px;
+}
+
+window:not(.nautilus-window) scale highlight,
+window:not(.nautilus-window) scale progress {
+  background-color: #6bbf88;
+  background-image: linear-gradient(90deg, #7ad4a0 0%, #52a070 100%);
+  border-radius: 999px;
+}
+
+window:not(.nautilus-window) scale slider {
+  background-color: #e6f0ea;
+  border: 2px solid #6bbf88;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(107, 191, 136, 0.32);
+}
+
+window:not(.nautilus-window) progressbar trough {
+  background-color: rgba(14, 28, 22, 0.62);
+  border-radius: 999px;
+}
+
+window:not(.nautilus-window) progressbar progress {
+  background-color: #6bbf88;
+  background-image: linear-gradient(90deg, #7ad4a0 0%, #52a070 100%);
+  border-radius: 999px;
+}
+
+window:not(.nautilus-window) switch {
+  background-color: rgba(14, 28, 22, 0.70);
+  border: 1px solid rgba(107, 191, 136, 0.18);
+}
+
+window:not(.nautilus-window) switch:checked {
+  background-color: #52a070;
+  border-color: #6bbf88;
+}
+
+window:not(.nautilus-window) switch slider {
+  background-color: #e6f0ea;
+}
+
+window:not(.nautilus-window) combobox button,
+window:not(.nautilus-window) dropdown > button,
+window:not(.nautilus-window) button.combo {
+  background-color: #2a3830;
+  background-image: linear-gradient(180deg, #324438 0%, #283a32 100%);
+  color: #e6f0ea;
+  border: 1px solid rgba(107, 191, 136, 0.22);
+  border-radius: 6px;
+}
+
+window:not(.nautilus-window) combobox button:hover,
+window:not(.nautilus-window) dropdown > button:hover {
+  background-color: rgba(45, 102, 68, 0.45);
+}
+
+window:not(.nautilus-window) checkbutton,
+window:not(.nautilus-window) radiobutton {
+  color: #e6f0ea;
+}
+
+window:not(.nautilus-window) check {
+  background-color: #2a3830;
+  border: 1px solid rgba(107, 191, 136, 0.28);
+  border-radius: 4px;
+}
+
+window:not(.nautilus-window) check:checked {
+  background-color: #52a070;
+  color: #f4faf6;
+}
+
+window:not(.nautilus-window) separator {
+  background-color: rgba(107, 191, 136, 0.16);
 }

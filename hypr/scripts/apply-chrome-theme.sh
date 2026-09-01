@@ -22,12 +22,12 @@ import json, os, struct, zlib, sys, time
 from pathlib import Path
 
 src = Path(sys.argv[1])
-FRAME = (18, 20, 17)
-PANEL = (26, 28, 25)
-PANEL2 = (34, 36, 32)
-INK = (232, 230, 224)
-INK_STRONG = (245, 243, 238)
-MUTED = (163, 158, 144)
+FRAME = (14, 28, 22)
+PANEL = (26, 40, 34)
+PANEL2 = (30, 52, 40)
+INK = (230, 246, 242)
+INK_STRONG = (244, 250, 246)
+MUTED = (155, 184, 170)
 LEAF = (107, 191, 136)
 SAND = (196, 168, 130)
 

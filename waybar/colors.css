@@ -1,17 +1,12 @@
-/* Neutral charcoal field + leaf interactive + sand annotation
- * Surfaces desaturated so green isn't ~60% of the rice by area.
- */
-@define-color ink #E8E6E0;
-@define-color ink-strong #F5F3EE;
-@define-color muted #A39E90;
-/* Interactive (~7%) */
+/* Mint field + leaf interactive + sand annotation */
+@define-color ink #E6F0EA;
+@define-color ink-strong #F4FAF6;
+@define-color muted #9BB8AA;
 @define-color leaf #6BBF88;
 @define-color leaf-deep #3D7A52;
-/* Annotation (~3%+) */
 @define-color sand #C4A882;
 @define-color sand-bright #D4B896;
 @define-color vine #C4A882;
-/* Field — warm charcoal, not mint */
-@define-color glass rgba(20, 19, 17, 0.50);
-@define-color glass-hover rgba(40, 36, 30, 0.58);
-@define-color glass-active rgba(45, 102, 68, 0.72);
+@define-color glow rgba(107, 191, 136, 0.24);
+@define-color glow-bright rgba(107, 191, 136, 0.38);
+@define-color glow-deep rgba(8, 20, 14, 0.42);

@@ -13,4 +13,4 @@ user_pref("widget.wayland.force-move-to-rect", true);
 
 // Slight transparency helps frosted menus read correctly over content
 user_pref("browser.tabs.allow_transparent_browser", true);
-user_pref("widget.non-native-theme.use-theme-accent", true);
+user_pref("widget.non-native-theme.use-theme-accent", false);

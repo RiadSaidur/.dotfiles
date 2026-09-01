@@ -83,8 +83,9 @@ __pycache__/
 # Local secrets (see *.example)
 conky/Atria/secrets
 
-# Wallpaper lives in ~/Downloads/bg.jpg — no bundled copy
+# Wallpaper lives in ~/Downloads/bg.jpg — SDDM copy in theme dir (large binary)
 hypr/wallpapers/
+sddm/themes/*/background.jpg
 
 # mpv ships these as examples/docs, not user config
 mpv/encoding.rst
