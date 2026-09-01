@@ -9,9 +9,11 @@
   --mint-muted: #9bb8aa;
   --mint-leaf: #6bbf88;
   --mint-leaf-deep: #3d7a52;
-  --mint-glass: #0e1c16;
-  --mint-panel: #12241c;
-  --mint-panel-2: #162c22;
+  --mint-sand: #c4a882;
+  --mint-sand-bright: #d4b896;
+  --mint-glass: #121411;
+  --mint-panel: #1a1c19;
+  --mint-panel-2: #222420;
   --mint-select: #2d6644;
 
   --lwt-accent-color: var(--mint-glass) !important;
@@ -20,10 +22,10 @@
 
   --toolbar-bgcolor: var(--mint-panel) !important;
   --toolbar-color: var(--mint-ink) !important;
-  --toolbar-field-background-color: rgba(22, 44, 34, 0.85) !important;
+  --toolbar-field-background-color: rgba(40, 36, 30, 0.85) !important;
   --toolbar-field-color: var(--mint-ink) !important;
   --toolbar-field-border-color: rgba(107, 191, 136, 0.22) !important;
-  --toolbar-field-focus-background-color: rgba(22, 44, 34, 0.95) !important;
+  --toolbar-field-focus-background-color: rgba(40, 36, 30, 0.95) !important;
   --toolbar-field-focus-color: var(--mint-ink-strong) !important;
   --toolbar-field-focus-border-color: rgba(107, 191, 136, 0.45) !important;
 
@@ -31,11 +33,11 @@
   --tab-selected-textcolor: var(--mint-ink-strong) !important;
   --tabs-navbar-separator-color: transparent !important;
 
-  --arrowpanel-background: rgba(14, 28, 22, 0.92) !important;
+  --arrowpanel-background: rgba(20, 19, 17, 0.92) !important;
   --arrowpanel-color: var(--mint-ink) !important;
   --arrowpanel-border-color: rgba(107, 191, 136, 0.22) !important;
 
-  --button-bgcolor: rgba(22, 44, 34, 0.7) !important;
+  --button-bgcolor: rgba(40, 36, 30, 0.7) !important;
   --button-hover-bgcolor: rgba(45, 102, 68, 0.55) !important;
   --button-active-bgcolor: rgba(45, 102, 68, 0.72) !important;
 }
@@ -67,7 +69,7 @@
 #urlbar,
 #urlbar-background,
 #searchbar {
-  background-color: rgba(22, 44, 34, 0.85) !important;
+  background-color: rgba(40, 36, 30, 0.85) !important;
   background-image: none !important;
   color: var(--mint-ink) !important;
   border: 1px solid rgba(107, 191, 136, 0.22) !important;
@@ -79,7 +81,7 @@
 #urlbar[open="true"] > #urlbar-background,
 #urlbar:focus-within > #urlbar-background,
 #searchbar:focus-within {
-  background-color: rgba(22, 44, 34, 0.95) !important;
+  background-color: rgba(40, 36, 30, 0.95) !important;
   border-color: rgba(107, 191, 136, 0.45) !important;
   box-shadow: none !important;
   outline: none !important;
@@ -116,7 +118,7 @@
 
 .tabbrowser-tab:hover > .tab-stack > .tab-background,
 .tabbrowser-tab:hover .tab-background {
-  background-color: rgba(22, 44, 34, 0.7) !important;
+  background-color: rgba(40, 36, 30, 0.7) !important;
   background-image: none !important;
 }
 
@@ -212,16 +214,32 @@ tooltip,
 #permission-popup,
 #editBookmarkPanel,
 #confirmation-hint {
-  --panel-background: rgba(14, 28, 22, 0.55) !important;
-  --arrowpanel-background: rgba(14, 28, 22, 0.55) !important;
-  --arrowpanel-border-color: rgba(107, 191, 136, 0.22) !important;
+  --panel-background: rgba(20, 19, 17, 0.55) !important;
+  --arrowpanel-background: rgba(20, 19, 17, 0.55) !important;
+  --arrowpanel-border-color: rgba(196, 168, 130, 0.28) !important;
   --arrowpanel-color: var(--mint-ink) !important;
-  background-color: rgba(14, 28, 22, 0.55) !important;
+  background-color: rgba(20, 19, 17, 0.55) !important;
   background-image: none !important;
   color: var(--mint-ink) !important;
-  border: 1px solid rgba(107, 191, 136, 0.22) !important;
+  border: 1px solid rgba(196, 168, 130, 0.28) !important;
   border-radius: 10px !important;
   box-shadow: none !important;
+}
+
+/* Bookmarks bar — sand annotation */
+#PersonalToolbar,
+#PersonalToolbar .toolbarbutton-1,
+#PersonalToolbar toolbarbutton,
+#PlacesToolbarItems > toolbarbutton {
+  color: var(--mint-sand) !important;
+  fill: var(--mint-sand) !important;
+}
+
+#PersonalToolbar .toolbarbutton-1:hover,
+#PersonalToolbar toolbarbutton:hover {
+  color: var(--mint-sand-bright) !important;
+  fill: var(--mint-sand-bright) !important;
+  background-color: rgba(196, 168, 130, 0.18) !important;
 }
 
 menupopup > menu,
@@ -243,5 +261,5 @@ toolbarbutton.subviewbutton:hover {
 }
 
 menuseparator {
-  border-color: rgba(107, 191, 136, 0.18) !important;
+  border-color: rgba(196, 168, 130, 0.22) !important;
 }

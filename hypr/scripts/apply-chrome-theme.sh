@@ -22,13 +22,14 @@ import json, os, struct, zlib, sys, time
 from pathlib import Path
 
 src = Path(sys.argv[1])
-FRAME = (14, 28, 22)
-PANEL = (18, 36, 28)
-PANEL2 = (22, 44, 34)
-INK = (230, 240, 234)
-INK_STRONG = (244, 250, 246)
-MUTED = (155, 184, 170)
+FRAME = (18, 20, 17)
+PANEL = (26, 28, 25)
+PANEL2 = (34, 36, 32)
+INK = (232, 230, 224)
+INK_STRONG = (245, 243, 238)
+MUTED = (163, 158, 144)
 LEAF = (107, 191, 136)
+SAND = (196, 168, 130)
 
 def write_png(path: Path, rgb, w=128, h=128):
     r, g, b = rgb
@@ -64,13 +65,13 @@ def theme_blob():
             "tab_background_text_inactive": [120, 150, 136],
             "tab_background_text_incognito": list(MUTED),
             "tab_background_text_incognito_inactive": [120, 150, 136],
-            "bookmark_text": list(INK),
+            "bookmark_text": list(SAND),
             "button_background": list(PANEL2),
             "omnibox_background": list(PANEL2),
             "omnibox_text": list(INK),
             "ntp_background": list(FRAME),
             "ntp_text": list(INK),
-            "ntp_link": list(LEAF),
+            "ntp_link": list(SAND),
             "ntp_header": list(PANEL),
         },
         "tints": {

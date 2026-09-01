@@ -2,7 +2,7 @@
 
 window,
 .background {
-	background-color: rgba(14, 28, 22, 0.55);
+	background-color: rgba(20, 19, 17, 0.55);
 	color: #e6f0ea;
 }
 
@@ -10,7 +10,7 @@ window,
 headerbar,
 .titlebar,
 .top-bar {
-	background-color: rgba(18, 36, 28, 0.55);
+	background-color: rgba(26, 28, 25, 0.55);
 	background-image: none;
 	color: #e6f0ea;
 	border: none;
@@ -19,14 +19,14 @@ headerbar,
 
 headerbar:backdrop,
 .titlebar:backdrop {
-	background-color: rgba(14, 28, 22, 0.5);
+	background-color: rgba(20, 19, 17, 0.5);
 	color: #d8e6de;
 }
 
 placessidebar,
 .sidebar,
 .sidebar-pane {
-	background-color: rgba(14, 28, 22, 0.55);
+	background-color: rgba(20, 19, 17, 0.55);
 	color: #e6f0ea;
 	border: none;
 }
@@ -39,7 +39,7 @@ placessidebar row:selected,
 }
 
 placessidebar row:hover {
-	background-color: rgba(22, 44, 34, 0.5);
+	background-color: rgba(40, 36, 30, 0.5);
 }
 
 /* File list — slightly denser so text stays readable over frost */
@@ -47,12 +47,12 @@ placessidebar row:hover {
 list,
 iconview,
 treeview {
-	background-color: rgba(14, 28, 22, 0.72);
+	background-color: rgba(20, 19, 17, 0.72);
 	color: #e6f0ea;
 }
 
 .boxed-list {
-	background-color: rgba(14, 28, 22, 0.55);
+	background-color: rgba(20, 19, 17, 0.55);
 	color: #e6f0ea;
 }
 
@@ -60,7 +60,7 @@ dialog,
 messagedialog,
 filechooser,
 filechooserdialog {
-	background-color: rgba(14, 28, 22, 0.55);
+	background-color: rgba(20, 19, 17, 0.55);
 	color: #e6f0ea;
 }
 
@@ -68,7 +68,7 @@ popover.background,
 popover.menu,
 menu,
 .menubar {
-	background-color: rgba(14, 28, 22, 0.55);
+	background-color: rgba(20, 19, 17, 0.55);
 	border: 1px solid rgba(107, 191, 136, 0.22);
 	border-radius: 10px;
 	color: #e6f0ea;
@@ -85,7 +85,7 @@ entry,
 headerbar entry,
 .titlebar entry,
 searchbar entry {
-	background-color: rgba(22, 44, 34, 0.65);
+	background-color: rgba(40, 36, 30, 0.65);
 	background-image: none;
 	color: #e6f0ea;
 	border: 1px solid rgba(107, 191, 136, 0.22);
@@ -96,13 +96,13 @@ searchbar entry {
 
 entry:focus,
 headerbar entry:focus {
-	background-color: rgba(22, 44, 34, 0.8);
+	background-color: rgba(40, 36, 30, 0.8);
 	border-color: rgba(107, 191, 136, 0.45);
 	box-shadow: none;
 }
 
 button {
-	background-color: rgba(22, 44, 34, 0.65);
+	background-color: rgba(40, 36, 30, 0.65);
 	color: #e6f0ea;
 	border-radius: 6px;
 	border: 1px solid rgba(107, 191, 136, 0.15);
@@ -117,4 +117,12 @@ button.suggested-action,
 button.default {
 	background-color: rgba(84, 157, 108, 0.75);
 	color: #f4faf6;
+}
+
+/* Links / meta — sand */
+*:link, link, .link {
+	color: #c4a882;
+}
+*:visited {
+	color: #9a8060;
 }
