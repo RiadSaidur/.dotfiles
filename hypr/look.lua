@@ -4,8 +4,8 @@
 hl.config({
     general = {
         gaps_in     = 3,
-        gaps_out    = 4,
-        border_size = 4,
+        gaps_out    = 5,
+        border_size = 2,
         col = {
             -- Active: multi-stop purple → violet → fuchsia → pink (not green / not gold)
             active_border   = {
@@ -43,15 +43,15 @@ hl.config({
         },
         shadow = {
             enabled        = true,
-            range          = 36,
+            range          = 14,
             render_power   = 4,
             offset         = { 0, 0 },
             color          = {
                 colors = {
-                    "rgba(4c1d9588)",
-                    "rgba(7c3aed99)",
-                    "rgba(d946efaa)",
-                    "rgba(e879f9aa)",
+                    "rgba(4c1d9577)",
+                    "rgba(7c3aed88)",
+                    "rgba(d946ef99)",
+                    "rgba(e879f999)",
                 },
                 angle  = 125,
             },
