@@ -80,18 +80,24 @@
   --button-active-bgcolor: rgba(45, 102, 68, 0.72) !important;
 }
 
-/* Let Hyprland blur show through chrome — web content stays opaque */
+/* Let Hyprland blur show through chrome ONLY — never the page view */
 #main-window,
-#titlebar,
-.browser-toolbar {
+#titlebar {
   background-color: transparent !important;
 }
 
+/* Page view / web content host — solid, no frost, no inherit transparency */
 #browser,
 #tabbrowser-tabpanels,
 .browserStack,
-#appcontent {
-  background-color: inherit !important;
+#appcontent,
+#tabbrowser-tabbox,
+tabpanels,
+.browserContainer,
+.browserSidebarContainer {
+  background-color: #0e1c16 !important;
+  background-image: none !important;
+  opacity: 1 !important;
 }
 
 /* Toolbox / title strip — frosted mint glass */

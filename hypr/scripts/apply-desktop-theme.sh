@@ -163,6 +163,11 @@ if [[ -f "${QT6CT}" ]]; then
   fi
 fi
 
+# LibreOffice: dark chrome + white document/cells (no-op if soffice is running)
+if [[ -x "${HOME}/.config/hypr/scripts/apply-libreoffice-theme.sh" ]]; then
+  "${HOME}/.config/hypr/scripts/apply-libreoffice-theme.sh" 2>/dev/null || true
+fi
+
 echo "==> Applied"
 echo "    GTK:    ${GTK_THEME} + mint-vine libadwaita CSS"
 echo "    Icons:  ${ICON_THEME}"

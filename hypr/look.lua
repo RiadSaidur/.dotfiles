@@ -5,21 +5,21 @@ hl.config({
     general = {
         gaps_in     = 3,
         gaps_out    = 5,
-        border_size = 2,
+        border_size = 3,
         col = {
-            -- Active: multi-stop purple → violet → fuchsia → pink (not green / not gold)
+            -- Active: high-contrast purple spectrum (deep → violet → magenta → hot pink)
             active_border   = {
                 colors = {
-                    "rgba(4c1d95ff)",
-                    "rgba(7c3aedff)",
-                    "rgba(a855f7ff)",
-                    "rgba(d946efff)",
-                    "rgba(e879f9ff)",
+                    "rgba(2e1065ff)",
+                    "rgba(6d28d9ff)",
+                    "rgba(c026d3ff)",
+                    "rgba(db2777ff)",
+                    "rgba(f0abfcff)",
                 },
-                angle  = 35,
+                angle  = 45,
             },
-            -- Unfocused: dim purple ember
-            inactive_border = { colors = { "rgba(7c3aed28)", "rgba(1a182466)" }, angle = 160 },
+            -- Unfocused: barely-there purple
+            inactive_border = { colors = { "rgba(6d28d922)", "rgba(1a182455)" }, angle = 160 },
         },
         layout = "dwindle",
     },
@@ -43,21 +43,20 @@ hl.config({
         },
         shadow = {
             enabled        = true,
-            range          = 14,
-            render_power   = 4,
+            range          = 8,
+            render_power   = 3,
             offset         = { 0, 0 },
             color          = {
                 colors = {
-                    "rgba(4c1d9577)",
-                    "rgba(7c3aed88)",
-                    "rgba(d946ef99)",
-                    "rgba(e879f999)",
+                    "rgba(6d28d9cc)",
+                    "rgba(c026d3dd)",
+                    "rgba(db2777cc)",
                 },
-                angle  = 125,
+                angle  = 135,
             },
-            color_inactive = "rgba(7c3aed18)",
+            color_inactive = "rgba(6d28d910)",
         },
-        -- Inner glow disabled — halo is outward shadow only
+        -- No inner glow — halo is thin outward shadow only
         glow = {
             enabled = false,
         },

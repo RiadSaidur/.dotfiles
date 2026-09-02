@@ -22,9 +22,9 @@ hl.on("hyprland.start", function()
   hl.exec_cmd(
     "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP "
       .. "QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM QT_QUICK_CONTROLS_STYLE "
-      .. "XCURSOR_THEME XCURSOR_SIZE GTK_THEME"
+      .. "XCURSOR_THEME XCURSOR_SIZE GTK_THEME SAL_USE_VCLPLUGIN"
   )
-  hl.exec_cmd("systemctl --user import-environment GTK_THEME QT_QPA_PLATFORMTHEME QT_QUICK_CONTROLS_STYLE 2>/dev/null || true")
+  hl.exec_cmd("systemctl --user import-environment GTK_THEME QT_QPA_PLATFORMTHEME QT_QUICK_CONTROLS_STYLE SAL_USE_VCLPLUGIN 2>/dev/null || true")
 
   hl.exec_cmd("hyprpaper")
   hl.exec_cmd("mako")
@@ -43,3 +43,5 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("QT_QUICK_CONTROLS_STYLE", "org.kde.breeze")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+-- LibreOffice chrome via KDE MintVine palette (document cells stay white via LO prefs)
+hl.env("SAL_USE_VCLPLUGIN", "kf6")

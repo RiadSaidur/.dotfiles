@@ -11,6 +11,6 @@ user_pref("widget.wayland.use-move-to-rect", true);
 // Mirror of force-move when present (Firefox 149+ builds); ignored if unknown
 user_pref("widget.wayland.force-move-to-rect", true);
 
-// Slight transparency helps frosted menus read correctly over content
-user_pref("browser.tabs.allow_transparent_browser", true);
+// Keep page view opaque — only toolbars/menus use translucent chrome CSS
+user_pref("browser.tabs.allow_transparent_browser", false);
 user_pref("widget.non-native-theme.use-theme-accent", false);

@@ -8,7 +8,7 @@ hl.window_rule({
     match     = { class = "^firefox$" },
     workspace = "1",
     float     = false,
-    opacity   = "0.92 override 0.82 override",
+    opacity   = "0.98 override 0.92 override",
 })
 
 -- Chromium family: native Wayland menus can frost with blur:popups when translucent
