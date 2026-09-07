@@ -52,7 +52,24 @@
 
   --toolbarbutton-hover-background: rgba(45, 102, 68, 0.38) !important;
   --toolbarbutton-active-background: rgba(45, 102, 68, 0.55) !important;
-  --toolbar-field-highlight-color: #8ae8b0 !important;
+  /* Selected/highlighted text in address bar — never white-on-white */
+  --toolbar-field-highlight: #3d7a52 !important;
+  --toolbar-field-highlight-background: #3d7a52 !important;
+  --toolbar-field-highlight-color: #f4faf6 !important;
+
+  --lwt-toolbar-field-background-color: rgba(36, 56, 48, 0.55) !important;
+  --lwt-toolbar-field-color: #e6f0ea !important;
+  --lwt-toolbar-field-border-color: rgba(107, 191, 136, 0.22) !important;
+  --lwt-toolbar-field-focus: rgba(42, 64, 54, 0.62) !important;
+  --lwt-toolbar-field-focus-background-color: rgba(42, 64, 54, 0.62) !important;
+  --lwt-toolbar-field-focus-color: #f4faf6 !important;
+
+  --toolbar-field-background-color: rgba(36, 56, 48, 0.55) !important;
+  --toolbar-field-color: #e6f0ea !important;
+  --toolbar-field-border-color: rgba(107, 191, 136, 0.22) !important;
+  --toolbar-field-focus-background-color: rgba(42, 64, 54, 0.62) !important;
+  --toolbar-field-focus-color: #f4faf6 !important;
+  --toolbar-field-focus-border-color: rgba(107, 191, 136, 0.50) !important;
 
   --lwt-accent-color: var(--mint-glass) !important;
   --lwt-text-color: var(--mint-ink) !important;
@@ -60,12 +77,6 @@
 
   --toolbar-bgcolor: var(--mint-panel) !important;
   --toolbar-color: var(--mint-ink) !important;
-  --toolbar-field-background-color: var(--mint-panel-2) !important;
-  --toolbar-field-color: var(--mint-ink) !important;
-  --toolbar-field-border-color: var(--glass-border) !important;
-  --toolbar-field-focus-background-color: rgba(50, 68, 56, 0.65) !important;
-  --toolbar-field-focus-color: var(--mint-ink-strong) !important;
-  --toolbar-field-focus-border-color: rgba(107, 191, 136, 0.45) !important;
 
   --tab-selected-bgcolor: var(--mint-select) !important;
   --tab-selected-textcolor: var(--mint-ink-strong) !important;
@@ -129,39 +140,90 @@ tabpanels,
   box-shadow: none !important;
 }
 
-/* Address / search bar — kill default grey focus wash */
+/* Address / search bar — frosted mint (FF143+ uses .urlbar-background class) */
 #urlbar,
-#urlbar-background,
-#searchbar {
-  background-color: var(--mint-panel-2) !important;
-  background-image: linear-gradient(180deg, rgba(50, 68, 56, 0.62) 0%, rgba(40, 58, 50, 0.52) 100%) !important;
-  color: var(--mint-ink) !important;
-  border: 1px solid var(--glass-border) !important;
+:is(#urlbar-background, .urlbar-background),
+#searchbar,
+#urlbar:not([focused]) > :is(#urlbar-background, .urlbar-background),
+#urlbar:not([focused="true"]) > :is(#urlbar-background, .urlbar-background) {
+  background-color: rgba(36, 56, 48, 0.55) !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(46, 68, 54, 0.62) 0%,
+    rgba(20, 36, 28, 0.48) 100%
+  ) !important;
+  color: #e6f0ea !important;
+  border: 1px solid rgba(107, 191, 136, 0.22) !important;
   border-radius: 8px !important;
   box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 0 12px var(--glass-glow) !important;
+    inset 0 1px 0 rgba(180, 230, 196, 0.12),
+    0 0 12px rgba(107, 191, 136, 0.14) !important;
+  fill: #e6f0ea !important;
 }
 
-#urlbar[focused="true"] > #urlbar-background,
-#urlbar[open="true"] > #urlbar-background,
-#urlbar:focus-within > #urlbar-background,
+.urlbar-input-container {
+  background-color: transparent !important;
+  color: #e6f0ea !important;
+}
+
+#urlbar:is([focused], [focused="true"], [open], [open="true"]),
+#urlbar:focus-within,
 #searchbar:focus-within {
-  background-color: rgba(50, 68, 56, 0.68) !important;
-  background-image: linear-gradient(180deg, rgba(58, 78, 64, 0.72) 0%, rgba(44, 62, 52, 0.62) 100%) !important;
+  color: #f4faf6 !important;
+  --toolbar-field-color: #f4faf6 !important;
+  --toolbar-field-focus-color: #f4faf6 !important;
+  --toolbar-field-focus-background-color: rgba(42, 64, 54, 0.62) !important;
+  --urlbar-box-text-color: #f4faf6 !important;
+}
+
+#urlbar:is([focused], [focused="true"], [open], [open="true"]) > :is(#urlbar-background, .urlbar-background),
+#urlbar:focus-within > :is(#urlbar-background, .urlbar-background),
+#urlbar[breakout][breakout-extend] > :is(#urlbar-background, .urlbar-background),
+#urlbar[breakout][breakout-extend][open] > :is(#urlbar-background, .urlbar-background),
+#searchbar:focus-within,
+#searchbar:focus-within :is(#urlbar-background, .urlbar-background) {
+  background-color: rgba(42, 64, 54, 0.62) !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(58, 78, 64, 0.70) 0%,
+    rgba(30, 48, 40, 0.55) 100%
+  ) !important;
   border-color: rgba(107, 191, 136, 0.50) !important;
   box-shadow:
-    0 0 0 1px rgba(107, 191, 136, 0.15),
-    0 0 18px rgba(107, 191, 136, 0.32) !important;
+    inset 0 1px 0 rgba(180, 230, 196, 0.14),
+    0 0 0 1px rgba(107, 191, 136, 0.12),
+    0 0 18px rgba(107, 191, 136, 0.28) !important;
   outline: none !important;
+  color: #f4faf6 !important;
 }
 
 #urlbar-input,
 #urlbar-input-container,
 .urlbar-input-box,
-#searchbar .searchbar-textbox {
-  color: var(--mint-ink) !important;
-  caret-color: var(--mint-leaf) !important;
+#urlbar .urlbar-input-box,
+.urlbar-input,
+#searchbar .searchbar-textbox,
+#urlbar:is([focused], [focused="true"]) #urlbar-input,
+#urlbar:is([focused], [focused="true"]) .urlbar-input-box,
+#urlbar:focus-within #urlbar-input,
+#urlbar:focus-within .urlbar-input {
+  color: #e6f0ea !important;
+  -moz-text-fill-color: #e6f0ea !important;
+  caret-color: #6bbf88 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Text selection inside address bar — leaf green, light ink */
+#urlbar-input::selection,
+.urlbar-input-box::selection,
+#urlbar .urlbar-input-box::selection,
+#searchbar .searchbar-textbox::selection,
+#urlbar-input::-moz-selection,
+.urlbar-input-box::-moz-selection {
+  background-color: #3d7a52 !important;
+  color: #f4faf6 !important;
+  -moz-text-fill-color: #f4faf6 !important;
 }
 
 /* Tabs — Proton / Firefox 120+ */
@@ -361,11 +423,16 @@ menuseparator {
   border-color: rgba(107, 191, 136, 0.22) !important;
 }
 
-#urlbar[breakout][breakout-extend] > #urlbar-background,
-#urlbar[breakout][breakout-extend][open] > #urlbar-background {
-  background-color: rgba(42, 56, 48, 0.65) !important;
-  background-image: linear-gradient(180deg, rgba(50, 68, 56, 0.70) 0%, rgba(40, 58, 50, 0.58) 100%) !important;
+#urlbar[breakout][breakout-extend] > :is(#urlbar-background, .urlbar-background),
+#urlbar[breakout][breakout-extend][open] > :is(#urlbar-background, .urlbar-background) {
+  background-color: rgba(42, 64, 54, 0.62) !important;
+  background-image: linear-gradient(
+    180deg,
+    rgba(58, 78, 64, 0.70) 0%,
+    rgba(30, 48, 40, 0.55) 100%
+  ) !important;
   border-color: rgba(107, 191, 136, 0.45) !important;
+  color: #f4faf6 !important;
   box-shadow:
     inset 0 1px 0 rgba(180, 230, 196, 0.10),
     0 0 18px rgba(107, 191, 136, 0.24) !important;
@@ -416,8 +483,8 @@ menuseparator {
 
 #urlbar-input::selection,
 .urlbar-input-box::selection {
-  background-color: #6bbf88 !important;
-  color: #0e1c16 !important;
+  background-color: #3d7a52 !important;
+  color: #f4faf6 !important;
 }
 
 /* Proton tab indicator line */

@@ -14,3 +14,6 @@ user_pref("widget.wayland.force-move-to-rect", true);
 // Keep page view opaque — only toolbars/menus use translucent chrome CSS
 user_pref("browser.tabs.allow_transparent_browser", false);
 user_pref("widget.non-native-theme.use-theme-accent", false);
+// Dark toolbar theme so Proton field focus isn't forced light/white
+user_pref("browser.theme.toolbar-theme", 1);
+user_pref("browser.theme.content-theme", 1);
