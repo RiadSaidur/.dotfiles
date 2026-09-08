@@ -190,3 +190,195 @@ button:hover {
 
 *:link, link, .link { color: #c4a882; }
 *:visited { color: #9a8060; }
+
+/* Remmina + GTK3 preference panes — kill light middle panels (white bg + light labels) */
+scrolledwindow,
+scrolledwindow > viewport,
+scrolledwindow > viewport > box,
+scrolledwindow > viewport > grid,
+viewport,
+frame,
+frame > border,
+notebook,
+notebook > stack,
+notebook stack,
+.frame,
+.view,
+list,
+treeview,
+.rubberband,
+grid {
+	background-color: #1a2822;
+	background-image: none;
+	color: #e6f0ea;
+}
+
+/* Notebook tabs — Remmina Basic/Advanced bar was light with white labels */
+notebook > header,
+notebook header,
+notebook > header.top,
+notebook > header.bottom,
+notebook > header.left,
+notebook > header.right {
+	background-color: #121f1a;
+	background-image: linear-gradient(180deg, #1e2a24 0%, #121f1a 100%);
+	border: none;
+	border-bottom: 1px solid rgba(107, 191, 136, 0.18);
+	box-shadow: none;
+	min-height: 36px;
+	padding: 4px 6px;
+}
+
+notebook > header tabs,
+notebook header tabs {
+	background-color: transparent;
+	background-image: none;
+}
+
+notebook tab,
+notebook > header tab,
+notebook > header > tabs > tab {
+	background-color: transparent;
+	background-image: none;
+	color: #9bb8aa;
+	border: none;
+	border-radius: 6px;
+	padding: 6px 12px;
+	margin: 0 2px;
+	box-shadow: none;
+	outline: none;
+	min-width: 0;
+}
+
+notebook tab label,
+notebook > header tab label,
+notebook > header > tabs > tab label,
+notebook tab *,
+notebook > header tab * {
+	color: #9bb8aa;
+	background-color: transparent;
+	background-image: none;
+}
+
+notebook tab:hover,
+notebook > header tab:hover {
+	background-color: rgba(45, 102, 68, 0.35);
+	color: #e6f0ea;
+}
+
+notebook tab:hover label,
+notebook > header tab:hover label {
+	color: #e6f0ea;
+}
+
+notebook tab:checked,
+notebook tab:checked:hover,
+notebook > header tab:checked,
+notebook > header > tabs > tab:checked {
+	background-color: #52a070;
+	background-image: linear-gradient(180deg, #72c892 0%, #52a070 100%);
+	color: #f4faf6;
+	box-shadow: inset 0 -2px 0 #6bbf88;
+}
+
+notebook tab:checked label,
+notebook > header tab:checked label,
+notebook > header > tabs > tab:checked label,
+notebook tab:checked *,
+notebook > header tab:checked * {
+	color: #f4faf6;
+}
+
+/* Kill Adwaita/Breeze blue underline on active tab */
+notebook tab:checked,
+notebook > header tab:checked {
+	border-image: none;
+	border-bottom: none;
+	outline: none;
+}
+
+notebook tab:checked > box,
+notebook tab:checked > label {
+	box-shadow: none;
+	border: none;
+}
+
+scrolledwindow label,
+viewport label,
+frame label,
+notebook label,
+grid label,
+box label {
+	color: #e6f0ea;
+}
+
+/* Remmina profile editor often nests these */
+window.background scrolledwindow,
+window.background scrolledwindow * {
+	background-color: transparent;
+	color: #e6f0ea;
+}
+
+window.background scrolledwindow,
+window.background scrolledwindow > viewport,
+window.background notebook,
+window.background notebook > stack {
+	background-color: #1a2822;
+	background-image: linear-gradient(180deg, #243830 0%, #1a2822 100%);
+	color: #e6f0ea;
+}
+
+/* Keep entries readable on the dark pane */
+window.background scrolledwindow entry,
+window.background notebook entry,
+window.background scrolledwindow combobox,
+window.background notebook combobox,
+window.background scrolledwindow button,
+window.background notebook button {
+	background-color: #2a3830;
+	background-image: linear-gradient(180deg, #324438 0%, #283a32 100%);
+	color: #e6f0ea;
+	border: 1px solid rgba(107, 191, 136, 0.22);
+	border-radius: 6px;
+}
+
+window.background scrolledwindow entry:focus,
+window.background notebook entry:focus {
+	border-color: rgba(107, 191, 136, 0.50);
+	color: #f4faf6;
+}
+
+/* Suggested / primary actions (Save and Connect) */
+button.suggested-action,
+.suggested-action {
+	background-color: #52a070;
+	background-image: linear-gradient(180deg, #72c892 0%, #52a070 100%);
+	color: #f4faf6;
+	border-color: rgba(107, 191, 136, 0.40);
+}
+
+button.suggested-action:hover,
+.suggested-action:hover {
+	background-color: #6bbf88;
+	background-image: linear-gradient(180deg, #8fd4a8 0%, #6bbf88 100%);
+	color: #f4faf6;
+}
+
+checkbutton,
+radiobutton {
+	color: #e6f0ea;
+}
+
+check,
+radio {
+	background-color: #2a3830;
+	border: 1px solid rgba(107, 191, 136, 0.28);
+	color: #e6f0ea;
+}
+
+check:checked,
+radio:checked {
+	background-color: #52a070;
+	color: #f4faf6;
+}
+

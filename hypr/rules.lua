@@ -47,8 +47,14 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match = { class = "^google-chrome$", title = "^Open File$" },
-    float = true,
+    match   = { class = "^org\\.remmina\\.Remmina$" },
+    opacity = "0.94 override 0.86 override",
+})
+hl.window_rule({
+    match   = { class = "^org\\.remmina\\.Remmina$", title = "^Remote Connection Profile$" },
+    float   = true,
+    center  = true,
+    opacity = "0.94 override 0.94 override",
 })
 
 hl.window_rule({
