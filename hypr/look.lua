@@ -5,7 +5,7 @@ hl.config({
     general = {
         gaps_in     = 3,
         gaps_out    = 5,
-        border_size = 3,
+        border_size = 2,
         col = {
             -- Active: high-contrast purple spectrum (deep → violet → magenta → hot pink)
             active_border   = {
@@ -43,14 +43,14 @@ hl.config({
         },
         shadow = {
             enabled        = true,
-            range          = 8,
+            range          = 5,
             render_power   = 3,
             offset         = { 0, 0 },
             color          = {
                 colors = {
-                    "rgba(6d28d9cc)",
-                    "rgba(c026d3dd)",
-                    "rgba(db2777cc)",
+                    "rgba(6d28d966)",
+                    "rgba(c026d366)",
+                    "rgba(db277766)",
                 },
                 angle  = 135,
             },

@@ -29,8 +29,16 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match = { class = "^polkit-gnome$" },
-    float = true,
+    match   = { class = "^(polkit-gnome|Polkit-gnome-authentication-agent-1)$" },
+    float   = true,
+    center  = true,
+    opacity = "0.92 override 0.92 override",
+})
+hl.window_rule({
+    match   = { title = "^Authentication is required" },
+    float   = true,
+    center  = true,
+    opacity = "0.92 override 0.92 override",
 })
 
 hl.window_rule({
