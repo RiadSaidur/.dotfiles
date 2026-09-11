@@ -1,0 +1,40 @@
+# Maintainer: RiadSaidur <reidvai1998@gmail.com>
+# Before AUR upload: set url= and source= to your public upstream repo
+# (see packaging/AUR.md). Do not point source= at a private rice tree.
+
+pkgname=shadow-cat-hyprland-git
+pkgver=0.1.0.r0.g0000000
+pkgrel=1
+pkgdesc='Orange-brained interactive desktop pet for Hyprland (layer-shell)'
+arch=('x86_64')
+# TODO: replace with public project URL before publishing
+url='https://github.com/YOURUSER/shadow-cat'
+license=('MIT')
+depends=('gtk3' 'gtk-layer-shell' 'hyprland')
+makedepends=('git' 'pkgconf')
+provides=('shadow-cat-hyprland')
+conflicts=('shadow-cat-hyprland')
+# TODO: replace with public git URL before publishing
+source=("git+${url}.git#branch=master")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd shadow-cat
+  local v
+  v=$(git describe --long --tags 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')
+  if [[ -n $v ]]; then
+    printf '%s' "$v"
+  else
+    printf '0.1.0.r%s.g%s' "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  fi
+}
+
+build() {
+  cd shadow-cat
+  make VERSION="${pkgver%%.r*}"
+}
+
+package() {
+  cd shadow-cat
+  make DESTDIR="$pkgdir" PREFIX=/usr install
+}

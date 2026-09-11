@@ -1,0 +1,8 @@
+# Example Hyprland wiring for a system-installed shadow-cat
+# (after: pacman -S shadow-cat-hyprland-git  OR  sudo make install)
+
+exec-once = shadow-cat
+
+# Keep the silhouette crisp (no blur washing the orange fur)
+layerrule = blur, unset, namespace:shadow-cat
+layerrule = ignore_alpha 0.0, namespace:shadow-cat

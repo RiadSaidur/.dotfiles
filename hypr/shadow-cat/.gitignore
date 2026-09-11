@@ -1,0 +1,9 @@
+# Local makepkg / editor junk (keep sources tracked in the rice repo)
+/pkg/
+/src/
+/dist/
+*.pkg.tar*
+*.pkg.tar.zst
+/shadow-cat
+/tests/test_unit
+/tests/bench_hotpath*

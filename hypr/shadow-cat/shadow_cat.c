@@ -22,6 +22,11 @@
 #define EDGE_PAD 10   /* sit just outside window chrome / content */
 #define N_ANGLES 16   /* facing quantized to 22.5° steps */
 
+#ifndef SHADOW_CAT_VERSION
+#define SHADOW_CAT_VERSION "0.1.0"
+#endif
+
+
 /* Movement / gait styles — 12+ */
 typedef enum {
     M_WALK = 0,      /* 1  steady walk */
@@ -1360,8 +1365,8 @@ static void update_pose_targets(double dt)
     double tsit = 0, troll = 0, tsx = 1.0, tsy = 1.0;
     double twalk = 0, tsleep = 0, tgroom = 0, thiss = 0, tpet = 0, tnarrow = 0;
     double tbob = 0, twag = 0.12, thead = 0;
-    /* Default: a little skinny — lean body, modest length */
-    double tfat = 0.10, tlong = 0.58, tarch = 0.10, tpuff = 0.0, ths = 1.0;
+    /* Default: lean but soft — cute orange, not a stick */
+    double tfat = 0.18, tlong = 0.52, tarch = 0.08, tpuff = 0.0, ths = 1.06;
     double spd = hypot(g.vx, g.vy);
     double move = fmin(1.0, spd / 130.0); /* 0 idle … 1 full locomotion */
     double air = fmin(1.0, g.air_z / 40.0);
@@ -1370,15 +1375,15 @@ static void update_pose_targets(double dt)
     case B_SLEEP:
         /* curled nap — round loaf curl */
         tsit = 4.5; tsleep = 1.0; twag = 0.28; tbob = 0;
-        tfat = 0.22; tlong = 0.36; tarch = -0.10; ths = 0.96;
+        tfat = 0.28; tlong = 0.36; tarch = -0.08; ths = 1.0;
         tsx = 1.14; tsy = 0.76;
         break;
 
     case B_LOAF:
         /* classic cat loaf — compact, tucked paws vibe */
         tsit = 3.0; twag = 0.42; tbob = 0.15;
-        tfat = 0.20; tlong = 0.42; tarch = -0.04;
-        tsx = 1.08; tsy = 0.84; ths = 1.02;
+        tfat = 0.26; tlong = 0.40; tarch = -0.03;
+        tsx = 1.1; tsy = 0.84; ths = 1.06;
         break;
 
     case B_LOOK:
@@ -1462,35 +1467,34 @@ static void update_pose_targets(double dt)
     case B_DASH:
     case B_CORNER: {
         /* Shape follows gait intensity — idle coast returns to baseline body */
-        double gait_sx = 1.0, gait_sy = 1.0, gait_long = 0.60, gait_fat = 0.10;
-        double gait_arch = 0.12, gait_bob = 1.6, gait_wag = 0.4;
+        double gait_sx = 1.0, gait_sy = 1.0, gait_long = 0.55, gait_fat = 0.18;
+        double gait_arch = 0.1, gait_bob = 1.6, gait_wag = 0.4;
         if (g.motion == M_CREEP) {
-            gait_sx = 1.12; gait_sy = 0.86; gait_long = 0.74; gait_fat = 0.14;
-            gait_arch = 0.35; gait_bob = 0.7; gait_wag = 0.25;
+            gait_sx = 1.12; gait_sy = 0.86; gait_long = 0.7; gait_fat = 0.22;
+            gait_arch = 0.32; gait_bob = 0.7; gait_wag = 0.25;
         } else if (g.motion == M_SPRINT || g.beh == B_DASH) {
-            gait_sx = 1.34; gait_sy = 0.72; gait_long = 0.92; gait_fat = 0.06;
-            gait_arch = 0.18; gait_bob = 2.4; gait_wag = 0.65;
+            gait_sx = 1.3; gait_sy = 0.74; gait_long = 0.85; gait_fat = 0.12;
+            gait_arch = 0.16; gait_bob = 2.4; gait_wag = 0.65;
         } else if (g.motion == M_HOP) {
-            gait_sx = 0.94; gait_sy = 1.1; gait_long = 0.55; gait_bob = 5.0;
-            gait_fat = 0.10; gait_arch = 0.05;
+            gait_sx = 0.94; gait_sy = 1.1; gait_long = 0.52; gait_bob = 5.0;
+            gait_fat = 0.16; gait_arch = 0.05;
         } else if (g.motion == M_SKID) {
-            gait_sx = 1.34; gait_sy = 0.7; gait_long = 0.84; gait_arch = -0.05;
-            gait_bob = 1.0; gait_fat = 0.08;
+            gait_sx = 1.32; gait_sy = 0.7; gait_long = 0.8; gait_arch = -0.05;
+            gait_bob = 1.0; gait_fat = 0.14;
         } else if (g.motion == M_TROT) {
-            gait_sx = 1.14; gait_sy = 0.88; gait_long = 0.66; gait_bob = 2.8;
-            gait_fat = 0.10; gait_arch = 0.14;
+            gait_sx = 1.12; gait_sy = 0.9; gait_long = 0.62; gait_bob = 2.8;
+            gait_fat = 0.16; gait_arch = 0.12;
         } else if (g.motion == M_DIAGONAL) {
-            gait_sx = 1.18; gait_sy = 0.86; gait_long = 0.72; gait_fat = 0.08;
-            gait_arch = 0.16; gait_bob = 2.2; gait_wag = 0.5;
+            gait_sx = 1.16; gait_sy = 0.88; gait_long = 0.68; gait_fat = 0.16;
+            gait_arch = 0.14; gait_bob = 2.2; gait_wag = 0.5;
         } else {
-            /* walk / arc / etc — skinny standing proportions */
-            gait_sx = 1.10; gait_sy = 0.90; gait_long = 0.64; gait_fat = 0.10;
-            gait_arch = 0.14; gait_bob = 1.8;
+            gait_sx = 1.08; gait_sy = 0.92; gait_long = 0.58; gait_fat = 0.18;
+            gait_arch = 0.12; gait_bob = 1.8;
         }
         tsx = 1.0 + (gait_sx - 1.0) * move;
         tsy = 1.0 + (gait_sy - 1.0) * move;
-        tlong = 0.58 + (gait_long - 0.58) * move;
-        tfat = 0.10 + (gait_fat - 0.10) * move;
+        tlong = 0.52 + (gait_long - 0.52) * move;
+        tfat = 0.18 + (gait_fat - 0.18) * move;
         tarch = 0.08 + (gait_arch - 0.08) * move;
         tbob = gait_bob * move;
         twag = 0.12 + (gait_wag - 0.12) * fmax(move, 0.15);
@@ -2101,15 +2105,15 @@ static void draw_text_fade(cairo_t *cr, const char *s, double x, double y, doubl
     cairo_show_text(cr, s);
 }
 
-/* Waycat-style stub paw — small solid blob */
+/* Cute stub paw — tiny relative to body */
 static void draw_paw(cairo_t *cr, double x, double y, double scale, int raised)
 {
     cairo_save(cr);
     cairo_translate(cr, x, y);
     if (raised)
         cairo_rotate(cr, -0.35);
-    cairo_scale(cr, scale * 1.05, scale * 0.95);
-    cairo_arc(cr, 0, 0, 1.85, 0, 2 * G_PI);
+    cairo_scale(cr, scale * 1.05, scale * 0.92);
+    cairo_arc(cr, 0, 0, 1.55, 0, 2 * G_PI);
     set_fur(cr, 1.0);
     cairo_fill(cr);
     cairo_restore(cr);
@@ -2124,7 +2128,7 @@ static void draw_leg_paw(cairo_t *cr, double hx, double hy, double fx, double fy
     cairo_move_to(cr, hx, hy);
     cairo_line_to(cr, fx, fy);
     cairo_stroke(cr);
-    draw_paw(cr, fx, fy + 0.7, 0.82 + thick * 0.02, 0);
+    draw_paw(cr, fx, fy + 0.55, 0.78 + thick * 0.015, 0);
 }
 
 static void draw_cat_body(cairo_t *cr)
@@ -2211,32 +2215,32 @@ static void draw_cat_body(cairo_t *cr)
      * Side-view cat silhouette (local +X = nose):
      * round haunch → arched back → shoulder → deep chest → tucked belly.
      */
-    double hx = -12.0 - fat * 1.8 + lng * 0.8;          /* haunch rear */
-    double front = 13.5 + lng * 10.0;                    /* chest front */
-    double chest_x = 7.0 + lng * 4.8;
-    double back_y = -9.2 - arch * 9.5 - puff * 2.8;      /* spine peak */
-    double shoulder_y = -7.4 - arch * 4.5;
-    double rump_y = -6.6 - fat * 1.2 - arch * 2.0;
-    double belly_y = 4.2 + fat * 3.2 - lng * 1.2;        /* higher = skinnier */
-    double tuck = belly_y - (2.2 + lng * 1.4 + arch * 1.0); /* deeper tuck */
+    double hx = -12.2 - fat * 2.2 + lng * 0.4;
+    double front = 13.0 + lng * 9.0;
+    double chest_x = 6.5 + lng * 4.2;
+    double back_y = -9.6 - arch * 9.0 - puff * 2.5;
+    double shoulder_y = -7.6 - arch * 4.2;
+    double rump_y = -7.0 - fat * 1.6 - arch * 2.0;
+    double belly_y = 5.2 + fat * 3.8 - lng * 0.8;        /* softer belly */
+    double tuck = belly_y - (1.4 + lng * 1.0 + arch * 0.7);
     double mid_h = (back_y + belly_y) * 0.5;
-    double nose_x = front; /* legs / scratch still use nose_x */
+    double nose_x = front;
     double butt_x = hx;
 
-    /* Haunch mass — lean rear thigh */
+    /* Haunch — soft round rear */
     cairo_save(cr);
-    cairo_translate(cr, hx + 4.0 + fat, mid_h * 0.12 + 0.2);
-    cairo_scale(cr, 0.92 + fat * 0.2, 1.05 + fat * 0.15);
-    cairo_arc(cr, 0, 0, 5.8 + fat * 1.2, 0, 2 * G_PI);
+    cairo_translate(cr, hx + 4.2 + fat, mid_h * 0.15 + 0.4);
+    cairo_scale(cr, 1.0 + fat * 0.22, 1.12 + fat * 0.18);
+    cairo_arc(cr, 0, 0, 6.6 + fat * 1.4, 0, 2 * G_PI);
     set_fur(cr, 1.0);
     cairo_fill(cr);
     cairo_restore(cr);
 
-    /* Chest mass — slimmer forechest */
+    /* Chest — plush forechest */
     cairo_save(cr);
-    cairo_translate(cr, chest_x + 1.2, 0.4);
-    cairo_scale(cr, 1.05 + lng * 0.18, 0.92 + fat * 0.12);
-    cairo_arc(cr, 0, 0, 5.2 + fat * 0.8, 0, 2 * G_PI);
+    cairo_translate(cr, chest_x + 1.3, 0.6);
+    cairo_scale(cr, 1.12 + lng * 0.15, 1.0 + fat * 0.14);
+    cairo_arc(cr, 0, 0, 5.8 + fat * 0.9, 0, 2 * G_PI);
     set_fur(cr, 1.0);
     cairo_fill(cr);
     cairo_restore(cr);
@@ -2259,20 +2263,20 @@ static void draw_cat_body(cairo_t *cr)
                    7.5 + lng * 3.5, back_y + 0.8,
                    chest_x + 3.0, shoulder_y,
                    front - 1.5, -3.5);
-    /* deep chest front — leaner profile */
+    /* deep chest front */
     cairo_curve_to(cr,
-                   front + 2.0, -0.8,
-                   front + 1.4, belly_y - 1.6,
-                   front - 3.0, belly_y - 0.4);
-    /* belly with deeper mid tuck */
+                   front + 2.4, -0.4,
+                   front + 1.8, belly_y - 1.4,
+                   front - 2.6, belly_y - 0.2);
+    /* soft belly tuck */
     cairo_curve_to(cr,
-                   chest_x + 0.5, tuck + 0.2,
-                   -2.0, belly_y + 1.0,
-                   hx + 4.5, belly_y - 0.2);
+                   chest_x + 0.8, tuck + 0.5,
+                   -1.5, belly_y + 1.4,
+                   hx + 5.0, belly_y + 0.2);
     /* round under haunch */
     cairo_curve_to(cr,
-                   hx + 1.2, belly_y - 1.8,
-                   hx - 2.2 - fat, 3.5,
+                   hx + 1.4, belly_y - 1.4,
+                   hx - 2.5 - fat, 4.0,
                    hx, 1.0);
     cairo_close_path(cr);
 
@@ -2311,15 +2315,15 @@ static void draw_cat_body(cairo_t *cr)
         }
     }
 
-    /* Head — Waycat proportions */
-    double head_y = -11.5 + 5.0 * g.head_drop - arch * 2.5;
-    double head_x = 8.0 + lng * 5.5;
-    double hr = (10.8 + fat * 0.4 + puff * 1.0) * hs;
+    /* Head — cute orange chibi */
+    double head_y = -12.0 + 5.0 * g.head_drop - arch * 2.0;
+    double head_x = 8.5 + lng * 5.0;
+    double hr = (12.2 + fat * 0.8 + puff * 1.2) * hs;
     double sleep_a = g.pose_sleep;
     double narrow = g.pose_narrow;
     double cute = 1.0 - 0.55 * g.pose_hiss;
 
-    /* Neck bridge so head isn't floating */
+    /* Neck bridge */
     {
         cairo_new_path(cr);
         cairo_move_to(cr, head_x - 5.0, head_y + 4.0);
@@ -2338,37 +2342,46 @@ static void draw_cat_body(cairo_t *cr)
     cairo_translate(cr, head_x, head_y);
     cairo_scale(cr, hs * (1.0 + puff * 0.1), hs * (1.0 - g.head_drop * 0.08));
 
-    /* Round soft skull — Waycat head blob */
+    /* Soft round skull */
     cairo_save(cr);
-    cairo_scale(cr, 1.12, 1.0);
-    cairo_arc(cr, 0, 1.0, hr * 0.88, 0, 2 * G_PI);
+    cairo_scale(cr, 1.18, 1.05);
+    cairo_arc(cr, 0, 1.2, hr * 0.9, 0, 2 * G_PI);
     set_fur(cr, 1.0);
     cairo_fill(cr);
     cairo_restore(cr);
 
-    /* Soft cheeks — same fur */
+    /* Puffy cheeks + warm blush */
     {
-        double cheek = 0.35 + 0.35 * g.pose_pet + 0.12 * puff;
+        double cheek = 0.7 + 0.45 * g.pose_pet + 0.15 * puff;
         set_fur(cr, 1.0);
-        cairo_arc(cr, -5.8, 3.6, 4.2 + cheek, 0, 2 * G_PI);
+        cairo_arc(cr, -6.4, 4.0, 5.2 + cheek * 1.2, 0, 2 * G_PI);
         cairo_fill(cr);
-        cairo_arc(cr, 6.0, 3.4, 4.0 + cheek * 0.9, 0, 2 * G_PI);
+        cairo_arc(cr, 6.6, 3.8, 5.0 + cheek * 1.1, 0, 2 * G_PI);
+        cairo_fill(cr);
+        cairo_set_source_rgba(cr, 1.0, 0.55, 0.42, (0.28 + 0.4 * g.pose_pet) * cute);
+        cairo_arc(cr, -6.6, 4.6, 2.5 + g.pose_pet, 0, 2 * G_PI);
+        cairo_fill(cr);
+        cairo_arc(cr, 6.9, 4.4, 2.3 + g.pose_pet * 0.9, 0, 2 * G_PI);
         cairo_fill(cr);
     }
 
-    /* Tiny muzzle bump */
+    /* Soft muzzle */
     cairo_save(cr);
-    cairo_scale(cr, 1.15, 0.75);
-    cairo_arc(cr, 0.4, 5.8, 3.2, 0, 2 * G_PI);
-    set_fur(cr, 1.0);
+    cairo_scale(cr, 1.2, 0.78);
+    cairo_arc(cr, 0.4, 6.0, 3.5, 0, 2 * G_PI);
+    {
+        double r, gg, b;
+        fur_color(&r, &gg, &b);
+        cairo_set_source_rgba(cr, fmin(1.0, r + 0.08), fmin(1.0, gg + 0.06), fmin(1.0, b + 0.04), 0.95);
+    }
     cairo_fill(cr);
     cairo_restore(cr);
 
-    /* Pointed Waycat ears + dark inner punch */
+    /* Soft rounded ears + peach inner */
     {
         double alert = 1.0 - sleep_a * 0.45;
-        double ear_h = -16.0 * alert - 0.5;
-        double ear_spread = 1.02 + puff * 0.22;
+        double ear_h = -15.2 * alert - 1.0;
+        double ear_spread = 1.0 + puff * 0.22;
         double pin = g.pose_hiss;
         if (pin > 0.25) {
             ear_h = -9.0;
@@ -2377,123 +2390,164 @@ static void draw_cat_body(cairo_t *cr)
 
         double tw_l = g.ear_l;
         double tw_r = g.ear_r;
-        double ear_h_l = ear_h - tw_l * 3.2;
-        double ear_h_r = ear_h - tw_r * 3.2;
-        double fold_l = pin * 2.5 + tw_l * 2.0;
-        double fold_r = pin * 2.0 + tw_r * 2.0;
-        double spr_l = ear_spread + tw_l * 0.06;
-        double spr_r = ear_spread + tw_r * 0.06;
+        double ear_h_l = ear_h - tw_l * 3.0;
+        double ear_h_r = ear_h - tw_r * 3.0;
+        double fold_l = pin * 2.2 + tw_l * 1.8;
+        double fold_r = pin * 1.8 + tw_r * 1.8;
+        double spr_l = ear_spread + tw_l * 0.05;
+        double spr_r = ear_spread + tw_r * 0.05;
 
         cairo_new_path(cr);
-        cairo_move_to(cr, -8.2 * spr_l, -3.2);
-        cairo_line_to(cr, -4.8 * spr_l - fold_l, ear_h_l);
-        cairo_line_to(cr, -1.6, -5.2);
+        cairo_move_to(cr, -8.0 * spr_l, -3.4);
+        cairo_curve_to(cr, -7.0 * spr_l, ear_h_l + 2.2,
+                       -4.6 * spr_l - fold_l, ear_h_l,
+                       -1.6, -5.4);
         cairo_close_path(cr);
-        cairo_move_to(cr, 1.8, -5.2);
-        cairo_line_to(cr, 5.0 * spr_r + fold_r, ear_h_r);
-        cairo_line_to(cr, 8.4 * spr_r, -3.0);
+        cairo_move_to(cr, 1.8, -5.4);
+        cairo_curve_to(cr, 4.8 * spr_r + fold_r, ear_h_r,
+                       7.0 * spr_r, ear_h_r + 2.2,
+                       8.2 * spr_r, -3.2);
         cairo_close_path(cr);
         set_fur(cr, 1.0);
         cairo_fill(cr);
 
-        /* dark inner-ear cutouts (Waycat negative space) */
-        set_ink(cr, 0.55 + 0.2 * sleep_a);
+        cairo_set_source_rgba(cr, 0.98, 0.72, 0.62, 0.75 + 0.15 * g.pose_pet);
         cairo_new_path(cr);
-        cairo_move_to(cr, -6.0 * spr_l, -4.2);
-        cairo_line_to(cr, -4.6 * spr_l - fold_l * 0.5, ear_h_l + 3.5);
-        cairo_line_to(cr, -2.8, -5.0);
+        cairo_move_to(cr, -6.0 * spr_l, -4.4);
+        cairo_line_to(cr, -4.5 * spr_l - fold_l * 0.5, ear_h_l + 4.0);
+        cairo_line_to(cr, -2.5, -5.1);
         cairo_close_path(cr);
         cairo_fill(cr);
         cairo_new_path(cr);
-        cairo_move_to(cr, 3.0, -5.0);
-        cairo_line_to(cr, 4.8 * spr_r + fold_r * 0.4, ear_h_r + 3.4);
-        cairo_line_to(cr, 6.2 * spr_r, -4.0);
+        cairo_move_to(cr, 2.8, -5.1);
+        cairo_line_to(cr, 4.7 * spr_r + fold_r * 0.4, ear_h_r + 3.8);
+        cairo_line_to(cr, 6.2 * spr_r, -4.2);
         cairo_close_path(cr);
         cairo_fill(cr);
     }
 
-    /* Waycat eyes — dark punched dots that track activity */
+    /* Cute eyes — cream sclera + small pupils + sparkle */
     if (sleep_a > 0.55 || (g.pose_roll > 0.3 && sleep_a > 0.2)) {
-        set_ink(cr, 0.55);
-        cairo_set_line_width(cr, 1.6);
+        cairo_set_source_rgba(cr, 0.35, 0.18, 0.12, 0.7);
+        cairo_set_line_width(cr, 1.7);
         cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-        cairo_move_to(cr, -6.2, 1.4);
-        cairo_curve_to(cr, -3.6, 3.2, -1.4, 3.2, 0.6, 1.4);
+        cairo_move_to(cr, -6.6, 1.5);
+        cairo_curve_to(cr, -3.8, 3.6, -1.2, 3.6, 1.0, 1.5);
         cairo_stroke(cr);
-        cairo_move_to(cr, 2.0, 1.4);
-        cairo_curve_to(cr, 4.4, 3.2, 6.4, 3.2, 8.2, 1.4);
+        cairo_move_to(cr, 2.2, 1.5);
+        cairo_curve_to(cr, 4.8, 3.6, 7.0, 3.6, 8.8, 1.5);
         cairo_stroke(cr);
     } else if (g.eyes_closed) {
-        set_ink(cr, 0.5);
-        cairo_set_line_width(cr, 1.5);
+        cairo_set_source_rgba(cr, 0.35, 0.18, 0.12, 0.65);
+        cairo_set_line_width(cr, 1.6);
         cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-        cairo_move_to(cr, -6.0, 1.5); cairo_curve_to(cr, -3.4, 2.8, -1.2, 2.8, 0.6, 1.5);
-        cairo_move_to(cr, 2.2, 1.5); cairo_curve_to(cr, 4.4, 2.8, 6.4, 2.8, 8.0, 1.5);
+        cairo_move_to(cr, -6.4, 1.6); cairo_curve_to(cr, -3.6, 3.0, -1.2, 3.0, 0.8, 1.6);
+        cairo_move_to(cr, 2.4, 1.6); cairo_curve_to(cr, 4.8, 3.0, 7.0, 3.0, 8.6, 1.6);
         cairo_stroke(cr);
     } else {
-        double er = (2.15 - 0.55 * narrow) * (1.0 + 0.12 * g.pose_pet);
-        double dil = fmax(0.35, fmin(1.15, 0.55 + 0.55 * g.pupil));
-        er *= dil;
-        double ex0 = -3.8 - narrow * 0.2;
-        double ex1 = 4.6 + narrow * 0.2;
-        double ey = 1.2;
-        double gx = g.gaze_x * 1.6;
-        double gy = g.gaze_y * 1.2;
-        if (g.pose_hiss > 0.35) {
+        double er = (4.2 - 1.2 * narrow) * (1.0 + 0.12 * g.pose_pet);
+        double ex0 = -4.0 - narrow * 0.25;
+        double ex1 = 4.8 + narrow * 0.2;
+        double ey = 1.5;
+        double gx = g.gaze_x * er * 0.38;
+        double gy = g.gaze_y * er * 0.32;
+        double glen = hypot(gx, gy);
+        double maxr = er * 0.38;
+        if (glen > maxr && glen > 1e-6) {
+            gx *= maxr / glen;
+            gy *= maxr / glen;
+        }
+
+        /* cream sclera */
+        cairo_set_source_rgba(cr, 1.0, 0.96, 0.88, 1.0);
+        cairo_arc(cr, ex0, ey, er, 0, 2 * G_PI);
+        cairo_fill(cr);
+        cairo_arc(cr, ex1, ey, er, 0, 2 * G_PI);
+        cairo_fill(cr);
+
+        double dil = fmax(0.2, fmin(1.0, g.pupil));
+        double pr = er * (0.28 + 0.22 * dil);
+        if (g.pose_hiss > 0.35 || dil < 0.28) {
             set_ink(cr, 0.95);
+            double slit_w = er * (0.14 + 0.1 * dil);
+            double slit_h = er * (0.78 + 0.15 * (1.0 - dil));
             cairo_save(cr);
             cairo_translate(cr, ex0 + gx, ey + gy);
-            cairo_scale(cr, 0.35, 1.15);
-            cairo_arc(cr, 0, 0, er, 0, 2 * G_PI);
+            cairo_scale(cr, slit_w / er, slit_h / er);
+            cairo_arc(cr, 0, 0, er * 0.5, 0, 2 * G_PI);
             cairo_fill(cr);
             cairo_restore(cr);
             cairo_save(cr);
             cairo_translate(cr, ex1 + gx, ey + gy);
-            cairo_scale(cr, 0.35, 1.15);
-            cairo_arc(cr, 0, 0, er, 0, 2 * G_PI);
+            cairo_scale(cr, slit_w / er, slit_h / er);
+            cairo_arc(cr, 0, 0, er * 0.5, 0, 2 * G_PI);
             cairo_fill(cr);
             cairo_restore(cr);
         } else {
             set_ink(cr, 0.92);
-            cairo_arc(cr, ex0 + gx, ey + gy, er, 0, 2 * G_PI);
+            cairo_arc(cr, ex0 + gx, ey + gy, pr, 0, 2 * G_PI);
             cairo_fill(cr);
-            cairo_arc(cr, ex1 + gx, ey + gy, er, 0, 2 * G_PI);
+            cairo_arc(cr, ex1 + gx, ey + gy, pr, 0, 2 * G_PI);
             cairo_fill(cr);
         }
-    }
 
-    /* Tiny dark nose */
-    {
-        double nx = 0.5, ny = 5.6;
-        set_ink(cr, 0.55 + 0.25 * g.pose_hiss);
-        cairo_arc(cr, nx, ny, 1.15, 0, 2 * G_PI);
+        /* sparkles */
+        cairo_set_source_rgba(cr, 1.0, 1.0, 1.0, 0.95);
+        cairo_arc(cr, ex0 + gx - er * 0.3, ey + gy - er * 0.32, er * 0.2, 0, 2 * G_PI);
         cairo_fill(cr);
+        cairo_arc(cr, ex1 + gx - er * 0.3, ey + gy - er * 0.32, er * 0.2, 0, 2 * G_PI);
+        cairo_fill(cr);
+        cairo_set_source_rgba(cr, 1.0, 1.0, 1.0, 0.5);
+        cairo_arc(cr, ex0 + gx + er * 0.2, ey + gy + er * 0.22, er * 0.09, 0, 2 * G_PI);
+        cairo_fill(cr);
+        cairo_arc(cr, ex1 + gx + er * 0.2, ey + gy + er * 0.22, er * 0.09, 0, 2 * G_PI);
+        cairo_fill(cr);
+    }
+
+    /* Warm nose + soft smile */
+    {
+        double nx = 0.5, ny = 6.2;
+        cairo_new_path(cr);
+        cairo_move_to(cr, nx, ny - 1.0);
+        cairo_curve_to(cr, nx - 1.9, ny - 0.15, nx - 1.5, ny + 1.3, nx, ny + 1.7);
+        cairo_curve_to(cr, nx + 1.5, ny + 1.3, nx + 1.9, ny - 0.15, nx, ny - 1.0);
+        cairo_close_path(cr);
+        cairo_set_source_rgba(cr, 0.85, 0.42, 0.38, 0.95);
+        if (g.pose_hiss > 0.3)
+            cairo_set_source_rgba(cr, 0.75, 0.28, 0.28, 0.9);
+        cairo_fill(cr);
+
+        cairo_set_line_width(cr, 1.35);
+        cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
         if (g.pose_hiss > 0.25) {
-            cairo_set_line_width(cr, 1.2);
-            cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-            cairo_move_to(cr, nx - 2.0, ny + 1.8);
-            cairo_curve_to(cr, nx - 0.6, ny + 4.0, nx + 0.6, ny + 4.0, nx + 2.0, ny + 1.8);
+            cairo_set_source_rgba(cr, 0.7, 0.28, 0.28, 0.65 * g.pose_hiss);
+            cairo_move_to(cr, nx - 2.2, ny + 2.2);
+            cairo_curve_to(cr, nx - 0.7, ny + 4.6, nx + 0.7, ny + 4.6, nx + 2.2, ny + 2.2);
             cairo_stroke(cr);
-        } else if (g.pose_pet > 0.2 || cute > 0.7) {
-            cairo_set_line_width(cr, 1.1);
-            cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-            set_ink(cr, 0.35 + 0.25 * g.pose_pet);
-            cairo_move_to(cr, nx - 2.2, ny + 1.6);
-            cairo_curve_to(cr, nx - 0.8, ny + 2.8, nx + 0.8, ny + 2.8, nx + 2.2, ny + 1.6);
+        } else {
+            double smile = 0.9 + 0.35 * g.pose_pet;
+            cairo_set_source_rgba(cr, 0.45, 0.22, 0.16, 0.55 + 0.25 * cute);
+            cairo_move_to(cr, nx - 2.8 * smile, ny + 2.0);
+            cairo_curve_to(cr, nx - 1.2, ny + 2.0 + 1.5 * smile,
+                           nx - 0.25, ny + 1.9 + 1.3 * smile,
+                           nx, ny + 1.9);
+            cairo_curve_to(cr, nx + 0.25, ny + 1.9 + 1.3 * smile,
+                           nx + 1.2, ny + 2.0 + 1.5 * smile,
+                           nx + 2.8 * smile, ny + 2.0);
             cairo_stroke(cr);
         }
     }
 
-    /* Sparse whiskers */
+    /* Soft short whiskers */
     if (sleep_a < 0.75) {
-        set_ink(cr, 0.22 * cute + 0.08);
+        cairo_set_source_rgba(cr, 0.4, 0.2, 0.14, 0.28 * cute + 0.1);
         cairo_set_line_width(cr, 1.0);
         cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-        double wy = 4.8;
-        cairo_move_to(cr, -4.5, wy - 0.6); cairo_line_to(cr, -11.5, wy - 1.8);
-        cairo_move_to(cr, -4.6, wy + 0.5); cairo_line_to(cr, -12.0, wy + 0.4);
-        cairo_move_to(cr, 5.0, wy - 0.6); cairo_line_to(cr, 12.0, wy - 1.6);
-        cairo_move_to(cr, 5.1, wy + 0.5); cairo_line_to(cr, 12.5, wy + 0.5);
+        double wy = 5.0;
+        cairo_move_to(cr, -4.6, wy - 0.6); cairo_line_to(cr, -11.5, wy - 1.6);
+        cairo_move_to(cr, -4.7, wy + 0.5); cairo_line_to(cr, -12.0, wy + 0.4);
+        cairo_move_to(cr, 5.1, wy - 0.6); cairo_line_to(cr, 12.0, wy - 1.5);
+        cairo_move_to(cr, 5.2, wy + 0.5); cairo_line_to(cr, 12.5, wy + 0.45);
         cairo_stroke(cr);
     }
 
@@ -2527,8 +2581,8 @@ static void draw_cat_body(cairo_t *cr)
             base *= 0.6;
         }
 
-        double amp = (10.0 + fat * 2.0) * energy;
-        double len = 22.0 + fat * 3.0 + (g.beh == B_TAILFLICK ? 6.0 : 0);
+        double amp = (11.0 + fat * 2.5) * energy;
+        double len = 26.0 + fat * 4.0 + (g.beh == B_TAILFLICK ? 6.0 : 0);
         double root_x = butt_x + 1.5;
         double root_y = mid_h - 1.0;
 
@@ -3299,6 +3353,19 @@ static void on_realize(GtkWidget *w, gpointer data)
 
 int main(int argc, char **argv)
 {
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-V") == 0) {
+            printf("shadow-cat %s\n", SHADOW_CAT_VERSION);
+            return 0;
+        }
+        if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
+            printf("Usage: shadow-cat [--version]\n"
+                   "Interactive Hyprland desktop pet (GTK layer-shell).\n"
+                   "Requires an active Hyprland session for IPC.\n");
+            return 0;
+        }
+    }
+
     srand((unsigned)time(NULL) ^ (unsigned)getpid());
     gtk_init(&argc, &argv);
 
@@ -3339,10 +3406,10 @@ int main(int argc, char **argv)
     g.ear_phase = 0;
     g.ear_which = 0;
     g.ear_wait = 8.0 + frand() * 12.0; /* first sleep twitch after a while */
-    g.pose_fat = 0.10;
-    g.pose_long = 0.58;
+    g.pose_fat = 0.18;
+    g.pose_long = 0.52;
     g.pose_arch = 0.08;
-    g.pose_head = 1.0;
+    g.pose_head = 1.06;
     g.mon_w = 1920;
     g.mon_h = 1080;
 
