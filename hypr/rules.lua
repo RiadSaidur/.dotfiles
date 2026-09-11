@@ -4,11 +4,12 @@ hl.window_rule({
     opacity = "0.94 override 0.70 override",
 })
 
+-- Keep Firefox fully opaque so selection damage isn't lost under decoration opacity
 hl.window_rule({
     match     = { class = "^firefox$" },
     workspace = "1",
     float     = false,
-    opacity   = "0.98 override 0.92 override",
+    opacity   = "1.0 override 1.0 override",
 })
 
 -- Chromium family: native Wayland menus can frost with blur:popups when translucent

@@ -79,6 +79,15 @@ hl.config({
         force_default_wallpaper  = 0,
         disable_splash_rendering = true,
     },
+
+    -- Workaround: Firefox (and some GTK apps) paint text selection into their
+    -- buffer, but Hyprland 0.54–0.56 often skips presenting those updates until
+    -- something forces a redraw (screenshot, wofi/drun). Full damage + no VFR
+    -- keeps selection highlights visible. Slightly more GPU use; no Firefox changes.
+    debug = {
+        vfr             = false,
+        damage_tracking = 0,
+    },
 })
 
 hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
