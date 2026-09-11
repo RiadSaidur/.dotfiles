@@ -37,6 +37,8 @@ hl.on("hyprland.start", function()
   hl.exec_cmd(home .. "/.config/conky/Atria/start.sh")
   -- Re-theme whenever ~/Downloads/bg.jpg is replaced
   hl.exec_cmd(home .. "/.config/hypr/scripts/watch-wallpaper.sh")
+  -- Desktop pet (layer-shell silhouette; chase cursor)
+  hl.exec_cmd(home .. "/.config/hypr/shadow-cat/launch.sh")
 end)
 
 hl.env("XCURSOR_SIZE", "24")

@@ -107,6 +107,11 @@ hl.layer_rule({
     blur = true,
     ignore_alpha = 0.15,
 })
+hl.layer_rule({
+    match = { namespace = "shadow-cat" },
+    blur = false,
+    ignore_alpha = 0.0,
+})
 
 hl.workspace_rule({
     workspace = "2",

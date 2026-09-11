@@ -92,3 +92,13 @@ mpv/encoding.rst
 mpv/tech-overview.txt
 mpv/restore-old-bindings.conf
 mpv/mplayer-input.conf
+
+# shadow-cat — keep sources; ignore built binaries & bench dumps
+hypr/shadow-cat/shadow-cat
+hypr/shadow-cat/shadow-cat.baseline
+hypr/shadow-cat/**/*.o
+hypr/shadow-cat/tests/test_unit
+hypr/shadow-cat/tests/bench_hotpath
+hypr/shadow-cat/tests/bench_hotpath_*
+hypr/shadow-cat/tests/hotpath_*.txt
+hypr/shadow-cat/tests/baseline.txt
