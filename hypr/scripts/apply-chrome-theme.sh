@@ -30,6 +30,20 @@ INK_STRONG = (244, 250, 246)
 MUTED = (155, 184, 170)
 LEAF = (107, 191, 136)
 SAND = (196, 168, 130)
+ICON = (45, 102, 68)
+
+pal_path = Path.home() / ".config/theme/chrome-palette.json"
+if pal_path.is_file():
+    pal = json.loads(pal_path.read_text())
+    FRAME = tuple(pal.get("frame", FRAME))
+    PANEL = tuple(pal.get("panel", PANEL))
+    PANEL2 = tuple(pal.get("panel2", PANEL2))
+    INK = tuple(pal.get("ink", INK))
+    INK_STRONG = tuple(pal.get("ink_strong", INK_STRONG))
+    MUTED = tuple(pal.get("muted", MUTED))
+    LEAF = tuple(pal.get("leaf", LEAF))
+    SAND = tuple(pal.get("sand", SAND))
+    ICON = tuple(pal.get("leaf", ICON))
 
 def write_png(path: Path, rgb, w=128, h=128):
     r, g, b = rgb
@@ -96,7 +110,7 @@ def write_swatches(img_dir: Path):
     write_png(img_dir / "tab.png", FRAME)
     write_png(img_dir / "ntp.png", FRAME)
     write_png(img_dir / "frame_inactive.png", (12, 24, 18))
-    write_png(img_dir / "icon128.png", (45, 102, 68))
+    write_png(img_dir / "icon128.png", ICON)
 
 # Keep source theme fresh
 src_manifest = json.loads((src / "manifest.json").read_text())

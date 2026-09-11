@@ -1,0 +1,29 @@
+{
+  "wallpaper": "/home/syds/Downloads/bg.jpg",
+  "roles": {
+    "field": "#111a14",
+    "panel": "#17211a",
+    "moss": "#1d2921",
+    "surface": "#1c261f",
+    "surface2": "#1a241d",
+    "surface3": "#26332a",
+    "surface4": "#28362d",
+    "surface5": "#253029",
+    "surface6": "#202b24",
+    "glass_top": "#2d3d33",
+    "text": "#ddf0e3",
+    "text_strong": "#edf7f1",
+    "muted": "#8ead99",
+    "leaf": "#5fbd7e",
+    "leaf_deep": "#447a56",
+    "leaf_mid": "#509868",
+    "leaf_bright": "#73d694",
+    "leaf_hover": "#6acb8a",
+    "sand": "#c7a67f",
+    "sand_bright": "#dbbb95",
+    "sand_dim": "#947d62",
+    "kitty_bg": "#090e0b",
+    "glow_ink": "#a2e0b7",
+    "danger": "#b05454"
+  }
+}

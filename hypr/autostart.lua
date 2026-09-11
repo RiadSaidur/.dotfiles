@@ -15,8 +15,8 @@ hl.env("GTK_THEME", gtk_theme)
 
 hl.on("hyprland.start", function()
   local home = os.getenv("HOME")
-  -- Theme env + gsettings before dbus activation (fixes GTK4 apps like pavucontrol)
-  hl.exec_cmd(home .. "/.config/hypr/scripts/apply-desktop-theme.sh")
+  -- Derive palette from wallpaper, then apply GTK/Qt (set-wallpaper calls apply-desktop-theme)
+  hl.exec_cmd(home .. "/.config/hypr/scripts/set-wallpaper.sh")
   gtk_theme = detect_gtk_theme()
   hl.env("GTK_THEME", gtk_theme)
   hl.exec_cmd(
@@ -35,6 +35,8 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("hyprctl setcursor Oxygen_White 24")
   hl.exec_cmd(home .. "/.config/waybar/launch.sh")
   hl.exec_cmd(home .. "/.config/conky/Atria/start.sh")
+  -- Re-theme whenever ~/Downloads/bg.jpg is replaced
+  hl.exec_cmd(home .. "/.config/hypr/scripts/watch-wallpaper.sh")
 end)
 
 hl.env("XCURSOR_SIZE", "24")

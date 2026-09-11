@@ -1,8 +1,8 @@
 font=JetBrainsMonoNL Nerd Font 11
-background-color=#12241CC0
-text-color=#E6F0EA
+background-color=#17211aC0
+text-color=#ddf0e3
 # Leaf glow border on notifications
-border-color=#7AD4A0
+border-color=#73d694
 border-size=2
 border-radius=10
 width=340
@@ -12,11 +12,11 @@ margin=12
 default-timeout=5000
 
 [urgency=low]
-border-color=#7AD4A088
-text-color=#E6F0EA
+border-color=#73d69488
+text-color=#ddf0e3
 
 [urgency=normal]
-border-color=#7AD4A0
+border-color=#73d694
 
 [urgency=high]
 border-color=#E07070
