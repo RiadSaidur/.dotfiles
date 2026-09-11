@@ -2101,15 +2101,15 @@ static void draw_text_fade(cairo_t *cr, const char *s, double x, double y, doubl
     cairo_show_text(cr, s);
 }
 
-/* Waycat-style stub paw — solid mint blob, no bean embroidery */
+/* Waycat-style stub paw — small solid blob */
 static void draw_paw(cairo_t *cr, double x, double y, double scale, int raised)
 {
     cairo_save(cr);
     cairo_translate(cr, x, y);
     if (raised)
         cairo_rotate(cr, -0.35);
-    cairo_scale(cr, scale * 1.25, scale);
-    cairo_arc(cr, 0, 0, 3.0, 0, 2 * G_PI);
+    cairo_scale(cr, scale * 1.05, scale * 0.95);
+    cairo_arc(cr, 0, 0, 1.85, 0, 2 * G_PI);
     set_fur(cr, 1.0);
     cairo_fill(cr);
     cairo_restore(cr);
@@ -2124,7 +2124,7 @@ static void draw_leg_paw(cairo_t *cr, double hx, double hy, double fx, double fy
     cairo_move_to(cr, hx, hy);
     cairo_line_to(cr, fx, fy);
     cairo_stroke(cr);
-    draw_paw(cr, fx, fy + 1.2, 0.95 + thick * 0.04, 0);
+    draw_paw(cr, fx, fy + 0.7, 0.82 + thick * 0.02, 0);
 }
 
 static void draw_cat_body(cairo_t *cr)
@@ -2624,10 +2624,10 @@ static void draw_cat_body(cairo_t *cr)
             double a = sin(phase);
             double b = sin(phase + G_PI);
             double reach = 8.0 + vclimb * 6.0;
-            draw_paw(cr, 4.0 + a * 2.0, belly_y - reach * (0.55 + 0.35 * a), 1.0, 1);
-            draw_paw(cr, 9.0 - a * 1.5, belly_y - reach * (0.4 + 0.35 * -a), 0.95, 1);
-            draw_paw(cr, -5.0 + b * 2.0, belly_y - reach * (0.25 + 0.3 * b), 0.9, 0);
-            draw_paw(cr, -10.0 - b * 1.5, belly_y - reach * (0.15 + 0.25 * -b), 0.85, 0);
+            draw_paw(cr, 4.0 + a * 2.0, belly_y - reach * (0.55 + 0.35 * a), 0.72, 1);
+            draw_paw(cr, 9.0 - a * 1.5, belly_y - reach * (0.4 + 0.35 * -a), 0.68, 1);
+            draw_paw(cr, -5.0 + b * 2.0, belly_y - reach * (0.25 + 0.3 * b), 0.66, 0);
+            draw_paw(cr, -10.0 - b * 1.5, belly_y - reach * (0.15 + 0.25 * -b), 0.62, 0);
         } else if (walk > 0.08 && on_stairs) {
             /* Stair steps — high vertical foot lift */
             double phase = g.frame * 5.5;
@@ -2635,7 +2635,7 @@ static void draw_cat_body(cairo_t *cr)
             double b = sin(phase + G_PI);
             double lift = 4.0 + vclimb * 7.0;
             double leg = 5.0 + walk * 4.0;
-            double thick = 3.2;
+            double thick = 2.15;
             draw_leg_paw(cr, 5.0, belly_y - 1.0,
                          6.0 + a * 3.0, belly_y + leg - fmax(0.0, a) * lift, thick);
             draw_leg_paw(cr, 9.0, belly_y - 0.5,
@@ -2655,7 +2655,7 @@ static void draw_cat_body(cairo_t *cr)
             double a = sin(phase);
             double b = sin(phase + G_PI);
             double leg_len = 5.5 + walk * 5.5;
-            double thick = 3.2 + (1.0 - lng) * 0.8;
+            double thick = 2.1 + (1.0 - lng) * 0.35;
             double diag = 0.0;
             {
                 double spd = hypot(g.vx, g.vy);
@@ -2678,27 +2678,27 @@ static void draw_cat_body(cairo_t *cr)
                 draw_paw(cr, 7.0 + a * 2.0, belly_y + 2.0, 0.85, 1);
         } else if (g.beh == B_SCRATCH && g.anim_style == SCR_POST) {
             /* reared — front paws rake up */
-            draw_paw(cr, nose_x - 2, -8 + sin(g.t * 16) * 3, 1.05, 1);
-            draw_paw(cr, nose_x + 4, -6 + cos(g.t * 16) * 3, 1.0, 1);
-            draw_leg_paw(cr, -5, belly_y, -6, belly_y + 7, 3.4);
-            draw_leg_paw(cr, -9, belly_y, -10, belly_y + 6.5, 3.2);
+            draw_paw(cr, nose_x - 2, -8 + sin(g.t * 16) * 3, 0.78, 1);
+            draw_paw(cr, nose_x + 4, -6 + cos(g.t * 16) * 3, 0.74, 1);
+            draw_leg_paw(cr, -5, belly_y, -6, belly_y + 7, 2.2);
+            draw_leg_paw(cr, -9, belly_y, -10, belly_y + 6.5, 2.05);
         } else if (g.beh == B_SCRATCH && g.anim_style == SCR_DIG) {
-            draw_leg_paw(cr, 4, belly_y, 2 + sin(g.t * 18) * 4, belly_y + 8, 3.3);
-            draw_leg_paw(cr, 8, belly_y, 9 - sin(g.t * 18) * 4, belly_y + 7.5, 3.1);
-            draw_paw(cr, -7, belly_y + 5, 0.9, 0);
-            draw_paw(cr, -11, belly_y + 4.5, 0.85, 0);
+            draw_leg_paw(cr, 4, belly_y, 2 + sin(g.t * 18) * 4, belly_y + 8, 2.15);
+            draw_leg_paw(cr, 8, belly_y, 9 - sin(g.t * 18) * 4, belly_y + 7.5, 2.0);
+            draw_paw(cr, -7, belly_y + 5, 0.68, 0);
+            draw_paw(cr, -11, belly_y + 4.5, 0.64, 0);
         } else if (sleep_a < 0.65) {
             double tuck = 1.0 - sit_amt * 0.35;
             double py = belly_y + 1.5 + sit_amt * 1.5;
-            draw_paw(cr, -3.5 * tuck, py, 0.88 + fat * 0.15, 0);
-            draw_paw(cr, 2.5 * tuck, py + 0.3, 0.9 + fat * 0.12, 0);
+            draw_paw(cr, -3.5 * tuck, py, 0.68 + fat * 0.1, 0);
+            draw_paw(cr, 2.5 * tuck, py + 0.3, 0.7 + fat * 0.08, 0);
             if (sit_amt < 0.55) {
-                draw_paw(cr, -8.5, py - 0.5, 0.8, 0);
-                draw_paw(cr, 6.5, py - 0.2, 0.78, 0);
+                draw_paw(cr, -8.5, py - 0.5, 0.62, 0);
+                draw_paw(cr, 6.5, py - 0.2, 0.6, 0);
             }
         } else if (sleep_a >= 0.65) {
-            draw_paw(cr, 1.0, belly_y + 2.0, 0.85, 0);
-            draw_paw(cr, -4.0, belly_y + 1.5, 0.75, 0);
+            draw_paw(cr, 1.0, belly_y + 2.0, 0.64, 0);
+            draw_paw(cr, -4.0, belly_y + 1.5, 0.58, 0);
         }
     }
 
