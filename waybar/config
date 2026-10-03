@@ -14,6 +14,7 @@
     ],
     "modules-center": [
         "hyprland/workspaces",
+        "custom/minimized",
         "custom/runcat"
     ],
     "modules-right": [
@@ -27,7 +28,20 @@
     "hyprland/workspaces": {
         "format": "{id}",
         "on-click": "activate",
-        "sort-by-number": true
+        "sort-by-number": true,
+        "show-special": true,
+        "special-visible-only": true,
+        "format-icons": {
+            "special": "󰖰",
+            "default": ""
+        }
+    },
+    "custom/minimized": {
+        "exec": "hyprctl workspaces -j 2>/dev/null | python3 -c \"import json,sys; ws=json.load(sys.stdin); n=sum(w.get('windows',0) for w in ws if str(w.get('name','')).startswith('special:minimized') or str(w.get('id',''))=='special:minimized'); print(json.dumps({'text':'󰖰 '+str(n) if n else '','class':'minimized' if n else 'empty','tooltip':str(n)+' minimized — click to restore'}))\"",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "hyprctl dispatch togglespecialworkspace minimized",
+        "tooltip": true
     },
     "temperature": {
         "critical-threshold": 80,

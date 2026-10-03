@@ -896,9 +896,17 @@ static void refresh_windows(void)
                 wid = atoi(widp + 5);
         }
 
-        if (!is_mapped || is_hidden || ww < 80 || wh < 80) {
+        if (!is_mapped || is_hidden || ww < 160 || wh < 160) {
             p = end;
             continue;
+        }
+        /* Skip skinny toolbars / emulator side strips — perch looks broken */
+        if (ww < 220 || wh < 220) {
+            double aspect = (ww > wh) ? (double)ww / (double)wh : (double)wh / (double)ww;
+            if (aspect > 4.0) {
+                p = end;
+                continue;
+            }
         }
         if (ww > 16384 || wh > 16384) {
             p = end;
@@ -1159,23 +1167,32 @@ static void continue_overstim_or_flee(void)
 
 static void pick_window_edge_target(const WinRect *w)
 {
-    /* Prefer vertical window edges (sides), rarely top/bottom chrome */
-    int side = (frand() < 0.78) ? ((frand() < 0.5) ? 2 : 3) : (rand() % 2);
+    /* Prefer top sill — upright cat reads; sides only on wide windows */
+    double r = frand();
+    int side;
+    if (r < 0.62)
+        side = 0; /* top */
+    else if (r < 0.82)
+        side = 1; /* bottom */
+    else if (w->w >= 280 && w->h >= 280)
+        side = (frand() < 0.5) ? 2 : 3; /* side */
+    else
+        side = 0;
     double along;
     if (side == 0) {
-        along = frand();
+        along = 0.12 + frand() * 0.76;
         g.tx = w->x + along * (w->w - SIZE);
         g.ty = w->y - SIZE + EDGE_PAD;
     } else if (side == 1) {
-        along = frand();
+        along = 0.12 + frand() * 0.76;
         g.tx = w->x + along * (w->w - SIZE);
         g.ty = w->y + w->h - EDGE_PAD;
     } else if (side == 2) {
-        along = frand();
+        along = 0.15 + frand() * 0.7;
         g.tx = w->x - SIZE + EDGE_PAD;
         g.ty = w->y + along * (w->h - SIZE);
     } else {
-        along = frand();
+        along = 0.15 + frand() * 0.7;
         g.tx = w->x + w->w - EDGE_PAD;
         g.ty = w->y + along * (w->h - SIZE);
     }
@@ -1365,41 +1382,48 @@ static void update_pose_targets(double dt)
     double tsit = 0, troll = 0, tsx = 1.0, tsy = 1.0;
     double twalk = 0, tsleep = 0, tgroom = 0, thiss = 0, tpet = 0, tnarrow = 0;
     double tbob = 0, twag = 0.12, thead = 0;
-    /* Side-silhouette cat — long body, modest head (runcat read) */
-    double tfat = 0.14, tlong = 0.62, tarch = 0.14, tpuff = 0.0, ths = 0.86;
+    /* Flat-illustration cat — compact body, soft readable head */
+    double tfat = 0.16, tlong = 0.58, tarch = 0.12, tpuff = 0.0, ths = 0.94;
     double spd = hypot(g.vx, g.vy);
     double move = fmin(1.0, spd / 75.0); /* 0 idle … 1 full locomotion */
     double air = fmin(1.0, g.air_z / 40.0);
 
     switch (g.beh) {
     case B_SLEEP:
-        /* curled nap — round loaf curl */
-        tsit = 4.5; tsleep = 1.0; twag = 0.28; tbob = 0;
-        tfat = 0.24; tlong = 0.40; tarch = -0.06; ths = 0.9;
-        tsx = 1.12; tsy = 0.78;
+        /* soft loading-loop nap — round loaf + tiny breath */
+        tsit = 4.8; tsleep = 1.0; twag = 0.22;
+        tfat = 0.28; tlong = 0.38; tarch = -0.1; ths = 0.94;
+        tsx = 1.16; tsy = 0.74;
+        tbob = 0.35 + 0.25 * sin(g.t * 1.6); /* chest rise */
         break;
 
     case B_LOAF:
-        /* classic cat loaf — compact, tucked paws vibe */
-        tsit = 3.0; twag = 0.42; tbob = 0.15;
-        tfat = 0.22; tlong = 0.44; tarch = 0.0;
-        tsx = 1.08; tsy = 0.86; ths = 0.9;
+        /* idle loaf — compact tucked paws + soft breath */
+        tsit = 3.2; twag = 0.38;
+        tfat = 0.24; tlong = 0.42; tarch = -0.02;
+        tsx = 1.1; tsy = 0.84; ths = 0.94;
+        tbob = 0.25 + 0.2 * sin(g.t * 2.0);
         break;
 
     case B_LOOK:
-        /* glance: eyes/head vibe only — keep body */
-        tsit = 1.2; twag = 0.55; tbob = 0.35; ths = 1.04;
+        /* idle glance — breath + gentle tail */
+        tsit = 1.4; twag = 0.5; ths = 0.98;
+        tbob = 0.4 + 0.25 * sin(g.t * 2.1);
+        tsx = 1.0 + 0.018 * sin(g.t * 2.1);
+        tsy = 1.0 - 0.014 * sin(g.t * 2.1);
         break;
 
     case B_SIDE_EYE:
     case B_STARE:
-        tsit = 1.6; tnarrow = 1.0; twag = 0.48; tbob = 0.15; ths = 1.03;
+        tsit = 1.6; tnarrow = 1.0; twag = 0.42; ths = 0.98;
         tarch = 0.08;
+        tbob = 0.2 + 0.15 * sin(g.t * 1.8);
         break;
 
     case B_TAILFLICK:
-        /* annoyance is in the tail, not a new silhouette */
-        tsit = 1.0; twag = 1.1; tbob = 0.6; tarch = 0.2;
+        /* fluid S-tail focus — body stays still */
+        tsit = 1.2; twag = 1.25; tbob = 0.35; tarch = 0.16;
+        tsx = 1.02; tsy = 0.98;
         break;
 
     case B_GROOM:
@@ -1408,21 +1432,22 @@ static void update_pose_targets(double dt)
         break;
 
     case B_STRETCH: {
-        /* timed stretch cycle: reach → hold → ease back */
+        /* Morning stretch — keep silhouette feline, not a flat streak */
         double u = (g.dur > 0.01) ? (g.t / g.dur) : 1.0;
         if (u > 1) u = 1;
-        double reach = (u < 0.35) ? smootherstep(u / 0.35)
-                     : (u < 0.65) ? 1.0
-                     : (1.0 - smootherstep((u - 0.65) / 0.35));
-        tsit = 0.4 + 0.6 * (1.0 - reach);
-        tsx = 1.0 + 0.55 * reach;
-        tsy = 1.0 - 0.42 * reach;
-        tlong = 0.45 + 0.5 * reach;
-        tfat = 0.16 - 0.06 * reach;
-        tarch = -0.12 * reach;
-        ths = 1.0 - 0.12 * reach;
-        thead = 0.25 * reach;
-        twag = 0.2 + 0.15 * reach;
+        double reach = (u < 0.28) ? smootherstep(u / 0.28)
+                     : (u < 0.72) ? 1.0
+                     : (1.0 - smootherstep((u - 0.72) / 0.28));
+        tsit = 0.3 * (1.0 - reach);
+        tsx = 1.0 + 0.22 * reach;
+        tsy = 1.0 - 0.12 * reach;
+        tlong = 0.55 + 0.22 * reach;
+        tfat = 0.16 - 0.02 * reach;
+        tarch = 0.14 + 0.38 * reach; /* butt up / arched back */
+        ths = 0.94 - 0.04 * reach;
+        thead = 0.3 * reach;
+        twag = 0.35 + 0.35 * reach;
+        tbob = 0.15 * reach;
         break;
     }
 
@@ -1469,36 +1494,36 @@ static void update_pose_targets(double dt)
         /* Keep feline silhouette while moving — modest stretch, not a worm */
         double gait_sx = 1.0, gait_sy = 1.0, gait_long = 0.66, gait_fat = 0.16;
         double gait_arch = 0.18, gait_bob = 1.4, gait_wag = 0.4;
-        double gait_hs = 0.88;
+        double gait_hs = 0.96;
         if (g.motion == M_CREEP) {
             gait_sx = 1.04; gait_sy = 0.94; gait_long = 0.7; gait_fat = 0.18;
-            gait_arch = 0.28; gait_bob = 0.6; gait_wag = 0.25; gait_hs = 0.9;
+            gait_arch = 0.28; gait_bob = 0.6; gait_wag = 0.25; gait_hs = 0.96;
         } else if (g.motion == M_SPRINT || g.beh == B_DASH) {
             gait_sx = 1.12; gait_sy = 0.88; gait_long = 0.74; gait_fat = 0.14;
-            gait_arch = 0.22; gait_bob = 2.0; gait_wag = 0.6; gait_hs = 0.86;
+            gait_arch = 0.22; gait_bob = 2.0; gait_wag = 0.6; gait_hs = 0.92;
         } else if (g.motion == M_HOP) {
             gait_sx = 0.96; gait_sy = 1.06; gait_long = 0.6; gait_bob = 4.0;
-            gait_fat = 0.16; gait_arch = 0.12; gait_hs = 0.9;
+            gait_fat = 0.16; gait_arch = 0.12; gait_hs = 0.96;
         } else if (g.motion == M_SKID) {
             gait_sx = 1.14; gait_sy = 0.86; gait_long = 0.72; gait_arch = 0.05;
-            gait_bob = 1.0; gait_fat = 0.15; gait_hs = 0.86;
+            gait_bob = 1.0; gait_fat = 0.15; gait_hs = 0.92;
         } else if (g.motion == M_TROT) {
             gait_sx = 1.06; gait_sy = 0.94; gait_long = 0.68; gait_bob = 2.2;
-            gait_fat = 0.16; gait_arch = 0.18; gait_hs = 0.88;
+            gait_fat = 0.16; gait_arch = 0.18; gait_hs = 0.96;
         } else if (g.motion == M_DIAGONAL) {
             gait_sx = 1.08; gait_sy = 0.92; gait_long = 0.7; gait_fat = 0.15;
-            gait_arch = 0.2; gait_bob = 1.8; gait_wag = 0.5; gait_hs = 0.88;
+            gait_arch = 0.2; gait_bob = 1.8; gait_wag = 0.5; gait_hs = 0.96;
         } else {
             /* walk — compact side cat, slight lean only */
             gait_sx = 1.05; gait_sy = 0.95; gait_long = 0.66; gait_fat = 0.16;
-            gait_arch = 0.18; gait_bob = 1.5; gait_hs = 0.9;
+            gait_arch = 0.18; gait_bob = 1.5; gait_hs = 0.96;
         }
         tsx = 1.0 + (gait_sx - 1.0) * move;
         tsy = 1.0 + (gait_sy - 1.0) * move;
-        tlong = 0.62 + (gait_long - 0.62) * move;
-        tfat = 0.14 + (gait_fat - 0.14) * move;
-        tarch = 0.14 + (gait_arch - 0.14) * move;
-        ths = 0.86 + (gait_hs - 0.86) * move;
+        tlong = 0.58 + (gait_long - 0.58) * move;
+        tfat = 0.16 + (gait_fat - 0.16) * move;
+        tarch = 0.12 + (gait_arch - 0.12) * move;
+        ths = 0.94 + (gait_hs - 0.94) * move;
         tbob = gait_bob * move;
         twag = 0.12 + (gait_wag - 0.12) * fmax(move, 0.15);
         twalk = move;
@@ -1978,13 +2003,13 @@ static void pick_next_behavior(void)
     if (g.mood < -1) g.mood = -1;
 
     struct { Behavior b; int w; double dmin, dmax; } opts[] = {
-        { B_SLEEP,     58, 20.0, 55.0 },
-        { B_LOAF,       6, 2.0, 4.5 },
-        { B_WANDER,     9, 2.5, 5.5 },
-        { B_LOOK,       6, 1.4, 3.0 },
+        { B_SLEEP,     54, 20.0, 55.0 },
+        { B_LOAF,       8, 2.5, 5.0 },
+        { B_WANDER,     8, 2.5, 5.5 },
+        { B_LOOK,       7, 1.6, 3.5 },
         { B_STARE,      3, 1.5, 3.5 },
-        { B_STRETCH,    4, 1.2, 2.2 },
-        { B_TAILFLICK,  4, 0.8, 1.8 },
+        { B_STRETCH,    7, 1.6, 2.8 },
+        { B_TAILFLICK,  6, 1.0, 2.2 },
         { B_FLOP,       3, 1.0, 1.8 },
         { B_JUMP,       2, 0.8, 1.4 },
         { B_DASH,       2, 1.2, 2.2 },
@@ -2044,7 +2069,7 @@ static void pick_next_behavior(void)
     set_beh(pick, dur);
 }
 
-/* ---------- Drawing (classic orange / ginger cat) ---------- */
+/* ---------- Drawing (LottieFiles flat orange cat) ---------- */
 
 /* Ginger #E8913A · sleepy #C48A58 · eye punch #2A1810 */
 #define FUR_R 0.910
@@ -2217,81 +2242,68 @@ static void draw_cat_body(cairo_t *cr)
                      3.0 + fat * 1.2);
 
     /*
-     * Runcat-feel silhouette (local +X = nose):
-     * long low body, round haunch, tucked belly, small head with tall ears.
-     * Reads as “cat” from outline alone — face is secondary.
+     * LottieFiles-style flat cat (local +X = nose):
+     * clean capsule body, round head, tall ears — pose reads before detail.
+     * Refs: idle / walk / stretch / sleep loops on lottiefiles.com/free-animations/cat
      */
-    double hx = -13.5 - fat * 1.8;                       /* rump */
-    double front = 12.5 + lng * 7.0;                      /* chest front */
-    double chest_x = 6.5 + lng * 3.5;
-    double back_y = -7.4 - arch * 7.5 - puff * 2.0;       /* spine */
-    double shoulder_y = -5.8 - arch * 3.2;
-    double rump_y = -5.6 - fat * 1.3 - arch * 1.4;
-    double belly_y = 4.2 + fat * 2.6;                     /* low belly */
-    double tuck = belly_y - (1.6 + arch * 0.9);
+    double hx = -12.8 - fat * 2.0;                       /* rump */
+    double front = 11.5 + lng * 8.0;                      /* chest front */
+    double chest_x = 5.8 + lng * 3.8;
+    double back_y = -7.0 - arch * 8.0 - puff * 2.0;       /* spine */
+    double shoulder_y = -5.4 - arch * 3.5;
+    double rump_y = -5.2 - fat * 1.4 - arch * 1.6;
+    double belly_y = 4.4 + fat * 2.8;                     /* low belly */
+    double tuck = belly_y - (1.5 + arch * 1.0);
     double mid_h = (back_y + belly_y) * 0.5;
     double nose_x = front;
     double butt_x = hx;
 
-    /* Haunch mass */
-    cairo_save(cr);
-    cairo_translate(cr, hx + 5.0 + fat, mid_h * 0.2);
-    cairo_scale(cr, 1.05 + fat * 0.18, 1.08 + fat * 0.12);
-    cairo_arc(cr, 0, 0, 6.2 + fat * 1.1, 0, 2 * G_PI);
-    set_fur(cr, 1.0);
-    cairo_fill(cr);
-    cairo_restore(cr);
-
-    /* Forechest */
-    cairo_save(cr);
-    cairo_translate(cr, chest_x + 0.8, 0.4);
-    cairo_scale(cr, 1.05 + lng * 0.12, 0.95 + fat * 0.1);
-    cairo_arc(cr, 0, 0, 5.2 + fat * 0.7, 0, 2 * G_PI);
-    set_fur(cr, 1.0);
-    cairo_fill(cr);
-    cairo_restore(cr);
-
-    /* Outer cat outline — one solid silhouette */
+    /* Flat body capsule — one solid fill like Lottie shape layers */
     cairo_new_path(cr);
-    cairo_move_to(cr, hx, 0.5);
+    cairo_move_to(cr, hx + 1.0, mid_h);
     cairo_curve_to(cr,
-                   hx - 3.0 - fat, -0.5,
-                   hx - 0.5, rump_y - 2.5,
-                   hx + 5.0, rump_y);
+                   hx - 2.5 - fat, mid_h - 1.0,
+                   hx - 0.5, rump_y - 2.0,
+                   hx + 5.5, rump_y);
     cairo_curve_to(cr,
-                   hx + 10.0, back_y,
-                   -0.5 + lng, back_y - 1.2 - arch,
-                   4.0 + lng * 3.5, back_y);
+                   hx + 11.0, back_y,
+                   0.0, back_y - 1.0 - arch * 0.5,
+                   chest_x, back_y);
     cairo_curve_to(cr,
-                   8.0 + lng * 4.0, back_y + 0.6,
-                   chest_x + 2.5, shoulder_y,
-                   front - 2.0, -2.8);
+                   chest_x + 4.0, back_y + 0.5,
+                   front - 1.0, shoulder_y,
+                   front - 1.5, -2.2);
     cairo_curve_to(cr,
-                   front + 1.6, -0.2,
-                   front + 1.2, belly_y - 1.0,
-                   front - 3.0, belly_y);
+                   front + 2.0, 0.2,
+                   front + 1.5, belly_y - 0.8,
+                   front - 2.5, belly_y);
     cairo_curve_to(cr,
-                   chest_x, tuck,
-                   -2.0, belly_y + 1.0,
+                   chest_x + 0.5, tuck,
+                   -1.0, belly_y + 0.8,
                    hx + 5.5, belly_y);
     cairo_curve_to(cr,
-                   hx + 1.5, belly_y - 1.0,
-                   hx - 2.0 - fat, 3.2,
-                   hx, 0.5);
+                   hx + 1.5, belly_y - 0.8,
+                   hx - 1.5 - fat, mid_h + 2.0,
+                   hx + 1.0, mid_h);
     cairo_close_path(cr);
     set_fur(cr, 1.0);
     cairo_fill(cr);
 
-    /* Soft shoulder / hip landmarks */
-    {
-        double r, gg, b;
-        fur_color(&r, &gg, &b);
-        cairo_set_source_rgba(cr, r * 0.88, gg * 0.9, b * 0.88, 0.18);
-    }
-    cairo_arc(cr, chest_x - 0.5, -1.8, 2.0, 0, 2 * G_PI);
+    /* Soft haunch / chest volumes (flat, no outline) */
+    cairo_save(cr);
+    cairo_translate(cr, hx + 5.2 + fat * 0.5, mid_h * 0.15);
+    cairo_scale(cr, 1.0 + fat * 0.15, 1.05 + fat * 0.1);
+    cairo_arc(cr, 0, 0, 5.6 + fat, 0, 2 * G_PI);
+    set_fur(cr, 1.0);
     cairo_fill(cr);
-    cairo_arc(cr, hx + 5.5, -0.6, 2.4 + fat, 0, 2 * G_PI);
+    cairo_restore(cr);
+    cairo_save(cr);
+    cairo_translate(cr, chest_x + 0.5, 0.3);
+    cairo_scale(cr, 1.0 + lng * 0.08, 0.95 + fat * 0.08);
+    cairo_arc(cr, 0, 0, 4.8 + fat * 0.5, 0, 2 * G_PI);
+    set_fur(cr, 1.0);
     cairo_fill(cr);
+    cairo_restore(cr);
 
     if (puff > 0.15) {
         set_fur(cr, 0.7 * puff);
@@ -2305,10 +2317,10 @@ static void draw_cat_body(cairo_t *cr)
         }
     }
 
-    /* Head — small, nestled into chest (silhouette first) */
-    double head_y = -8.2 + 4.0 * g.head_drop - arch * 1.2;
-    double head_x = 9.0 + lng * 3.5;
-    double hr = (7.6 + fat * 0.5 + puff * 0.8) * hs;
+    /* Head — round Lottie/Noto idle face nestled on chest */
+    double head_y = -9.0 + 4.5 * g.head_drop - arch * 1.4;
+    double head_x = 8.5 + lng * 4.0;
+    double hr = (8.8 + fat * 0.6 + puff * 0.9) * hs;
     double sleep_a = g.pose_sleep;
     double narrow = g.pose_narrow;
     double cute = 1.0 - 0.55 * g.pose_hiss;
@@ -2421,10 +2433,10 @@ static void draw_cat_body(cairo_t *cr)
         cairo_move_to(cr, 1.8, 0.7); cairo_curve_to(cr, 3.4, 1.7, 4.8, 1.7, 5.8, 0.7);
         cairo_stroke(cr);
     } else {
-        double er = (2.35 - 0.55 * narrow) * (1.0 + 0.1 * g.pose_pet);
-        double ex0 = -2.4 - narrow * 0.15;
-        double ex1 = 3.2 + narrow * 0.1;
-        double ey = 0.7;
+        double er = (2.7 - 0.6 * narrow) * (1.0 + 0.1 * g.pose_pet);
+        double ex0 = -2.8 - narrow * 0.15;
+        double ex1 = 3.4 + narrow * 0.1;
+        double ey = 0.55;
         double gx = g.gaze_x * er * 0.35;
         double gy = g.gaze_y * er * 0.3;
         double glen = hypot(gx, gy);
@@ -2534,47 +2546,55 @@ static void draw_cat_body(cairo_t *cr)
             energy *= 0.35 + 0.2 * (1.0 - sleep_a);
 
         double t = g.tail_t;
-        /* layered waves: slow base sway + mid ripple + tip flick */
-        double base = sin(t * 1.7) * 0.55 + sin(t * 0.6 + 1.1) * 0.25;
-        double mid = sin(t * 3.4 + 0.7) * 0.4 + sin(t * 5.1) * 0.15;
-        double tip = sin(t * 7.2 + 0.3) * 0.55 + sin(t * 11.0) * 0.18;
+        /* Lottie S-curve: slow root sway, mid lag, tip follow-through */
+        double base = sin(t * 1.4) * 0.65 + sin(t * 0.55 + 0.8) * 0.2;
+        double mid = sin(t * 2.6 + 0.9) * 0.5 + sin(t * 4.2 + 0.3) * 0.12;
+        double tip = sin(t * 4.8 + 1.4) * 0.7 + sin(t * 7.5) * 0.15;
         if (g.beh == B_TAILFLICK) {
-            tip += sin(t * 18.0) * 0.7;
-            mid += sin(t * 14.0) * 0.35;
+            tip += sin(t * 14.0) * 0.85;
+            mid += sin(t * 10.0) * 0.4;
+            base += sin(t * 6.0) * 0.2;
         }
         if (g.pose_hiss > 0.2) {
-            tip += sin(t * 22.0) * 0.45 * g.pose_hiss;
-            base *= 0.6;
+            tip += sin(t * 18.0) * 0.4 * g.pose_hiss;
+            base *= 0.55;
+        }
+        if (sleep_a > 0.5) {
+            /* sleepy tip flick only */
+            base *= 0.45;
+            mid *= 0.35;
+            tip = sin(t * 1.8 + 0.5) * 0.55;
         }
 
-        double amp = (9.0 + fat * 2.0) * energy;
-        double len = 22.0 + fat * 3.0 + lng * 4.0 + (g.beh == B_TAILFLICK ? 5.0 : 0);
-        double root_x = butt_x + 2.0;
-        double root_y = mid_h + 0.5;
+        double amp = (10.0 + fat * 2.0) * energy;
+        double len = 24.0 + fat * 3.0 + (g.beh == B_TAILFLICK ? 6.0 : 0)
+                   + (g.beh == B_STRETCH ? 4.0 : 0);
+        double root_x = butt_x + 1.5;
+        double root_y = mid_h - 0.5 - arch * 1.5;
 
-        /* spine samples */
-        enum { TAIL_N = 10 };
+        enum { TAIL_N = 12 };
         double px[TAIL_N], py[TAIL_N];
-        /* trail more horizontally when moving — runcat silhouette */
-        double ang = -0.25 + base * 0.4 * energy - g.pose_walk * 0.35;
+        /* upright curl at rest; trail when walking; high during stretch */
+        double ang = -0.85 + base * 0.35 * energy
+                   + g.pose_walk * 0.55
+                   - (g.beh == B_STRETCH ? 0.35 : 0.0);
         px[0] = root_x;
         py[0] = root_y;
         for (int i = 1; i < TAIL_N; i++) {
             double u = (double)i / (TAIL_N - 1);
             double u2 = u * u;
-            /* amplitude grows toward tip — classic fluid whip */
-            double wave = base * (0.35 + 0.3 * u)
-                        + mid * u
+            /* phase lag toward tip — classic Lottie follow-through */
+            double lag = u * 1.15;
+            double wave = base * (0.25 + 0.35 * u)
+                        + mid * u * sin(lag + 0.4)
                         + tip * u2;
-            double curl = sin(t * 2.2 + u * 3.5) * 0.2 * u * energy;
-            ang += (-0.08 + wave * 0.55 * energy + curl) * (0.55 + 0.45 * u);
-            double seg = (len / (TAIL_N - 1)) * (1.0 - 0.12 * u);
-            px[i] = px[i - 1] + cos(ang) * -seg; /* -X is behind */
+            ang += (-0.05 + wave * 0.62 * energy) * (0.45 + 0.55 * u);
+            double seg = (len / (TAIL_N - 1)) * (1.0 - 0.1 * u);
+            px[i] = px[i - 1] + cos(ang) * -seg;
             py[i] = py[i - 1] + sin(ang) * -seg;
-            /* lift bias */
-            py[i] -= (0.6 + amp * 0.04) * u;
-            px[i] += sin(t * 2.8 + u * 4.0) * amp * 0.08 * u2;
-            py[i] += cos(t * 3.1 + u * 3.2) * amp * 0.12 * u;
+            py[i] -= (1.2 + amp * 0.05) * (1.0 - g.pose_walk) * u;
+            px[i] += sin(t * 2.2 + lag) * amp * 0.06 * u2;
+            py[i] += cos(t * 2.5 + lag) * amp * 0.1 * u;
         }
 
         /* tapered ribbon outline */
@@ -2620,9 +2640,11 @@ static void draw_cat_body(cairo_t *cr)
         cairo_fill(cr);
     }
 
-    if (sleep_a > 0.7) {
-        draw_text_fade(cr, "z", head_x + 14, head_y - 16, 0.45 * sleep_a);
-        draw_text_fade(cr, "z", head_x + 20, head_y - 24, 0.35 * sleep_a);
+    if (sleep_a > 0.55) {
+        double zbob = sin(g.t * 1.7) * 2.0;
+        draw_text_fade(cr, "z", head_x + 12, head_y - 14 + zbob, 0.4 * sleep_a);
+        draw_text_fade(cr, "z", head_x + 18, head_y - 22 + zbob * 0.7, 0.28 * sleep_a);
+        draw_text_fade(cr, "z", head_x + 24, head_y - 30 + zbob * 0.4, 0.18 * sleep_a);
     }
 
     if (g.pose_groom > 0.05) {
@@ -2639,7 +2661,22 @@ static void draw_cat_body(cairo_t *cr)
         int on_wall = near_side_wall() && vclimb > 0.4;
         int on_stairs = !near_side_wall() && vclimb > 0.4;
 
-        if (walk > 0.08 && on_wall) {
+        if (g.beh == B_STRETCH) {
+            /* Morning stretch — front reach, rear plant (Lottie orange-stretch) */
+            double u = (g.dur > 0.01) ? fmin(1.0, g.t / g.dur) : 1.0;
+            double reach = (u < 0.28) ? smootherstep(u / 0.28)
+                         : (u < 0.72) ? 1.0
+                         : (1.0 - smootherstep((u - 0.72) / 0.28));
+            double fwd = 4.0 + reach * 10.0;
+            draw_leg_paw(cr, chest_x + 1.0, belly_y - 0.5,
+                         front - 1.0 + fwd * 0.15, belly_y + 1.5 + reach * 0.5, 3.2);
+            draw_leg_paw(cr, chest_x + 3.5, belly_y,
+                         front + 1.5 + fwd * 0.35, belly_y + 1.2 + reach * 0.4, 3.0);
+            draw_leg_paw(cr, hx + 6.0, belly_y - 0.5,
+                         hx + 5.0 - reach * 1.5, belly_y + 3.0 - reach * 0.8, 3.3);
+            draw_leg_paw(cr, hx + 9.0, belly_y,
+                         hx + 8.0 - reach * 1.0, belly_y + 2.6 - reach * 0.6, 3.1);
+        } else if (walk > 0.08 && on_wall) {
             /* Wall climb — paws reach along the wall (body local “up”) */
             double phase = g.frame * 3.6;
             double a = sin(phase);
@@ -3374,10 +3411,10 @@ int main(int argc, char **argv)
     g.ear_phase = 0;
     g.ear_which = 0;
     g.ear_wait = 8.0 + frand() * 12.0; /* first sleep twitch after a while */
-    g.pose_fat = 0.14;
-    g.pose_long = 0.62;
-    g.pose_arch = 0.14;
-    g.pose_head = 0.86;
+    g.pose_fat = 0.16;
+    g.pose_long = 0.58;
+    g.pose_arch = 0.12;
+    g.pose_head = 0.94;
     g.mon_w = 1920;
     g.mon_h = 1080;
 

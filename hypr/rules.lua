@@ -1,7 +1,8 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 hl.window_rule({
-    match   = { class = "^kitty$" },
-    opacity = "0.94 override 0.70 override",
+    match          = { class = "^kitty$" },
+    opacity        = "0.94 override 0.70 override",
+    suppress_event = "maximize fullscreen",
 })
 
 -- Keep Firefox fully opaque so selection damage isn't lost under decoration opacity
@@ -28,6 +29,53 @@ hl.window_rule({
     match   = { class = "^cursor$" },
     opacity = "0.84 override 0.74 override",
 })
+
+-- Android Emulator: MUST float. If tiled, Hyprland stretches the chrome into a
+-- giant empty frame while the phone surface stays phone-sized (classic white void).
+-- Match initial_* — title/class can change after map (see r/hyprland 1hmp81t, 1mn4yoc).
+-- Real configs: float + title:^(Emulator)$ / title:^(Android Emulator -)
+local function android_emulator_chrome(extra)
+    local r = {
+        opacity            = "1.0 override 1.0 override",
+        opaque             = true,
+        float              = true,
+        center             = true,
+        keep_aspect_ratio  = true,
+        no_blur            = true,
+        no_shadow          = true,
+        no_dim             = true,
+        force_rgbx         = true,
+        immediate          = true,
+        render_unfocused   = true,
+        rounding           = 0,
+        border_size        = 2,
+        persistent_size    = true,
+        suppress_event     = "maximize",
+    }
+    if extra then
+        for k, v in pairs(extra) do
+            r[k] = v
+        end
+    end
+    return r
+end
+
+hl.window_rule(android_emulator_chrome({
+    name  = "android-emulator-class",
+    match = { class = "^(qemu-system-.*|Emulator)$" },
+}))
+hl.window_rule(android_emulator_chrome({
+    name  = "android-emulator-initial-class",
+    match = { initial_class = "^(qemu-system-.*|Emulator)$" },
+}))
+hl.window_rule(android_emulator_chrome({
+    name  = "android-emulator-title",
+    match = { title = "^(Android Emulator|Emulator)" },
+}))
+hl.window_rule(android_emulator_chrome({
+    name  = "android-emulator-initial-title",
+    match = { initial_title = "^(Android Emulator|Emulator)" },
+}))
 
 hl.window_rule({
     match   = { class = "^(polkit-gnome|Polkit-gnome-authentication-agent-1)$" },

@@ -38,6 +38,7 @@ window#waybar.hidden {
 #network,
 #bluetooth,
 #custom-mako,
+#custom-minimized,
 #pulseaudio,
 #backlight,
 #clock,
@@ -115,6 +116,16 @@ window#waybar.hidden {
     font-weight: bold;
     min-width: 1.2em;
     letter-spacing: 0;
+}
+
+#custom-minimized.empty {
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    opacity: 0;
 }
 
 #tray > * {

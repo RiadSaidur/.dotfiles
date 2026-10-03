@@ -1,6 +1,6 @@
 -- Keybindings (literals — no require dependency)
 local mainMod     = "SUPER"
-local terminal    = "kitty"
+local terminal    = "kitty --start-as=normal"
 local fileManager = "nautilus"
 local menu        = "wofi --show drun --allow-images"
 local runner      = "wofi --show run"
@@ -34,6 +34,13 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 hl.bind(mainMod .. " + F",         hl.dsp.window.fullscreen({ mode = "maximized" }))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
+
+-- Hyprland has no real minimize. Hide → special:minimized; bring back by toggling it.
+-- (Emulator titlebar − / □ do nothing useful under Wayland.)
+hl.bind(mainMod .. " + N",
+    hl.dsp.exec_cmd("hyprctl dispatch movetoworkspacesilent special:minimized"))
+hl.bind(mainMod .. " + SHIFT + N",
+    hl.dsp.exec_cmd("hyprctl dispatch togglespecialworkspace minimized"))
 
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set +5%"), { locked = true, repeating = true })

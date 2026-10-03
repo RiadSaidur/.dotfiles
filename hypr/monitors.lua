@@ -11,5 +11,6 @@ hl.monitor({
     mode     = "1920x1080",
     position = "1920x0",
     scale    = 1,
-    bitdepth = 10,
+    -- 10-bit breaks Android Emulator / some XWayland GL surfaces (grey slab)
+    -- bitdepth = 10,
 })
